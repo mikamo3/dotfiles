@@ -6,6 +6,17 @@ endif
 call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
+" NeoBundle {{{
+NeoBundle 'Shougo/vimproc', {
+    \ 'build' : {
+    \     'windows' : 'make -f make_mingw32.mak',
+    \     'cygwin' : 'make -f make_cygwin.mak',
+    \     'mac' : 'make -f make_mac.mak',
+    \     'unix' : 'make -f make_unix.mak',
+    \    },
+    \ }
+"}}}
+
 " ColorScheme {{{
 NeoBundle 'nanotech/jellybeans.vim'
 
@@ -16,6 +27,14 @@ NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
 NeoBundle 'Lokaltog/powerline-fontpatcher'
 "}}}
 
+" Unite {{{
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/unite-outline'
+"}}}
+
+" etc... {{{
+NeoBundle 'bronson/vim-trailing-whitespace'
+"}}}
 call neobundle#end()
 "}}}
 
@@ -32,6 +51,7 @@ set showmatch
 set whichwrap=h,l
 set hidden
 set history=2000
+
 " Encording: {{{
 if has('multi_byte')
     set encoding=utf-8
@@ -68,7 +88,8 @@ set foldlevel=0
 set foldnestmax=3         " maximum nest level
 set foldcolumn=1          " show fold guide
 " }}}
-colorscheme jellybeans 
+
+colorscheme jellybeans
 set guifont=Ricty\ Regular\ for\ Powerline:h14"
 if (exists('+colorcolumn'))
     set colorcolumn=80
@@ -84,5 +105,4 @@ nnoremap gk k
 nnoremap j gj
 nnoremap gj j
 nnoremap / /\v
-nnoremap ; :
 "}}}
