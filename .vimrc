@@ -5,8 +5,7 @@ endif
 " NeoBundle {{{
 call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
-
-" NeoBundle {{{
+" Vimproc {{{
 NeoBundle 'Shougo/vimproc', {
     \ 'build' : {
     \     'windows' : 'make -f make_mingw32.mak',
@@ -32,12 +31,22 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-outline'
 "}}}
 
-" etc... {{{
-NeoBundle 'bronson/vim-trailing-whitespace'
-"}}}
-call neobundle#end()
+" RainbowParentheses {{{
+NeoBundle 'kien/rainbow_parentheses.vim'
+autocmd BufEnter * RainbowParenthesesActivate
+autocmd BufEnter * RainbowParenthesesLoadRound
+
 "}}}
 
+" etc... {{{
+NeoBundle 'bronson/vim-trailing-whitespace'
+NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'Yggdroot/indentLine'
+NeoBundle 'junegunn/vim-easy-align'
+"}}}
+
+call neobundle#end()
+"}}}
 set nocompatible
 set number
 syntax on
@@ -51,6 +60,7 @@ set showmatch
 set whichwrap=h,l
 set hidden
 set history=2000
+set nrformats=hex
 
 " Encording: {{{
 if has('multi_byte')
@@ -90,7 +100,6 @@ set foldcolumn=1          " show fold guide
 " }}}
 
 colorscheme jellybeans
-set guifont=Ricty\ Regular\ for\ Powerline:h14"
 if (exists('+colorcolumn'))
     set colorcolumn=80
     highlight ColorColumn ctermbg=9
