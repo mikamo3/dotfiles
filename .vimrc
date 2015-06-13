@@ -159,10 +159,6 @@ if (exists('+colorcolumn'))
     set colorcolumn=80
     highlight ColorColumn ctermbg=9
 endif
-" list {{{
-set list
-set listchars=tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
-" }}}
 
 " KeyMapping {{{
 let mapleader=","
