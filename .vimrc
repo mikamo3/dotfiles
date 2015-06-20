@@ -85,6 +85,15 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 " }}}
 
+" TagList {{{
+NeoBundle 'vim-scripts/tagbar'
+let Tlist_Ctags_Cmd = "/usr/local/bin/ctags"
+let Tlist_Show_One_File = 1
+let Tlist_Use_Right_Window = 1
+let Tlist_Exit_OnlyWindow = 1
+map <silent> <C-l>t :TagbarToggle<CR>
+"}}}
+
 " RainbowParentheses {{{
 NeoBundle 'kien/rainbow_parentheses.vim'
 autocmd BufEnter * RainbowParenthesesActivate
@@ -96,6 +105,8 @@ NeoBundle 'bronson/vim-trailing-whitespace'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'junegunn/vim-easy-align'
+NeoBundle 'taichouchou2/vim-javascript'
+NeoBundle 'jiangmiao/simple-javascript-indenter'
 "}}}
 
 call neobundle#end()
@@ -116,6 +127,7 @@ set hidden
 set history=2000
 set nrformats=hex
 set cursorline
+set scrolloff=5
 
 " Encording: {{{
 if has('multi_byte')
@@ -128,6 +140,8 @@ endif
 
 " Indent {{{
 set autoindent
+set smarttab
+set smartindent 
 set expandtab
 set tabstop=4
 set shiftwidth=4
@@ -169,15 +183,15 @@ nnoremap gj j
 nnoremap / /\v
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 
-inoremap { {}<LEFT>
-inoremap [ []<LEFT>
-inoremap ( ()<LEFT>
-inoremap " ""<LEFT>
-inoremap ' ''<LEFT>
+inoremap {<Enter> {}<Left><CR><ESC><S-o>
+inoremap [<Enter> []<Left><CR><ESC><S-o>
+inoremap (<Enter> ()<Left><CR><ESC><S-o>
+"inoremap " ""<LEFT>
+"inoremap ' ''<LEFT>
 vnoremap { "zdi{<C-R>z}<ESC>
 vnoremap [ "zdi[<C-R>z]<ESC>
 vnoremap ( "zdi(<C-R>z)<ESC>
-vnoremap " "zdi"<C-R>z"<ESC>
+""vnoremap " "zdi"<C-R>z"<ESC>
 vnoremap ' "zdi'<C-R>z'<ESC>
 "}}}
 
