@@ -85,6 +85,10 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 " }}}
 
+" javascript-syntax {{{
+"NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
+" }}}
+
 " TagList {{{
 NeoBundle 'vim-scripts/tagbar'
 let Tlist_Ctags_Cmd = "/usr/local/bin/ctags"
@@ -100,6 +104,12 @@ autocmd BufEnter * RainbowParenthesesActivate
 autocmd BufEnter * RainbowParenthesesLoadRound
 "}}}
 
+" autoformat {{{
+NeoBundle 'Chiel92/vim-autoformat'
+au BufWrite * :Autoformat
+nnoremap <silent> <Leader>f :Autoformat<CR>
+" }}}
+
 " etc... {{{
 NeoBundle 'bronson/vim-trailing-whitespace'
 NeoBundle 'airblade/vim-gitgutter'
@@ -107,6 +117,7 @@ NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'taichouchou2/vim-javascript'
 NeoBundle 'jiangmiao/simple-javascript-indenter'
+NeoBundle 'tpope/vim-surround'
 "}}}
 
 call neobundle#end()
@@ -128,6 +139,7 @@ set history=2000
 set nrformats=hex
 set cursorline
 set scrolloff=5
+set noundofile
 
 " Encording: {{{
 if has('multi_byte')
@@ -141,7 +153,7 @@ endif
 " Indent {{{
 set autoindent
 set smarttab
-set smartindent 
+set smartindent
 set expandtab
 set tabstop=4
 set shiftwidth=4
@@ -182,6 +194,8 @@ nnoremap j gj
 nnoremap gj j
 nnoremap / /\v
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
+nnoremap ZZ <Nop>
+nnoremap ZQ <Nop>
 
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
 inoremap [<Enter> []<Left><CR><ESC><S-o>
