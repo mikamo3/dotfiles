@@ -56,7 +56,6 @@ main() {
   printf "dotfiles\n"
   cd "$(dirname "${BASH_SOURCE[0]}")" || exit 1
 
-  #
   if [ $(pwd) = ${DOTFILES_DIRECTORY}/src ]; then
     . "utils.sh" || exit 1
   else
@@ -64,7 +63,10 @@ main() {
     cd ${DOTFILES_DIRECTORY}/src || exit 1
     . "utils.sh" exit 1
   fi
+
   #install package
   check_os || exit 1
+
+  ./os/install.sh
 }
 main "$@"
