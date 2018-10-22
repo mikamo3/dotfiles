@@ -73,5 +73,7 @@ main() {
 	./os/install.sh
 
 	./os/symlink.sh
+
+	./os/initalize_git_repository.sh
 }
 main "$@"
