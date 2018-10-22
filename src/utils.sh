@@ -164,8 +164,8 @@ is_git_repository() {
 
 is_supported_version() {
 
-	declare -a v1=(${1//./ })
-	declare -a v2=(${2//./ })
+	declare -a v1=("${1//./ }")
+	declare -a v2=("${2//./ }")
 	local i=""
 
 	# Fill empty positions in v1 with zeros.
@@ -352,6 +352,7 @@ show_spinner() {
 	done
 
 }
+
 run_scripts() {
 	local sourceDir=""
 	if [ ! -d "$sourceDir" ]; then
