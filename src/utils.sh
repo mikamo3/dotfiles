@@ -352,3 +352,13 @@ show_spinner() {
 	done
 
 }
+run_scripts() {
+	local sourceDir=""
+	if [ ! -d "$sourceDir" ]; then
+		print_error "$sourceDir is not directory"
+		return 1
+	fi
+	while IFS= read -r -d '' script; do
+		"$script"
+	done < <(find "$sourceDir" -name '*.sh' -print0)
+}

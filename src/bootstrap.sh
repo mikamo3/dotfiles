@@ -8,7 +8,7 @@ declare -r DOTFILES_DIRECTORY="$HOME/.dotfiles"
 download_repos() {
 	printf "download dotfiles from %s\n" "$DOTFILES_TARBALL_URL"
 	local tmpFile=""
-  tmpFile=$(mktemp)
+	tmpFile=$(mktemp)
 	download "$DOTFILES_TARBALL_URL" "$tmpFile"
 	if [ -e "$DOTFILES_DIRECTORY" ]; then
 		printf "%s already exists\n" "$DOTFILES_DIRECTORY"
@@ -45,7 +45,8 @@ extract() {
 
 check_os() {
 	printf "check os\n"
-	local os=get_os
+	local os
+	os=$(get_os)
 	if [ "$os" == "arch" ]; then
 		return 0
 	fi
@@ -70,5 +71,7 @@ main() {
 	check_os || exit 1
 
 	./os/install.sh
+
+	./os/symlink.sh
 }
 main "$@"

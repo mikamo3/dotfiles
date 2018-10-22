@@ -21,9 +21,9 @@ update() {
 	execute "sudo pacman -Syu --noconfirm" "pacman (pacman update)"
 }
 
-print_in_purple "Install...\n\n"
+print_in_purple "Install $(get_os)...\n\n"
 ask_for_sudo
 update
-for package in $(cat ../../../packages/arch/pacman-package-list); do
+while read -r package; do
 	install_package "$package (pacman install)" "$package"
-done
+done <../../../packages/arch/pacman-package-list
