@@ -91,7 +91,6 @@ if ! check_connect_to_git; then
 				git clean -fd 1>/dev/null
 
 			print_result $? "Update content"
-
 		fi
 	else
 		print_warning "set SSH key manually (see https://github.com/settings/keys)"
