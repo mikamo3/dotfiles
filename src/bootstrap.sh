@@ -74,6 +74,6 @@ main() {
 
 	./os/symlink.sh
 
-	./os/initalize_git_repository.sh
+	./os/initalize_git_repository.sh "$GITHUB_REPOS"
 }
 main "$@"
