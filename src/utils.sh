@@ -354,7 +354,7 @@ show_spinner() {
 }
 
 run_scripts() {
-	local sourceDir=""
+	local sourceDir="$1"
 	if [ ! -d "$sourceDir" ]; then
 		print_error "$sourceDir is not directory"
 		return 1

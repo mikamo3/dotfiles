@@ -2,7 +2,6 @@
 declare -r GITHUB_REPOS="mikamo3/dotfiles"
 declare -r DOTFILES_ORIGIN="git@github.com:$GITHUB_REPOS.git"
 declare -r DOTFILES_TARBALL_URL="https://github.com/$GITHUB_REPOS/tarball/master"
-
 declare -r DOTFILES_DIRECTORY="$HOME/.dotfiles"
 
 download_repos() {
@@ -58,18 +57,17 @@ main() {
 	printf "dotfiles\n"
 	cd "$(dirname "${BASH_SOURCE[0]}")" || exit 1
 
-	if [ $(pwd) == "${DOTFILES_DIRECTORY}/src" ]; then
+	if [ "$(pwd)" == "${DOTFILES_DIRECTORY}/src" ]; then
 		. "utils.sh" || exit 1
 	else
 		download_repos || exit 1
 		cd "${DOTFILES_DIRECTORY}/src" || exit 1
-		. "utils.sh" exit 1
+		. "utils.sh" || exit 1
 
 	fi
 
 	#install package
 	check_os || exit 1
-
 	./os/install.sh
 
 	./os/symlink.sh

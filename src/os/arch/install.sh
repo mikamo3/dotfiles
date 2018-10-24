@@ -20,10 +20,12 @@ package_is_installed() {
 update() {
 	execute "sudo pacman -Syu --noconfirm" "pacman (pacman update)"
 }
-
-print_in_purple "Install $(get_os)...\n\n"
-ask_for_sudo
-update
-while read -r package; do
-	install_package "$package (pacman install)" "$package"
-done <../../../packages/arch/pacman-package-list
+main() {
+	print_in_purple "Install $(get_os)...\n\n"
+	ask_for_sudo
+	update
+	while read -r package; do
+		install_package "$package (pacman install)" "$package"
+	done <../../../packages/arch/pacman-package-list
+}
+main "$@"
