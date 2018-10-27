@@ -1,77 +1,117 @@
 #!/bin/bash
-declare -r GITHUB_REPOS="mikamo3/dotfiles"
-declare -r DOTFILES_ORIGIN="git@github.com:$GITHUB_REPOS.git"
-declare -r DOTFILES_TARBALL_URL="https://github.com/$GITHUB_REPOS/tarball/master"
-declare -r DOTFILES_DIRECTORY="$HOME/.dotfiles"
+# Build a new environment
+# 1.Download tarball from github repository (If this script is not running locally)
+# 2.Install necessary items based on the package list
+# 3.Create symbolic links
 
-download_repos() {
-	printf "download dotfiles from %s\n" "$DOTFILES_TARBALL_URL"
-	local tmpFile=""
-	tmpFile=$(mktemp)
-	download "$DOTFILES_TARBALL_URL" "$tmpFile"
-	if [ -e "$DOTFILES_DIRECTORY" ]; then
-		printf "%s already exists\n" "$DOTFILES_DIRECTORY"
-		return 1
-	fi
-	mkdir -p "$DOTFILES_DIRECTORY"
-	printf "exact to %s\n" "$DOTFILES_DIRECTORY"
-	extract "$tmpFile" "$DOTFILES_DIRECTORY"
-}
+declare -r GITHUB_REPOSITORY="mikamo3/dotfiles"
+declare -r TARBALL_URL="https://github.com/$GITHUB_REPOSITORY/tarball/master"
 
 download() {
-	local url="$1"
-	local dstFile="$2"
-	if command -v "curl" &>/dev/null; then
-		curl -LsSo "$dstFile" "$url" &>/dev/null
-		return $?
-	elif command -v "wget" &>/dev/null; then
-		wget -qO "$dstFile" "$url" &>/dev/null
-		return $?
-	fi
-	return 1
+  local url="$1"
+  local dst_path="$2"
+  if [[ -e "$dst_path" ]]; then
+    confirm "$dst_path is already exists. Do you want to overwrite? (y/n) :"
+    if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+      rm -rf "$dst_path"
+    fi
+  fi
+
+  if command -v curl &>/dev/null; then
+    curl -LsSo "$dst_path" "$url" &>/dev/null
+  elif command -v "wget" &>/dev/null; then
+    wget -qO "$dst_path" "$url" &>/dev/null
+    return $?
+  fi
+  return $?
 }
 
 extract() {
-	local archive="$1"
-	local outputDir="$2"
-
-	if command -v "tar" &>/dev/null; then
-		tar zxf "$archive" --strip-components 1 -C "$outputDir"
-		return $?
-	fi
-	return 1
+  local source_file_path=$1
+  local dst_path=$2
+  if command -v tar &>/dev/null; then
+    tar -zxf "$source_file_path" --strip-components 1 -C "$dst_path"
+    return $?
+  fi
+  reutrn 1
 }
 
-check_os() {
-	printf "check os\n"
-	local os
-	os=$(get_os)
-	if [ "$os" == "arch" ]; then
-		return 0
-	fi
-	printf "this script is not supported %s\n" "$os"
-	return 1
+#print function
+print_error_log() {
+  while read -r line; do
+    print_error "   $line\n"
+  done
+}
+print_error() {
+  print_color "1" "   [❌]$1\n"
+}
+print_success() {
+  print_color "2" "   [✅]$1\n"
+}
+print_info() {
+  print_color "4" "$1"
+}
+print_warn() {
+  print_color "3" "$1"
+}
+print_title() {
+  print_color "5" "$1"
+}
+print_color() {
+  local color=$1
+  local string=$2
+  printf "%b" "$(tput setaf "$color" 2>/dev/null)" "$string" "$(tput sgr0 2>/dev/null)"
+}
+
+confirm() {
+  local string=$1
+  print_warn "$string"
+  read -r
 }
 
 main() {
-	printf "dotfiles\n"
-	cd "$(dirname "${BASH_SOURCE[0]}")" || exit 1
+  local download_temp_file
+  local dotfiles_path="$HOME/.dotfiles"
+  #TODO: print ascii art
 
-	if [ "$(pwd)" == "${DOTFILES_DIRECTORY}/src" ]; then
-		. "utils.sh" || exit 1
-	else
-		download_repos || exit 1
-		cd "${DOTFILES_DIRECTORY}/src" || exit 1
-		. "utils.sh" || exit 1
+  cd "$(dirname "${BASH_SOURCE[0]}")" || exit 1
 
-	fi
+  #when execute
+  if ! printf "%s" "${BASH_SOURCE[0]}" | grep -q "bootstrap.sh"; then
+    #download
+    print_title "Download dotfiles Repository...\n"
+    print_info "  url:$($TARBALL_URL)\n"
+    download_temp_file=$(mktemp)
+    download "$TARBALL_URL" "$download_temp_file" || exit 1
+    print_info "Download complete!\n"
 
-	#install package
-	check_os || exit 1
-	./os/install.sh
+    #extract
+    print_title "Extracting\n"
+    confirm "Dottiles will extracrted to '$dotfiles_path'. Are you sure? (y/n) :"
+    if [[ ! "$REPLY" =~ ^[Yy]$ ]]; then
+      confirm "Where will you extract dotfiles to? (default: $dotfiles_path) :"
+      dotfiles_path="$REPLY"
+    fi
 
-	./os/symlink.sh
+    #when $dotfiles_path exists
+    while [[ -e "$dotfiles_path" ]]; do
+      confirm "$dotfiles_path is already exists. Do you overwrite it? (y/n):"
+      if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+        rm -rf "$dotfiles_path"
+      else
+        confirm "Where will you extract dotfiles to? :"
+        dotfiles_path="$REPLY"
+      fi
+    done
+    print_info "   from: $download_temp_file to: $dotfiles_path"
+    extract "$download_temp_file" "$dotfiles_path"
+    print_info "Extract complete"
+  else
+    dotfiles_path="$(pwd)/.."
+  fi
+  cd "$dotfiles_path/src/os" || exit 1
 
-	./os/initalize_git_repository.sh "$GITHUB_REPOS"
+  ./install.sh || exit 1
+  ./symlink.sh || exit 1
 }
 main "$@"

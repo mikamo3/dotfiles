@@ -2,60 +2,67 @@
 cd "$(dirname "${BASH_SOURCE[0]}")" && . "../utils.sh"
 
 create_symlink() {
-	local sourceDir=$1
-	local targetDir=$2
-	local sourceAbsoluteDir=""
-	local targetAbsoluteDir=""
-	targetAbsoluteDir=$(readlink -f "$targetDir")
-	if [ ! -d "$sourceDir" ]; then
-		print_error "$sourceDir - a file with the same name already exists!"
-		return 1
-	else
-		sourceAbsoluteDir=$(readlink -f "$sourceDir")
-	fi
-
-	if [ ! -d "$targetDir" ]; then
-		print_error "$targetDir - directory does not exists!"
-		return 1
-	fi
-
-	while IFS= read -r -d '' symlink; do
-		local symlinkAbsolutePath=""
-		symlinkAbsolutePath=$(readlink -f "$symlink")
-		local targetAbsolutePath="${targetAbsoluteDir}${symlinkAbsolutePath/${sourceAbsoluteDir}/}"
-		#create directory
-		if [ -d "$symlinkAbsolutePath" ]; then
-			mkd "$targetAbsolutePath"
-			continue
-		fi
-
-		if [ ! -e "$targetAbsolutePath" ]; then
-			execute "ln -fs $symlinkAbsolutePath $targetAbsolutePath" \
-				"$symlinkAbsolutePath → $targetAbsolutePath"
-		elif [ "$(readlink "$targetAbsolutePath")" == "$symlinkAbsolutePath" ]; then
-			print_success "$symlinkAbsolutePath → $targetAbsolutePath"
-		else
-			#when target file is real file
-			ask_for_confirmation "'$targetAbsolutePath' already exists. do you want to overwrite?"
-			if answer_is_yes; then
-				rm -rf "$targetAbsolutePath"
-				execute "ln -fs $symlinkAbsolutePath $targetAbsolutePath" \
-					"$symlinkAbsolutePath → $targetAbsolutePath"
-			else
-				print_error "$symlinkAbsolutePath → $targetAbsolutePath"
-			fi
-		fi
-
-	done < <(find "$sourceDir" -print0)
+  local -r source_dir=$1
+  local -r target_base_dir=$2
+  local source_absolute_dir
+  local target_absolute_base_dir
+  #check directory
+  if [[ ! -d "$source_dir" ]]; then
+    print_error "$source_dir - is not a directory"
+    return 1
+  fi
+  if [[ ! -d "$target_base_dir" ]]; then
+    print_error "$target_base_dir - is not a directory"
+    return 1
+  fi
+  source_absolute_dir=$(readlink -f "$source_dir")
+  target_absolute_base_dir=$(readlink -f "$target_base_dir")
+  while IFS= read -r -d '' source_path; do
+    local target_absolute_path=$target_absolute_base_dir${source_path/$source_absolute_dir/}
+    if [[ "$target_absolute_base_dir" == "$target_absolute_path" ]]; then
+      continue
+    fi
+    if [[ -d "$source_path" ]]; then
+      mkd "$target_absolute_path"
+      continue
+    fi
+    if [[ -e "$target_absolute_path" ]]; then
+      confirm "$target_absolute_path is already exists. Do you want to overwrite it? (y/n)"
+      if [[ ! "$REPLY" =~ ^[Yy]$ ]]; then
+        print_warn "$target_absolute_path skipped.\n"
+        continue
+      fi
+    fi
+    execute "$source_path → $target_absolute_path" "ln -sf $source_path $target_absolute_path"
+  done < <(find "$source_absolute_dir" -print0)
 }
 
-run_scripts "./common/before_symlink"
-run_scripts "./$(get_os)/before_symlink"
+main() {
+  print_title "Symlink \n\n"
+  check_os || return 1
 
-print_in_purple "Create Symbolic Link (common)...\n\n"
-create_symlink "../dots/common" "$HOME"
-print_in_purple "Create Symbolic Link ($(get_os))...\n\n"
-create_symlink "../dots/$(get_os)" "$HOME"
+  print_title "Run before symlink(common)\n"
+  run_scripts "./common/before_symlink"
+  print_info "Run before symlink(common) complete\n"
 
-run_scripts "./common/after_symlink"
-run_scripts "./$(get_os)/after_symlink"
+  print_title "Run before symlink($(get_os))\n"
+  run_scripts "./$(get_os)/before_symlink"
+  print_info "Run before symlink($(get_os)) complete\n"
+
+  print_title "Create symlink (common)...\n"
+  create_symlink "../../dots/common" "$HOME"
+  print_info "Create symlink (common) complete\n"
+
+  print_title "Create symlink ($(get_os))...\n"
+  create_symlink "../../dots/$(get_os)" "$HOME"
+  print_info "Create symlink ($(get_os)) complete\n"
+
+  print_title "Run after symlink(common)\n"
+  run_scripts "./common/after_symlink"
+  print_info "Run after symlink(common) complete\n"
+
+  print_title "Run after symlink($(get_os))\n"
+  run_scripts "./$(get_os)/after_symlink"
+  print_info "Run after symlink($(get_os)) complete\n"
+}
+main "$@"

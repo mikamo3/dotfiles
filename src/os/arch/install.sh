@@ -2,30 +2,23 @@
 cd "$(dirname "${BASH_SOURCE[0]}")" && . "../../utils.sh"
 
 install_package() {
-	declare -r EXTRA_ARGUMENTS="$3"
-	declare -r PACKAGE="$2"
-	declare -r PACKAGE_READABLE_NAME="$1"
-
-	if ! package_is_installed "$PACKAGE"; then
-		execute "pacman -S --noconfirm $EXTRA_ARGUMENTS $PACKAGE" "$PACKAGE_READABLE_NAME"
-	else
-		print_success "$PACKAGE_READABLE_NAME"
-	fi
+  declare -r PACKAGE="$1"
+  if ! package_is_installed "$PACKAGE"; then
+    execute "Install $PACKAGE" "sudo pacman -S --noconfirm $PACKAGE"
+  else
+    print_success "$PACKAGE is already installed"
+  fi
 }
 
 package_is_installed() {
-	pacman -Qs "$1" &>/dev/null
+  pacman -Qs "$1" &>/dev/null
 }
 
-update() {
-	execute "sudo pacman -Syu --noconfirm" "pacman (pacman update)"
-}
 main() {
-	print_in_purple "Install $(get_os)...\n\n"
-	ask_for_sudo
-	update
-	while read -r package; do
-		install_package "$package (pacman install)" "$package"
-	done <../../../packages/arch/pacman-package-list
+  sudo_keepalive
+  execute "Upgrade package" "sudo pacman -Syu"
+  while read -r package; do
+    install_package "$package"
+  done <../../../packages/arch/pacman-package-list
 }
 main "$@"

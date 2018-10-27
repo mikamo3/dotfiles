@@ -6,7 +6,7 @@ is_git_repository() {
 }
 
 check_git() {
-	if ! command -v "git" % >/dev/null; then
+	if ! command -v "git" &>/dev/null; then
 		print_error "git is not installed!"
 		return 1
 	fi
