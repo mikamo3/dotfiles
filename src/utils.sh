@@ -51,13 +51,13 @@ print_success() {
   print_color "2" "[✅]$1\n"
 }
 print_info() {
-  print_color "4" "$1"
+  print_color "4" "$1\n"
 }
 print_warn() {
-  print_color "3" "$1"
+  print_color "3" "$1\n"
 }
 print_title() {
-  print_color "5" "$1"
+  print_color "5" "$1\n"
 }
 print_color() {
   local color=$1
@@ -69,6 +69,18 @@ confirm() {
   local string=$1
   print_warn "$string"
   read -r </dev/tty
+  printf "\n"
+}
+
+ask_for_confirmation() {
+  local string=$1
+  print_warn "$string (y/n) :"
+  read -r -n 1 </dev/tty
+  printf "\n"
+}
+
+answer_is_yes() {
+  [[ "$REPLY" =~ ^[Yy]$ ]] && return 0 || return 1
 }
 
 sudo_keepalive() {
@@ -79,11 +91,12 @@ sudo_keepalive() {
     kill -0 "$$" || exit
   done 2>/dev/null &
 }
+
 execute() {
-  local -r CMD=$2
-  local -r MSG=$1
+  local -r CMD=$1
+  local -r MSG=${2:-${1}}
   local exit_code
-  $CMD
+  eval "$CMD"
   exit_code=$?
   if [[ 0 == "$exit_code" ]]; then
     print_success "$MSG"
@@ -102,7 +115,7 @@ mkd() {
         print_success "$1"
       fi
     else
-      execute "Create directory :$1" "mkdir -p $1"
+      execute "mkdir -p $1" "Create directory :$1"
     fi
   fi
 }

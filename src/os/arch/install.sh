@@ -4,7 +4,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" && . "../../utils.sh"
 install_package() {
   declare -r PACKAGE="$1"
   if ! package_is_installed "$PACKAGE"; then
-    execute "Install $PACKAGE" "sudo pacman -S --noconfirm $PACKAGE"
+    execute "sudo pacman -S --noconfirm $PACKAGE" "Install $PACKAGE"
   else
     print_success "$PACKAGE is already installed"
   fi
@@ -16,7 +16,7 @@ package_is_installed() {
 
 main() {
   sudo_keepalive
-  execute "Upgrade package" "sudo pacman -Syu"
+  execute "sudo pacman -Syu" "Upgrade package"
   while read -r package; do
     install_package "$package"
   done <../../../packages/arch/pacman-package-list

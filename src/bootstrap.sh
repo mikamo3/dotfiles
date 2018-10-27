@@ -43,10 +43,10 @@ print_error_log() {
   done
 }
 print_error() {
-  print_color "1" "   [❌]$1\n"
+  print_color "1" "[❌]$1\n"
 }
 print_success() {
-  print_color "2" "   [✅]$1\n"
+  print_color "2" "[✅]$1\n"
 }
 print_info() {
   print_color "4" "$1"
@@ -69,6 +69,22 @@ confirm() {
   read -r
 }
 
+confirm() {
+  local string=$1
+  print_warn "$string"
+  read -r <"$(tty)"
+}
+
+ask_for_confirmation() {
+  local string=$1
+  print_warn "$string (y/n) :"
+  read -r -n 1 <"$(tty)"
+}
+
+answer_is_yes() {
+  [[ "$REPLY" =~ ^[Yy]$ ]] && return 0 || return 1
+}
+
 main() {
   local download_temp_file
   local dotfiles_path="$HOME/.dotfiles"
@@ -87,16 +103,16 @@ main() {
 
     #extract
     print_title "Extracting\n"
-    confirm "Dottiles will extracrted to '$dotfiles_path'. Are you sure? (y/n) :"
-    if [[ ! "$REPLY" =~ ^[Yy]$ ]]; then
+    ask_for_confirmation "Dottiles will extracrted to '$dotfiles_path'. Are you sure? :"
+    if ! answer_is_yes; then
       confirm "Where will you extract dotfiles to? (default: $dotfiles_path) :"
       dotfiles_path="$REPLY"
     fi
 
     #when $dotfiles_path exists
     while [[ -e "$dotfiles_path" ]]; do
-      confirm "$dotfiles_path is already exists. Do you overwrite it? (y/n):"
-      if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+      ask_for_confirmation "$dotfiles_path is already exists. Do you overwrite it? (y/n):"
+      if answer_is_yes; then
         rm -rf "$dotfiles_path"
       else
         confirm "Where will you extract dotfiles to? :"
@@ -107,11 +123,13 @@ main() {
     extract "$download_temp_file" "$dotfiles_path"
     print_info "Extract complete"
   else
-    dotfiles_path="$(pwd)/.."
+    dotfiles_path="$(readlink -f "$(pwd)/..")"
   fi
+  print_info "Dotfiles directory :$dotfiles_path\n\n"
   cd "$dotfiles_path/src/os" || exit 1
 
   ./install.sh || exit 1
   ./symlink.sh || exit 1
+  ./initialize_dotfiles_repository.sh "$GITHUB_REPOSITORY" || exit 1
 }
 main "$@"

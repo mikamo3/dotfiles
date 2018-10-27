@@ -6,6 +6,7 @@ create_symlink() {
   local -r target_base_dir=$2
   local source_absolute_dir
   local target_absolute_base_dir
+
   #check directory
   if [[ ! -d "$source_dir" ]]; then
     print_error "$source_dir - is not a directory"
@@ -17,6 +18,8 @@ create_symlink() {
   fi
   source_absolute_dir=$(readlink -f "$source_dir")
   target_absolute_base_dir=$(readlink -f "$target_base_dir")
+
+  #create_symlink
   while IFS= read -r -d '' source_path; do
     local target_absolute_path=$target_absolute_base_dir${source_path/$source_absolute_dir/}
     if [[ "$target_absolute_base_dir" == "$target_absolute_path" ]]; then
@@ -27,13 +30,13 @@ create_symlink() {
       continue
     fi
     if [[ -e "$target_absolute_path" ]]; then
-      confirm "$target_absolute_path is already exists. Do you want to overwrite it? (y/n)"
-      if [[ ! "$REPLY" =~ ^[Yy]$ ]]; then
+      ask_for_confirmation "$target_absolute_path is already exists. Do you want to overwrite it?"
+      if ! answer_is_yes; then
         print_warn "$target_absolute_path skipped.\n"
         continue
       fi
     fi
-    execute "$source_path → $target_absolute_path" "ln -sf $source_path $target_absolute_path"
+    execute "ln -sf $source_path $target_absolute_path" "$source_path → $target_absolute_path"
   done < <(find "$source_absolute_dir" -print0)
 }
 
