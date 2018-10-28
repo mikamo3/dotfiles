@@ -9,7 +9,7 @@ main() {
   print_title "Initialize dotfiles directory as git repository"
 
   if command -v git &>/dev/null; then
-    print_info "git is installed."
+    print_success "git is installed."
   else
     print_warn "git is not installed. exiting..."
     return 1

@@ -40,7 +40,7 @@ main() {
   #TODO: print ascii art
 
   cd "$(dirname "${BASH_SOURCE[0]}")" || exit 1
-  printf "%s" "dotfiles install\n"
+  printf "%s\n" "dotfiles install"
 
   #when execute from url
   #download utils.sh then source it
@@ -48,14 +48,14 @@ main() {
   if ! printf "%s" "${BASH_SOURCE[0]}" | grep -q "bootstrap.sh"; then
     #download utils.sh
     download_util_file=$(mktemp)
-    printf "%s" "Download utils.sh...\n"
-    printf "  %s" "url:$UTILS_URL\n"
+    printf "%s\n" "Download utils.sh"
+    printf "  %s\n" "url:$UTILS_URL"
     download "$UTILS_URL" "$download_util_file" && . "$download_util_file" && rm -rf "$download_util_file"
     print_success "Download utils.sh complete"
     check_os || exit 1
 
     #download
-    print_title "Download dotfiles repository..."
+    print_title "Download dotfiles repository"
     print_info "  url:$TARBALL_URL"
     download_temp_file=$(mktemp)
     download "$TARBALL_URL" "$download_temp_file" || exit 1
@@ -88,7 +88,7 @@ main() {
     . ./utils.sh
     dotfiles_path="$(readlink -f "$(pwd)/..")"
   fi
-  print_info "Dotfiles directory :$dotfiles_path"
+  print_info "dotfiles directory :$dotfiles_path"
   cd "$dotfiles_path/src/os" || exit 1
 
   ./install.sh || exit 1
