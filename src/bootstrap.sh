@@ -65,12 +65,6 @@ confirm() {
   read -r
 }
 
-confirm() {
-  local string=$1
-  print_warn "$string"
-  read -r
-}
-
 ask_for_confirmation() {
   local string=$1
   print_warn "$string (y/n) :"
@@ -102,17 +96,18 @@ main() {
     ask_for_confirmation "Dottiles will extracrted to '$dotfiles_path'. Are you sure? :"
     if ! answer_is_yes; then
       confirm "Where will you extract dotfiles to? (default: $dotfiles_path) :"
-      dotfiles_path="$REPLY"
+      dotfiles_path=$(eval "echo $REPLY")
+
     fi
 
     #when $dotfiles_path exists
     while [[ -e "$dotfiles_path" ]]; do
-      ask_for_confirmation "$dotfiles_path is already exists. Do you overwrite it? (y/n):"
+      ask_for_confirmation "$dotfiles_path is already exists. Do you overwrite it? :"
       if answer_is_yes; then
         rm -rf "$dotfiles_path"
       else
         confirm "Where will you extract dotfiles to? :"
-        dotfiles_path="$REPLY"
+        dotfiles_path=$(eval "echo $REPLY")
       fi
     done
     mkdir -p "$dotfiles_path"
