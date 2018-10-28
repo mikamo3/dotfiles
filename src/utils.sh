@@ -76,14 +76,14 @@ print_color() {
 
 confirm() {
   local string=$1
-  print_warn "$string :"
+  print_color "3" "$string :"
   read -r
   printf "\n"
 }
 
 ask_for_confirmation() {
   local string=$1
-  print_warn "$string (y/n) :"
+  print_color "3" "$string (y/n) :"
   read -r -n 1
   printf "\n"
 }
