@@ -123,7 +123,7 @@ main() {
   else
     dotfiles_path="$(readlink -f "$(pwd)/..")"
   fi
-  print_info "Dotfiles directory :$dotfiles_path\n\n"
+  print_info "dotfiles directory :$dotfiles_path"
   cd "$dotfiles_path/src/os" || exit 1
 
   ./install.sh || exit 1

@@ -4,6 +4,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" && . "../utils.sh"
 create_symlink() {
   local -r source_dir=$1
   local -r target_base_dir=$2
+  local -r exclude_files=(".gitkeep" ".DS_Store")
   local source_absolute_dir
   local target_absolute_base_dir
 
@@ -25,6 +26,14 @@ create_symlink() {
     if [[ "$target_absolute_base_dir" == "$target_absolute_path" ]]; then
       continue
     fi
+
+    # skip exclude file
+    for exclude_file in "${exclude_files[@]}"; do
+      if [[ $(basename "$source_path") == "$exclude_file" ]]; then
+        continue
+      fi
+    done
+
     if [[ -d "$source_path" ]]; then
       mkd "$target_absolute_path"
       continue
