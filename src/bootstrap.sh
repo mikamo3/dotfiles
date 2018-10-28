@@ -45,7 +45,8 @@ main() {
   if ! printf "%s" "${BASH_SOURCE[0]}" | grep -q "bootstrap.sh"; then
     #download utils.sh
     download_util_file=$(mktemp)
-    printf "%s" "Download utils.sh..."
+    printf "%s" "Download utils.sh...\n"
+    printf "  %s" "url:$UTILS_URL\n"
     download "$UTILS_URL" "$download_util_file" && . "$download_util_file" && rm -rf "$download_util_file"
 
     #download
@@ -57,25 +58,20 @@ main() {
 
     #extract
     print_title "Extracting dotfiles tarball"
-    ask_for_confirmation "Dottiles will extracrted to '$dotfiles_path'. Are you sure? :"
+    ask_for_confirmation "Dotfiles will extracrted to '$dotfiles_path'. Are you sure? :"
     if ! answer_is_yes; then
       confirm "Where will you extract dotfiles to? (default: $dotfiles_path) :"
       dotfiles_path=$(eval "echo $REPLY")
     fi
 
-    #when $dotfiles_path exists
-    while [[ -e "$dotfiles_path" ]]; do
-      ask_for_confirmation "$dotfiles_path is already exists. Do you overwrite it? :"
-      if answer_is_yes; then
-        rm -rf "$dotfiles_path"
-      else
-        confirm "Where will you extract dotfiles to? :"
-        dotfiles_path=$(eval "echo $REPLY")
-      fi
-    done
+    if [[ -e "$dotfiles_path" ]]; then
+      print_error "$dotfiles_path is already exists. Please remove this directory manually"
+      return 1
+    fi
+
     mkdir -p "$dotfiles_path"
     print_info "Create Directory:$dotfiles_path"
-    print_info "   from: $download_temp_file to: $dotfiles_path"
+    print_info "Extract tarball from: $download_temp_file to: $dotfiles_path"
     extract "$download_temp_file" "$dotfiles_path"
     rm -rf "$download_temp_file"
     print_info "Extract complete"
