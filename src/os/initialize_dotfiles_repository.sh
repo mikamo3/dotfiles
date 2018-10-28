@@ -24,7 +24,7 @@ main() {
   print_info "Update content"
   #TODO: ask question
   ssh -T git@github.com
-  if [[ $? -ne 1 ]]; then
+  if [ $? -ne 1 ]; then
     print_error "Connection failed. Please check regist a public SSH key to Github"
     return 1
   fi
