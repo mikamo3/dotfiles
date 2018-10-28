@@ -35,7 +35,7 @@ main() {
     fi
   fi
 
-  print_title "Regist public key"
+  print_title "Add SSH key to Github"
   ask_for_confirmation "Regist public key to github (It is necessary to set the API key correctly in advance) ?"
   if answer_is_yes; then
 
@@ -45,8 +45,8 @@ main() {
     local git_ssl_keyname
     git_ssl_keyname="$(hostname)_$(date +%d-%m-%Y)"
 
-    while [[ "$git_api_token" != "" ]]; do
-      confirm "Please privide a Github Personal access token: "
+    while [[ "$git_api_token" == "" ]]; do
+      confirm "Please privide a Github Personal access token"
       git_api_token="$REPLY"
     done
 
