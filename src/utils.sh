@@ -81,7 +81,7 @@ ask_for_confirmation() {
 }
 
 answer_is_yes() {
-  [[ "$REPLY" =~ ^[Yy]$ ]] && return 0 || return 1
+  [[ "$REPLY" =~ ^[Yy]?$ ]] && return 0 || return 1
 }
 
 sudo_keepalive() {
