@@ -45,6 +45,14 @@ check_os() {
 }
 
 #print function
+print_result() {
+  if [[ "$1" -eq 0 ]]; then
+    print_success "$2"
+  else
+    print_error "$2"
+  fi
+  return "$1"
+}
 print_error() {
   print_color "1" "[❌]$1\n"
 }
@@ -68,7 +76,7 @@ print_color() {
 
 confirm() {
   local string=$1
-  print_warn "$string"
+  print_warn "$string :"
   read -r
   printf "\n"
 }
@@ -96,15 +104,8 @@ sudo_keepalive() {
 execute() {
   local -r CMD=$1
   local -r MSG=${2:-${1}}
-  local exit_code
   eval "$CMD"
-  exit_code=$?
-  if [[ 0 == "$exit_code" ]]; then
-    print_success "$MSG"
-  else
-    print_error "$MSG"
-  fi
-  return $exit_code
+  print_result "$?" "$MSG"
 }
 
 mkd() {
