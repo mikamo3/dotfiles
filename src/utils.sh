@@ -78,7 +78,6 @@ confirm() {
   local string=$1
   print_color "3" "$string :"
   read -r
-  printf "\n"
 }
 
 ask_for_confirmation() {
