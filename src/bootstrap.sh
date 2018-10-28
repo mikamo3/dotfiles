@@ -63,10 +63,10 @@ main() {
 
     #extract tarball
     print_title "Extract dotfiles tarball"
-    ask_for_confirmation "Dotfiles will extracrted to '$dotfiles_path'. Are you sure? :"
+    ask_for_confirmation "Dotfiles will extracrted to '$dotfiles_path'. Are you sure?"
     if ! answer_is_yes; then
-      confirm "Where will you extract dotfiles to? (default: $dotfiles_path) :"
-      dotfiles_path=$(eval "echo $REPLY")
+      confirm "Where will you extract dotfiles to? (default: $dotfiles_path)"
+      [[ "$REPLY" != "" ]] && dotfiles_path=$(eval "echo $REPLY")
     fi
 
     if [[ -e "$dotfiles_path" ]]; then
