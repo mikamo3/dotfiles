@@ -30,7 +30,7 @@ create_symlink() {
     # skip exclude file
     for exclude_file in "${exclude_files[@]}"; do
       if [[ $(basename "$source_path") == "$exclude_file" ]]; then
-        continue
+        continue 2
       fi
     done
 
