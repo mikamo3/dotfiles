@@ -43,7 +43,7 @@ Adding a SSH key to your GitHub account,and run '$(readlink -f "${BASH_SOURCE[0]
     if [[ $(cd "$BASE_DIR_GIT" && git config --get remote.origin.url) == "$github_origin" ]]; then
       print_info "remote repository already set up. skipped"
     else
-      execute "cd $BASE_DIR_GIT && git add remote origin $github_origin" "add remote origin"
+      execute "cd $BASE_DIR_GIT && git remote add origin $github_origin" "add remote origin"
     fi
   fi
 
