@@ -12,7 +12,7 @@ main() {
       print_info "$ssh_key_github_path already exists. generate is skipped"
     else
       while [[ "$email" == "" ]]; do
-        confirm "Please privide an Email"
+        confirm "Please provide an Email"
         email=$REPLY
       done
       execute "ssh-keygen -t rsa -b 4096 -C $email -f $ssh_key_github_path" "generate ssh key for Github" || return 1
