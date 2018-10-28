@@ -10,18 +10,14 @@ declare -r TARBALL_URL="https://github.com/$GITHUB_REPOSITORY/tarball/master"
 download() {
   local url="$1"
   local dst_path="$2"
-  if [[ -e "$dst_path" ]]; then
-    confirm "$dst_path is already exists. Do you want to overwrite? (y/n) :"
-    if [[ "$REPLY" =~ ^[Yy]$ ]]; then
-      rm -rf "$dst_path"
-    fi
-  fi
 
   if command -v curl &>/dev/null; then
-    curl -LsSo "$dst_path" "$url" &>/dev/null
+    curl -LsSo "$dst_path" "$url"
   elif command -v "wget" &>/dev/null; then
-    wget -qO "$dst_path" "$url" &>/dev/null
-    return $?
+    wget -qO "$dst_path" "$url"
+  else
+    print_error "need curl or wget command."
+    return 1
   fi
   return $?
 }
@@ -96,7 +92,7 @@ main() {
   if ! printf "%s" "${BASH_SOURCE[0]}" | grep -q "bootstrap.sh"; then
     #download
     print_title "Download dotfiles Repository...\n"
-    print_info "  url:$($TARBALL_URL)\n"
+    print_info "  url:$TARBALL_URL\n"
     download_temp_file=$(mktemp)
     download "$TARBALL_URL" "$download_temp_file" || exit 1
     print_info "Download complete!\n"
