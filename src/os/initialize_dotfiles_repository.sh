@@ -7,7 +7,7 @@ main() {
 
   print_title "Initialize git repository"
   if ! command -v git &>/dev/null; then
-    print_error "git is not installed. If you want to manage the dotfile in github. Please install git,\
+    print_error "git is not installed. If you want to manage the dotfile in Github. Please install git,\
 Adding a SSH key to your GitHub account,and run '$(readlink -f "${BASH_SOURCE[0]}")'. exiting..."
     return 1
   fi
