@@ -8,9 +8,9 @@ run_scripts() {
     print_error "$sourceDir is not directory"
     return 1
   fi
-  while IFS= read -r -d '' script; do
+  while IFS= read -r -d '' script <&3; do
     "$script"
-  done < <(find "$sourceDir" -name '*.sh' -print0)
+  done 3< <(find "$sourceDir" -name '*.sh' -print0)
 }
 
 get_os() {
@@ -68,14 +68,14 @@ print_color() {
 confirm() {
   local string=$1
   print_warn "$string"
-  read -r </dev/tty
+  read -r
   printf "\n"
 }
 
 ask_for_confirmation() {
   local string=$1
   print_warn "$string (y/n) :"
-  read -r -n 1 </dev/tty
+  read -r -n 1
   printf "\n"
 }
 

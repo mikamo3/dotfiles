@@ -20,7 +20,7 @@ create_symlink() {
   target_absolute_base_dir=$(readlink -f "$target_base_dir")
 
   #create_symlink
-  while IFS= read -r -d '' source_path; do
+  while IFS= read -r -d '' source_path <&3; do
     local target_absolute_path=$target_absolute_base_dir${source_path/$source_absolute_dir/}
     if [[ "$target_absolute_base_dir" == "$target_absolute_path" ]]; then
       continue
@@ -37,7 +37,7 @@ create_symlink() {
       fi
     fi
     execute "ln -sf $source_path $target_absolute_path" "$source_path → $target_absolute_path"
-  done < <(find "$source_absolute_dir" -print0)
+  done 3< <(find "$source_absolute_dir" -print0)
 }
 
 main() {
