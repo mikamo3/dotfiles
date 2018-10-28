@@ -6,6 +6,7 @@
 
 declare -r GITHUB_REPOSITORY="mikamo3/dotfiles"
 declare -r TARBALL_URL="https://github.com/$GITHUB_REPOSITORY/tarball/master"
+declare -r UTILS_URL="https://raw.githubusercontent.com/$GITHUB_REPOSITORY/master/src/utils.sh"
 
 download() {
   local url="$1"
@@ -32,72 +33,34 @@ extract() {
   reutrn 1
 }
 
-#print function
-print_error_log() {
-  while read -r line; do
-    print_error "   $line\n"
-  done
-}
-print_error() {
-  print_color "1" "[❌]$1\n"
-}
-print_success() {
-  print_color "2" "[✅]$1\n"
-}
-print_info() {
-  print_color "4" "$1\n"
-}
-print_warn() {
-  print_color "3" "$1\n"
-}
-print_title() {
-  print_color "5" "$1\n"
-}
-print_color() {
-  local color=$1
-  local string=$2
-  printf "%b" "$(tput setaf "$color" 2>/dev/null)" "$string" "$(tput sgr0 2>/dev/null)"
-}
-
-confirm() {
-  local string=$1
-  print_warn "$string"
-  read -r
-}
-
-ask_for_confirmation() {
-  local string=$1
-  print_warn "$string (y/n) :"
-  read -r -n 1
-}
-
-answer_is_yes() {
-  [[ "$REPLY" =~ ^[Yy]$ ]] && return 0 || return 1
-}
-
 main() {
   local download_temp_file
   local dotfiles_path="$HOME/.dotfiles"
+  local download_util_file
   #TODO: print ascii art
 
   cd "$(dirname "${BASH_SOURCE[0]}")" || exit 1
 
   #when execute
   if ! printf "%s" "${BASH_SOURCE[0]}" | grep -q "bootstrap.sh"; then
+    #download utils.sh
+    download_util_file=$(mktemp)
+    printf "%s" "Download utils.sh..."
+    download "$UTILS_URL" "$download_util_file" && . "$download_util_file" && rm -rf "$download_util_file"
+
     #download
-    print_title "Download dotfiles Repository...\n"
-    print_info "  url:$TARBALL_URL\n"
+    print_title "Download dotfiles Repository..."
+    print_info "  url:$TARBALL_URL"
     download_temp_file=$(mktemp)
     download "$TARBALL_URL" "$download_temp_file" || exit 1
-    print_info "Download complete!\n"
+    print_info "Download dotfiles Repository complete!"
 
     #extract
-    print_title "Extracting\n"
+    print_title "Extracting dotfiles tarball"
     ask_for_confirmation "Dottiles will extracrted to '$dotfiles_path'. Are you sure? :"
     if ! answer_is_yes; then
       confirm "Where will you extract dotfiles to? (default: $dotfiles_path) :"
       dotfiles_path=$(eval "echo $REPLY")
-
     fi
 
     #when $dotfiles_path exists
@@ -114,8 +77,10 @@ main() {
     print_info "Create Directory:$dotfiles_path"
     print_info "   from: $download_temp_file to: $dotfiles_path"
     extract "$download_temp_file" "$dotfiles_path"
+    rm -rf "$download_temp_file"
     print_info "Extract complete"
   else
+    . ./utils.sh
     dotfiles_path="$(readlink -f "$(pwd)/..")"
   fi
   print_info "dotfiles directory :$dotfiles_path"
