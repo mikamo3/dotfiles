@@ -16,7 +16,7 @@ package_is_installed() {
 
 main() {
   sudo_keepalive
-  execute "sudo pacman -Syu" "Upgrade package"
+  execute "sudo pacman -Syu --noconfirm" "Upgrade package"
   while read -r package; do
     install_package "$package"
   done <../../../packages/arch/pacman-package-list

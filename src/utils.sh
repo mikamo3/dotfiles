@@ -33,6 +33,7 @@ get_os() {
 }
 
 check_os() {
+  #TODO: suppord ubuntu
   local os
   os=$(get_os)
   if [ "$os" == "arch" ]; then

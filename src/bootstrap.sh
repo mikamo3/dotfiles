@@ -68,13 +68,13 @@ confirm() {
 confirm() {
   local string=$1
   print_warn "$string"
-  read -r <"$(tty)"
+  read -r
 }
 
 ask_for_confirmation() {
   local string=$1
   print_warn "$string (y/n) :"
-  read -r -n 1 <"$(tty)"
+  read -r -n 1
 }
 
 answer_is_yes() {
