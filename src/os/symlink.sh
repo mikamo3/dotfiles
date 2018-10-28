@@ -41,7 +41,7 @@ create_symlink() {
     if [[ -e "$target_absolute_path" ]]; then
       ask_for_confirmation "$target_absolute_path is already exists. Do you want to overwrite it?"
       if ! answer_is_yes; then
-        print_warn "$target_absolute_path skipped.\n"
+        print_warn "$target_absolute_path skipped."
         continue
       fi
     fi
@@ -50,31 +50,31 @@ create_symlink() {
 }
 
 main() {
-  print_title "Symlink \n\n"
+  print_title "Create symlink"
   check_os || return 1
 
-  print_title "Run before symlink(common)\n"
+  print_title "Run before symlink(common)"
   run_scripts "./common/before_symlink"
-  print_info "Run before symlink(common) complete\n"
+  print_success "Run before symlink(common)\n"
 
-  print_title "Run before symlink($(get_os))\n"
+  print_title "Run before symlink($(get_os))"
   run_scripts "./$(get_os)/before_symlink"
-  print_info "Run before symlink($(get_os)) complete\n"
+  print_success "Run before symlink($(get_os))\n"
 
-  print_title "Create symlink (common)...\n"
+  print_title "Create symlink (common)"
   create_symlink "../../dots/common" "$HOME"
-  print_info "Create symlink (common) complete\n"
+  print_success "Create symlink (common)\n"
 
-  print_title "Create symlink ($(get_os))...\n"
+  print_title "Create symlink ($(get_os))"
   create_symlink "../../dots/$(get_os)" "$HOME"
-  print_info "Create symlink ($(get_os)) complete\n"
+  print_success "Create symlink ($(get_os))\n"
 
-  print_title "Run after symlink(common)\n"
+  print_title "Run after symlink(common)"
   run_scripts "./common/after_symlink"
-  print_info "Run after symlink(common) complete\n"
+  print_success "Run after symlink(common)\n"
 
-  print_title "Run after symlink($(get_os))\n"
+  print_title "Run after symlink($(get_os))"
   run_scripts "./$(get_os)/after_symlink"
-  print_info "Run after symlink($(get_os)) complete\n"
+  print_success "Run after symlink($(get_os))\n"
 }
 main "$@"

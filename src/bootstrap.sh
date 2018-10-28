@@ -17,7 +17,7 @@ download() {
   elif command -v "wget" &>/dev/null; then
     wget -qO "$dst_path" "$url"
   else
-    print_error "need curl or wget command."
+    print_error "Need curl or wget command."
     return 1
   fi
   return $?
@@ -40,24 +40,29 @@ main() {
   #TODO: print ascii art
 
   cd "$(dirname "${BASH_SOURCE[0]}")" || exit 1
+  printf "%s" "dotfiles install\n"
 
-  #when execute
+  #when execute from url
+  #download utils.sh then source it
+  #download dotfiles tarball and extract it
   if ! printf "%s" "${BASH_SOURCE[0]}" | grep -q "bootstrap.sh"; then
     #download utils.sh
     download_util_file=$(mktemp)
     printf "%s" "Download utils.sh...\n"
     printf "  %s" "url:$UTILS_URL\n"
     download "$UTILS_URL" "$download_util_file" && . "$download_util_file" && rm -rf "$download_util_file"
+    print_success "Download utils.sh complete"
+    check_os || exit 1
 
     #download
-    print_title "Download dotfiles Repository..."
+    print_title "Download dotfiles repository..."
     print_info "  url:$TARBALL_URL"
     download_temp_file=$(mktemp)
     download "$TARBALL_URL" "$download_temp_file" || exit 1
-    print_info "Download dotfiles Repository complete!"
+    print_success "Download dotfiles repository complete"
 
-    #extract
-    print_title "Extracting dotfiles tarball"
+    #extract tarball
+    print_title "Extract dotfiles tarball"
     ask_for_confirmation "Dotfiles will extracrted to '$dotfiles_path'. Are you sure? :"
     if ! answer_is_yes; then
       confirm "Where will you extract dotfiles to? (default: $dotfiles_path) :"
@@ -69,21 +74,26 @@ main() {
       return 1
     fi
 
+    print_title "Create Directory:$dotfiles_path"
     mkdir -p "$dotfiles_path"
-    print_info "Create Directory:$dotfiles_path"
-    print_info "Extract tarball from: $download_temp_file to: $dotfiles_path"
+    print_success "Create Directory:$dotfiles_path"
+
+    print_title "Extract tarball"
+    print_info "  from:$download_temp_file"
+    print_info "  to: $dotfiles_path"
     extract "$download_temp_file" "$dotfiles_path"
     rm -rf "$download_temp_file"
-    print_info "Extract complete"
+    print_success "Extract tarball"
   else
     . ./utils.sh
     dotfiles_path="$(readlink -f "$(pwd)/..")"
   fi
-  print_info "dotfiles directory :$dotfiles_path"
+  print_info "Dotfiles directory :$dotfiles_path"
   cd "$dotfiles_path/src/os" || exit 1
 
   ./install.sh || exit 1
   ./symlink.sh || exit 1
   ./initialize_dotfiles_repository.sh "$GITHUB_REPOSITORY" || exit 1
+  print_success "Install complete"
 }
 main "$@"
