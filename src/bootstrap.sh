@@ -68,7 +68,7 @@ download_dotfiles_tarball() {
   print_info "  from:$download_temp_file"
   print_info "  to: $dotfiles_path"
   execute "extract $download_temp_file $dotfiles_path &&\
-    rm -rf \"$download_temp_file\""
+    rm -rf \"$download_temp_file\"" "Extract tarball to:$dotfiles_path"
 }
 main() {
   #TODO: print ascii art
