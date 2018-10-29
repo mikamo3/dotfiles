@@ -47,6 +47,7 @@ Adding a SSH key to your GitHub account,and run '$(readlink -f "${BASH_SOURCE[0]
     fi
   fi
 
+  print_title "Update dotfiles contents"
   ask_for_confirmation "Update contents from Github repository?"
   if answer_is_yes; then
     ssh -T git@github.com
@@ -54,10 +55,9 @@ Adding a SSH key to your GitHub account,and run '$(readlink -f "${BASH_SOURCE[0]
       print_error "Connection failed. Please check regist a public SSH key to Github"
       return 1
     fi
-    git fetch --all 1>/dev/null &&
-      git reset --hard origin/master 1>/dev/null &&
-      git clean -fd 1>/dev/null
-    print_result $? "Update contents"
+    execute "git fetch --all 1>/dev/null &&\
+      git reset --hard origin/master 1>/dev/null &&\
+      git clean -fd 1>/dev/null" "Update contents"
   fi
 }
 
