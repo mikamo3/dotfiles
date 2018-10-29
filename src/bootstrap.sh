@@ -103,7 +103,7 @@ main() {
     . ./utils.sh
     dotfiles_path="$(readlink -f "$(pwd)/../")"
   fi
-  print_info "dotfiles directory :$dotfiles_path"
+  print_info "  dotfiles directory :$dotfiles_path"
   cd "$dotfiles_path/src/os" || exit 1
 
   ./install.sh
