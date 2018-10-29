@@ -54,10 +54,11 @@ print_result() {
   return "$1"
 }
 print_error() {
-  print_color "1" "[❌]$1\n"
+  print_color "1" "[✗]$1\n"
 }
 print_success() {
-  print_color "2" "[✅]$1\n"
+  print_color "2" "[✓]$1\n"
+
 }
 print_info() {
   print_color "4" "$1\n"
