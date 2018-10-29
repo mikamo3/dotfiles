@@ -62,22 +62,13 @@ download_dotfiles_tarball() {
 
   #extract tarball
   print_title "Extract dotfiles tarball"
-  print_title "Create Directory:$dotfiles_path"
-  mkdir -p "$dotfiles_path" ||
-    (
-      print_error "Create Directory:$dotfiles_path"
-      return 1
-    )
-  print_success "Create Directory:$dotfiles_path"
+  execute "mkdir -p $dotfiles_path" "Create Directory:$dotfiles_path" || return 1
+
   print_title "Extract tarball"
   print_info "  from:$download_temp_file"
   print_info "  to: $dotfiles_path"
-  extract "$download_temp_file" "$dotfiles_path" &&
-    rm -rf "$download_temp_file" &&
-    print_success "Extract dotfiles tarball" &&
-    return 0
-  print_error "Extract dotfiles tarball"
-  return 1
+  execute "extract $download_temp_file $dotfiles_path &&\
+    rm -rf \"$download_temp_file\""
 }
 main() {
   #TODO: print ascii art
