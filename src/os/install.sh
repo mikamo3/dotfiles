@@ -26,7 +26,7 @@ main() {
 
   print_title "Run after install (common)"
   run_scripts "./common/after_install"
-  print_success "Run before install (common)\n"
+  print_success "Run after install (common)\n"
 
   print_title "Run after install ($(get_os))"
   run_scripts "./$(get_os)/after_install"
