@@ -34,10 +34,17 @@ create_symlink() {
       fi
     done
 
+    #skip symlink already created
+    if [[ "$target_absolute_path" == "$(readlink -f "$source_path")" ]]; then
+      print_success "$source_path → $target_absolute_path"
+      continue
+    fi
+
     if [[ -d "$source_path" ]]; then
       mkd "$target_absolute_path"
       continue
     fi
+
     if [[ -e "$target_absolute_path" ]]; then
       ask_for_confirmation "$target_absolute_path is already exists. Do you want to overwrite it?"
       if ! answer_is_yes; then
