@@ -54,17 +54,17 @@ print_result() {
   return "$1"
 }
 print_error() {
-  print_color "1" "[✗]$1\n"
+  print_color "1" "[✗] $1\n"
 }
 print_success() {
-  print_color "2" "[✓]$1\n"
+  print_color "2" "[✓] $1\n"
 
 }
 print_info() {
-  print_color "4" "$1\n"
+  print_color "4" "[i] $1\n"
 }
 print_warn() {
-  print_color "3" "$1\n"
+  print_color "3" "[!] $1\n"
 }
 print_title() {
   print_color "5" "$1\n"
@@ -77,13 +77,13 @@ print_color() {
 
 confirm() {
   local string=$1
-  print_color "3" "$string :"
+  print_color "3" "[?] $string :"
   read -r
 }
 
 ask_for_confirmation() {
   local string=$1
-  print_color "3" "$string (y/n) :"
+  print_color "3" "[?] $string (y/n) :"
   read -r -n 1
   printf "\n"
 }
