@@ -11,7 +11,7 @@ install_package() {
 }
 
 package_is_installed() {
-  pacman -Qs "$1" &>/dev/null
+  pacman -Qe "$1" &>/dev/null
 }
 
 main() {
