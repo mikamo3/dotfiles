@@ -45,7 +45,7 @@ download_util_file() {
   download "$UTILS_URL" "$download_util_file" &&
     . "$download_util_file" &&
     rm -rf "$download_util_file" &&
-    print_success "Download utils.sh complete" &&
+    print_success "Download utils.sh" &&
     return 0
   printf "%s\n" "Download utils.sh failed"
   return 1
@@ -58,12 +58,7 @@ download_dotfiles_tarball() {
   print_title "Download dotfiles repository"
   print_info "  url:$TARBALL_URL"
   download_temp_file=$(mktemp)
-  download "$TARBALL_URL" "$download_temp_file" ||
-    (
-      print_error "Download dotfiles repository"
-      return 1
-    )
-  print_success "Download dotfiles repository"
+  execute "download $TARBALL_URL $download_temp_file" "Download dotfiles repository" || return 1
 
   #extract tarball
   print_title "Extract dotfiles tarball"
