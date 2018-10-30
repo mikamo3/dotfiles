@@ -15,8 +15,8 @@ install_yay() {
 
 main() {
   print_title "Install yay"
-  if ! command -v yay; then
-    if ! command -v git; then
+  if ! command -v yay &>/dev/null; then
+    if ! command -v git &>/dev/null; then
       print_error "git is not installed. Please install git"
       return 1
     fi

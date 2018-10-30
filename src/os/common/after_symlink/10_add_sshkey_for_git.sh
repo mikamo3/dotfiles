@@ -31,12 +31,12 @@ main() {
         "  LogLevel ERROR" >>"${HOME}/.ssh/config"
       print_result "$?" "add github.com profile to '${HOME}/.ssh/config'"
     else
-      print_info "The connection setting to github has already been done"
+      print_info "The connection setting to Github has already been done"
     fi
   fi
 
   print_title "Add SSH key to Github"
-  ask_for_confirmation "Regist public key to github (It is necessary to set the API key correctly in advance) ?"
+  ask_for_confirmation "Regist public key to Github (It is necessary to set the API key correctly in advance) ?"
   if answer_is_yes; then
 
     #add public key to Github (need API key)
@@ -50,7 +50,7 @@ main() {
       git_api_token="$REPLY"
     done
 
-    confirm "Please privide A descriptive name for the new key (default:$git_ssl_keyname)"
+    confirm "Please privide a descriptive name for the new key (default:$git_ssl_keyname)"
     [[ "$REPLY" != "" ]] && git_ssl_keyname="$REPLY"
 
     ssh_pub="$(tail -1 <"$ssh_key_github_path.pub")"

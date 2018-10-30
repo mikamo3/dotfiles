@@ -22,15 +22,15 @@ Adding a SSH key to your GitHub account,and run '$(readlink -f "${BASH_SOURCE[0]
     fi
   fi
 
-  print_title "Setting up the remote repository"
-  ask_for_confirmation "Do you want to configure the dotfiles remote repository?"
+  print_title "Setting up the Github remote repository"
+  ask_for_confirmation "Do you want to configure the dotfiles Github remote repository?"
   if answer_is_yes; then
     local github_account_name
     local github_repository_name
     local github_origin
 
     while [[ "$github_account_name" == "" ]]; do
-      confirm "Please provide your github account name"
+      confirm "Please provide your Github account name"
       github_account_name="$REPLY"
     done
 
