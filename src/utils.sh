@@ -18,12 +18,12 @@ get_os() {
   local kernelName=""
   kernelName="$(uname -s)"
 
-  if [ "$kernelName" == "Darwin" ]; then
+  if [[ "$kernelName" == "Darwin" ]]; then
     os="macos"
-  elif [ "$kernelName" == "Linux" ]; then
-    if [ -e "/etc/lsb-release" ]; then
+  elif [[ "$kernelName" == "Linux" ]]; then
+    if [[ -e "/etc/lsb-release" ]]; then
       os="ubuntu"
-    elif [ -e "/etc/arch-release" ]; then
+    elif [[ -e "/etc/arch-release" ]]; then
       os="arch"
     fi
   else
@@ -36,7 +36,7 @@ check_os() {
   #TODO: support ubuntu
   local os
   os=$(get_os)
-  if [ "$os" == "arch" ]; then
+  if [[ "$os" == "arch" ]]; then
     print_success "Check os OK ($os)"
     return 0
   fi
@@ -46,7 +46,7 @@ check_os() {
 
 #print function
 print_result() {
-  if [[ "$1" -eq 0 ]]; then
+  if [[ "$1" == 0 ]]; then
     print_success "$2"
   else
     print_error "$2"
@@ -109,15 +109,14 @@ execute() {
 }
 
 mkd() {
-  if [ -n "$1" ]; then
-    if [ -e "$1" ]; then
-      if [ ! -d "$1" ]; then
-        print_error "$1 - a file with the same name already exists!"
-      else
-        print_success "$1"
-      fi
+  if [[ -e "$1" ]]; then
+    if [[ ! -d "$1" ]]; then
+      print_error "$1 - a file with the same name already exists!"
+      return 1
     else
-      execute "mkdir -p $1" "Create directory :$1"
+      print_success "$1"
     fi
+  else
+    execute "mkdir -p $1" "Create directory :$1"
   fi
 }
