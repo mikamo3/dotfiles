@@ -7,6 +7,6 @@ main() {
   sudo_keepalive
 
   execute "sudo pacman -Syu" "Upgrade package"
-  execute "sudo pacman -S $package_list"
+  execute "sudo pacman -S $package_list" "Install package"
 }
 main "$@"
