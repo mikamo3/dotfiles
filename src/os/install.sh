@@ -8,6 +8,8 @@ main() {
   print_title "Install package"
   check_os || return 1
 
+  sudo_keepalive
+
   print_title "Run before install (common)"
   run_scripts "./common/before_install"
   print_success "Run before install (common)\n"
