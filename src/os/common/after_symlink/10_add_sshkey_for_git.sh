@@ -50,7 +50,7 @@ main() {
       git_api_token="$REPLY"
     done
 
-    confirm "Please privide A descriptive name for the new key (default:$git_ssl_keyname)"
+    confirm "Please privide a descriptive name for the new key (default:$git_ssl_keyname)"
     [[ "$REPLY" != "" ]] && git_ssl_keyname="$REPLY"
 
     ssh_pub="$(tail -1 <"$ssh_key_github_path.pub")"
