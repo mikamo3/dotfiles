@@ -30,7 +30,7 @@ Adding a SSH key to your GitHub account,and run '$(readlink -f "${BASH_SOURCE[0]
     local github_origin
 
     while [[ "$github_account_name" == "" ]]; do
-      confirm "Please provide your github account name"
+      confirm "Please provide your Github account name"
       github_account_name="$REPLY"
     done
 
