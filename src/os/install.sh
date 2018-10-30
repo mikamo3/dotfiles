@@ -16,13 +16,9 @@ main() {
   run_scripts "./$(get_os)/before_install"
   print_success "Run before install ($(get_os))\n"
 
-  print_title "Install common"
   ./common/install.sh
-  print_success "Install common\n"
 
-  print_title "Install $(get_os)"
   ./"$(get_os)"/install.sh
-  print_success "Install $(get_os)\n"
 
   print_title "Run after install (common)"
   run_scripts "./common/after_install"
