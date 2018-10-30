@@ -12,14 +12,16 @@ install_package() {
 }
 
 main() {
+  print_title "Install AUR packages with yay"
   local package_list
   sudo_keepalive
   if ! command -v yay; then
     print_error "yay is not installed"
     return 1
   fi
+
   package_list=$(tr "\n" " " <../../../../packages/arch/aur-package-list)
-  execute "yay -S $package_list" "Install AUR package"
+  execute "yay -S $package_list" "Install AUR packages"
   while read -r package; do
     install_package "$package"
   done <../../../../packages/arch/aur-package-list
