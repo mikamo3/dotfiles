@@ -1,0 +1,11 @@
+vim
+git
+xorg-server
+xorg-apps
+xorg-xinit
+mesa
+xorg-twm
+xorg-xclock
+xterm
+lightdm
+lightdm-gtk-greeter
