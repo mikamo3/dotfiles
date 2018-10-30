@@ -15,7 +15,7 @@ main() {
   print_title "Install AUR packages with yay"
   local package_list
   sudo_keepalive
-  if ! command -v yay; then
+  if ! command -v yay &>/dev/null; then
     print_error "yay is not installed"
     return 1
   fi
