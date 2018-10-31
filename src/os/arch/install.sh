@@ -8,7 +8,7 @@ is_installed() {
 }
 is_installed_package() {
   local query=$1
-  pacman -Q "$1" &>/dev/null
+  pacman -Q "$query" &>/dev/null
 }
 is_installed_group() {
   local query=$1
