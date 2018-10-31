@@ -1,15 +1,6 @@
 base-devel
 vim
 git
-xorg-server
-xorg-apps
-xorg-xinit
-mesa
-xorg-twm
-xorg-xclock
-xterm
-lightdm
-lightdm-gtk-greeter
 i3-wm
 i3status
 dmenu
