@@ -5,7 +5,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" && . "../../../utils.sh"
 install_package() {
   declare -r PACKAGE="$1"
   if ! package_is_installed "$PACKAGE"; then
-    execute "yay -S --noconfirm $PACKAGE" "Install $PACKAGE"
+    execute "yay -S $PACKAGE" "Install $PACKAGE"
   else
     print_success "$PACKAGE is already installed"
   fi
