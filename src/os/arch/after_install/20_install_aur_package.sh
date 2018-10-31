@@ -10,7 +10,25 @@ install_package() {
     print_success "$PACKAGE is already installed"
   fi
 }
+is_installed() {
+  local query=$1
+  pacman -Q "$query" &>/dev/null
+}
 
+concat_package_list() {
+  local package_list_file=$1
+  local output_list=""
+  while read -r item; do
+    item=$(printf "%s" "$item" | sed 's/#.*//g')
+    if [[ "${item//[ ]/}" == "" ]]; then
+      continue
+    fi
+    if ! is_installed "$item"; then
+      output_list+=$(printf "%s" " $item")
+    fi
+  done <"$package_list_file"
+  printf "%s" "$output_list"
+}
 main() {
   print_title "Install AUR packages with yay"
   local package_list
@@ -19,10 +37,8 @@ main() {
     return 1
   fi
 
-  package_list=$(tr "\n" " " <../../../../packages/arch/aur-package-list)
+  package_list=$(concat_package_list "../../../../packages/arch/aur-package-list")
+  [[ "${package_list//[ ]/}" == "" ]] && print_success "There is no AUR package to install " && return 0
   execute "yay -S $package_list" "Install AUR packages"
-  while read -r package; do
-    install_package "$package"
-  done <../../../../packages/arch/aur-package-list
 }
 main "$@"
