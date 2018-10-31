@@ -51,7 +51,7 @@ Adding a SSH key to your GitHub account,and run '$(readlink -f "${BASH_SOURCE[0]
   ask_for_confirmation "Update contents from Github repository?"
   if answer_is_yes; then
     ssh -T git@github.com
-    if [ $? -ne 1 ]; then
+    if [[ $? != 1 ]]; then
       print_error "Connection failed. Please check regist a public SSH key to Github"
       return 1
     fi
