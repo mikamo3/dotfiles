@@ -6,10 +6,12 @@ cd "$(dirname "${BASH_SOURCE[0]}")" && . "../../../utils.sh"
 
 install_yay() {
   local work_dir
+  local cur_dir
+  cur_dir=$(pwd)
   work_dir=$(mktemp -d)
   git clone "$YAY_REPOSITORY_URL" "$work_dir" && cd "$work_dir" &&
-    makepkg -si --noconfirm &&
-    cd "$(dirname "${BASH_SOURCE[0]}")" &&
+    makepkg -si &&
+    cd "$cur_dir" &&
     rm -rf "$work_dir"
 }
 
