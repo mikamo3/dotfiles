@@ -8,16 +8,16 @@ is_installed() {
 }
 is_installed_package() {
   local query=$1
-  pacman -Q "$query" &>/dev/null
+  pacman -Q "$query" 2>/dev/null
 }
 is_installed_group() {
   local query=$1
   local installed_group
   local remote_group
-  installed_group=$(pacman -Qg "$query" &>/dev/null)
+  installed_group=$(pacman -Qg "$query" 2>/dev/null)
   #group not installed
   [[ $? == 1 ]] && return 1
-  remote_group=$(pacman -Sg "$query" &>/dev/null)
+  remote_group=$(pacman -Sg "$query" 2>/dev/null)
   #group not fount
   [[ $? == 1 ]] && return 1
   diff <(printf "%s" "$installed_group") <(printf "%s" "$remote_group") &>/dev/null
