@@ -1,5 +1,6 @@
 base-devel
 openssh
+bash-completion
 vim
 git
 
@@ -8,3 +9,10 @@ i3-wm
 i3status
 dmenu
 
+#input
+fcitx
+fcitx-mozc
+fcitx-im
+fcitx-configtool
+
+#fonts
