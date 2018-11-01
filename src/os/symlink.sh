@@ -29,7 +29,7 @@ create_symlink() {
     # skip exclude file
 
     #skip symlink already created
-    if [[ "$target_absolute_path" == "$(readlink -f "$source_path")" ]]; then
+    if [[ $(readlink -f "$target_absolute_path") == "$source_path" ]]; then
       print_success "$source_path → $target_absolute_path"
       continue
     fi
