@@ -111,5 +111,7 @@ main() {
   ./initialize_dotfiles_repository.sh
 
   print_success "Install complete"
+  ask_for_confirmation "Do you want to reboot now?"
+  answer_is_yes && sudo reboot
 }
 main "$@"
