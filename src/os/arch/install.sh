@@ -14,10 +14,10 @@ is_installed_group() {
   local query=$1
   local installed_group
   local remote_group
-  installed_group=$(pacman -Qg "$query")
+  installed_group=$(pacman -Qg "$query" &>/dev/null)
   #group not installed
   [[ $? == 1 ]] && return 1
-  remote_group=$(pacman -Sg "$query")
+  remote_group=$(pacman -Sg "$query" &>/dev/null)
   #group not fount
   [[ $? == 1 ]] && return 1
   diff <(printf "%s" "$installed_group") <(printf "%s" "$remote_group") &>/dev/null
