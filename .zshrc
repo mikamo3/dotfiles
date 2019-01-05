@@ -1,14 +1,19 @@
 #options
 setopt no_beep
 setopt nolistbeep
+setopt ignoreeof
+setopt prompt_subst
 
 autoload -U compinit promptinit colors
 compinit
 promptinit
 colors
 
+zstyle ':completion:*' list-colors "${LS_COLORS}"
+
 zstyle ':completion:*:default' menu select=2
 setopt completealiases
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 source /usr/share/zsh/scripts/zplug/init.zsh
 source .kawazu/repos/kawazu.sh
@@ -31,6 +36,8 @@ bindkey "^b" history-beginning-search-forward-end
 
 #zplug
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug "zsh-users/zsh-completions"
+zplug "caiogondim/bullet-train.zsh", use:bullet-train.zsh-theme, defer:3
 
 if ! zplug check --verbose; then
 	printf "Install? [y/N]: "
