@@ -1,0 +1,14 @@
+rofi.modi: drun,window,ssh
+rofi.show-icons: true
+rofi.font: Kazesawa 12
+rofi.sort: true
+rofi.sidebar-mode: true
+
+rofi.kb-row-up: Up,Control+k,ISO_Left_Tab
+rofi.kb-row-down: Down,Control+j
+rofi.kb-accept-entry: Return,KP_Enter
+rofi.kb-remove-to-eol: Control+C
+rofi.kb-mode-next: Shift+Right,Control+Tab,Control+l
+rofi.kb-mode-previous: Shift+Left,Control+ISO_Left_Tab,Control+h
+rofi.kb-remove-char-back: BackSpace
+rofi.theme: /usr/share/rofi/themes/solarized_alternate.rasi
