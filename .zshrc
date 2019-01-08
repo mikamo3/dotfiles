@@ -21,6 +21,10 @@ source .shell/colors
 source .shell/aliases
 
 export LANG=ja_JP.UTF-8
+path=(
+	~/bin
+	$path
+)
 
 #history
 setopt histignorealldups
