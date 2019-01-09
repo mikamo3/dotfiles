@@ -13,7 +13,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Cica 10
+font pango:Cica 12
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -168,11 +168,14 @@ bindsym $mod+r mode "resize"
 bar {
         status_command i3status
 }
+
 # gaps
 gaps outer 0
 gaps inner 10
 smart_gaps on
+smart_borders on
 
 # autostart
 exec --no-startup-id fcitx
 exec --no-startup-id compton -b --config .config/compton/compton.conf
+exec --no-startup-id ~/bin/wallpaper.sh
