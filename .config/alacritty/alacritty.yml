@@ -92,19 +92,19 @@ tabspaces: 8
 font:
   # Normal (roman) font face
   normal:
-    family: Cica
+    family: monospace
     # The `style` can be specified to pick a specific face.
     #style: Regular
 
   # Bold font face
   bold:
-    family: Cica
+    family: monospace
     # The `style` can be specified to pick a specific face.
     #style: Bold
 
   # Italic font face
   italic:
-    family: Cica
+    family: monospace
     # The `style` can be specified to pick a specific face.
     #style: Italic
 
