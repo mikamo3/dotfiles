@@ -175,6 +175,9 @@ gaps inner 10
 smart_gaps on
 smart_borders on
 
+# floating
+for_window [class="Pavucontrol"] floating enable
+
 # autostart
 exec --no-startup-id fcitx
 exec --no-startup-id compton -b --config .config/compton/compton.conf
