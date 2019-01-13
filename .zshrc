@@ -16,9 +16,9 @@ setopt completealiases
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 source /usr/share/zsh/scripts/zplug/init.zsh
-source .kawazu/repos/kawazu.sh
-source .shell/colors
-source .shell/aliases
+source ~/.kawazu/repos/kawazu.sh
+source ~/.shell/colors
+source ~/.shell/aliases
 
 export LANG=ja_JP.UTF-8
 path=(
