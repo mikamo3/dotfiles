@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+NERD_FONTS_ICONS=$HOME/.nerd-fonts-icons
+[[ ! -e $NERD_FONTS_ICONS ]] && exit 1
+selected=$(sed s'/\(.*\),\(.*\),\(.*\)/<span face="monospace" >[\\U\1] <big>\2<\/big>\3<\/span>/' .nerd-fonts-icons |
+  rofi -dmenu \
+  -i \
+  -markup-rows \
+  -p "" \
+  -lines 20)
+
+[[ -z "$selected" ]] && exit 1
+echo -E "$selected" |
+  echo -e "$(sed s'/.*\[\(.*\)\].*/\1/')" |
+    xsel -i -p && xsel -o -p |xsel -i -b
+
