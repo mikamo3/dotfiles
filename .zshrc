@@ -20,9 +20,9 @@ source ~/.kawazu/repos/kawazu.sh
 source ~/.shell/colors
 source ~/.shell/aliases
 
-export LANG=ja_JP.UTF-8
 path=(
 	~/bin
+  ~/.local/bin
 	$path
 )
 
