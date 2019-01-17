@@ -23,6 +23,7 @@ source ~/.shell/aliases
 path=(
 	~/bin
   ~/.local/bin
+  ~/.node_modules/bin
 	$path
 )
 
