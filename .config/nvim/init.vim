@@ -30,6 +30,7 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
   Plug 'junegunn/fzf.vim'
+  Plug 'nathanaelkane/vim-indent-guides'
 call plug#end()
 "}}}
 
@@ -40,6 +41,10 @@ let g:airline_powerline_fonts = 1
 let g:airline_theme = 'solarized'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
+" }}}
+
+" vim-indent-guides {{{
+let g:indent_guides_enable_on_vim_startup = 1
 " }}}
 
 "FileType {{{
