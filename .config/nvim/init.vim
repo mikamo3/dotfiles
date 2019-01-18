@@ -31,8 +31,23 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'vim-airline/vim-airline-themes'
   Plug 'junegunn/fzf.vim'
   Plug 'nathanaelkane/vim-indent-guides'
+  Plug 'tomtom/tcomment_vim'
+  Plug 'tpope/vim-surround'
+  Plug 'bronson/vim-trailing-whitespace'
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'easymotion/vim-easymotion'
+  Plug 'editorconfig/editorconfig-vim'
+  Plug 'osyo-manga/vim-over'
+  Plug 'tpope/vim-repeat'
+  Plug 'Shougo/denite.nvim'
+  Plug 'Shougo/neoyank.vim'
 call plug#end()
 "}}}
+
+
+" ale {{{
+let g:ale_sign_column_always = 1
+" }}}
 
 " vim-airline {{{
 colorscheme solarized
@@ -51,4 +66,12 @@ let g:indent_guides_enable_on_vim_startup = 1
 augroup vimrc
   autocmd FileType vim setlocal foldmethod=marker
 augroup END
+" }}}
+
+" {{{ deoplete
+let g:deoplete#enable_at_startup = 1
+" }}}
+
+" vim-easymotion {{{
+nmap s <Plug>(easymotion-s2)
 " }}}

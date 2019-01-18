@@ -187,4 +187,5 @@ exec --no-startup-id ~/bin/wallpaper.sh
 
 # keybinding
 bindsym $mod+n exec ~/bin/rofi-nerd-fonts-icons
-
+bindsym Mod1+Tab workspace next
+bindsym Mod1+Shift+Tab workspace prev
