@@ -49,6 +49,22 @@ call plug#begin('~/.local/share/nvim/plugged')
 call plug#end()
 "}}}
 
+" keymap {{{
+let mapleader = "\<Space>"
+inoremap <silent> jj <ESC>
+
+"   buffer {{{
+  nnoremap <silent><C-j> :bnext<CR>
+  nnoremap <silent><C-k> :bprevious<CR>
+  nnoremap <silent><C-w>d :bdelete<CR>
+"   }}}
+
+"   window {{{
+  nnoremap <C-w>\| :vsplit<CR>
+  nnoremap <C-w>- :split<CR>
+
+"   }}}
+" }}}
 " ale {{{
 let g:ale_sign_column_always = 1
 let g:ale_set_loclist = 0
@@ -121,20 +137,6 @@ nnoremap <silent> <Leader>s :OverCommandLine<CR>%s/
 
 " nerdtree {{{
 nnoremap <Leader>n :NERDTreeToggle<CR>
-" }}}
-
-" keymap {{{
-let mapleader = "\<Space>"
-inoremap <silent> jj <ESC>
-"   buffer {{{
-  nnoremap <silent><C-j> :bnext<CR>
-  nnoremap <silent><C-k> :bprevious<CR>
-  nnoremap <silent><C-w>d :bdelete<CR>
-"   }}}
-"   window {{{
-  nnoremap <C-w>\| :vsplit<CR>
-  nnoremap <C-w>- :split<CR>
-
 " }}}
 
 " FileType {{{
