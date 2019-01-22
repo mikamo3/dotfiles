@@ -26,7 +26,6 @@ endif
 
 call plug#begin('~/.local/share/nvim/plugged')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'svermeulen/vim-easyclip'
   Plug 'simeji/winresizer'
   Plug 'Shougo/neco-vim'
   Plug 'airblade/vim-gitgutter'
@@ -47,7 +46,7 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'vim-airline/vim-airline-themes'
   Plug 'w0rp/ale'
 call plug#end()
-"}}}
+" }}}
 
 " keymap {{{
 let mapleader = "\<Space>"
@@ -65,6 +64,7 @@ inoremap <silent> jj <ESC>
 
 "   }}}
 " }}}
+
 " ale {{{
 let g:ale_sign_column_always = 1
 let g:ale_set_loclist = 0
@@ -99,30 +99,6 @@ let g:airline#extensions#tabline#enabled = 1
 " }}}
 
 " fzf {{{
-  " yank list
-  function! s:yank_list()
-  redir => ys
-  silent Yanks
-  redir END
-  return split(ys, '\n')[1:]
-  endfunction
-
-  function! s:yank_handler(reg)
-  if empty(a:reg)
-    echo "aborted register paste"
-  else
-    let token = split(a:reg, ' ')
-    execute 'Paste' . token[0]
-  endif
-  endfunction
-
-  command! FZFYank call fzf#run({
-  \ 'source': <sid>yank_list(),
-  \ 'sink': function('<sid>yank_handler'),
-  \ 'options': '-m',
-  \ 'down': 12
-  \ })
-nnoremap <Leader>p :FZFYank<CR>
 nnoremap <Leader>b :Buffers<CR>
 " }}}
 
@@ -144,3 +120,4 @@ augroup vimrc
   autocmd FileType vim setlocal foldmethod=marker
 augroup END
 " }}}
+
