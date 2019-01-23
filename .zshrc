@@ -4,6 +4,10 @@ setopt nolistbeep
 setopt ignoreeof
 setopt prompt_subst
 
+# tmux plugin
+if [[ ! -d ~/.tmux/plugins/tpm ]];then
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && ~/.tmux/plugins/tpm/bin/install_plugins
+fi
 autoload -U compinit promptinit colors
 compinit
 promptinit

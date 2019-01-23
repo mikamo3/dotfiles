@@ -1,0 +1,37 @@
+{
+  "segments": {
+    "right": [
+      {
+        "function": "powerline.segments.common.sys.uptime",
+        "before": " ",
+        "priority": 50,
+        "args": {}
+      },
+      {
+        "function": "powerline.segments.common.time.date",
+        "before": " ",
+        "name": "date",
+        "args": {
+          "format": "%Y/%m/%d"
+        }
+      },
+      {
+        "function": "powerline.segments.common.time.date",
+        "before": " ",
+        "name": "time",
+        "args": {
+          "format": "%H:%M",
+          "istime": true
+        }
+      },
+      {
+        "function": "powerline.segments.common.env.user",
+        "before": " "
+      },
+      {
+        "function": "powerline.segments.common.net.hostname",
+        "before": " "
+      }
+    ]
+  }
+}
