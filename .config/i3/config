@@ -184,6 +184,9 @@ for_window [class="Pavucontrol"] floating enable
 exec --no-startup-id fcitx
 exec --no-startup-id compton -b --config .config/compton/compton.conf
 exec --no-startup-id ~/bin/wallpaper.sh
+exec --no-startup-id dropbox
+exec --no-startup-id nm-applet
+exec --no-startup-id google-drive-ocamlfuse ./googleDrive
 
 # keybinding
 bindsym $mod+n exec ~/bin/rofi-nerd-fonts-icons
