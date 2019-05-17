@@ -19,10 +19,14 @@ zstyle ':completion:*:default' menu select=2
 setopt completealiases
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
+#source
 source /usr/share/zsh/scripts/zplug/init.zsh
-source ~/.kawazu/repos/kawazu.sh
+source /usr/lib/kawazu/kawazu.sh
 source ~/.shell/colors
 source ~/.shell/aliases
+
+#export
+export KAWAZU_ROOT_DIR=/usr/lib/kawazu
 
 path=(
 	~/bin
