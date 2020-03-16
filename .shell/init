@@ -1,5 +1,4 @@
 init_environment() {
-  set -x
   INIT_DONE_PATH=~/.init_done
   FORCE_FLG=
   if [[ $1 == "force" ]];then
