@@ -24,7 +24,7 @@ source /usr/share/zsh/scripts/zplug/init.zsh
 source /usr/lib/kawazu/kawazu.sh
 source ~/.shell/colors
 source ~/.shell/aliases
-
+source ~/.shell/init
 #export
 export KAWAZU_ROOT_DIR=/usr/lib/kawazu
 
@@ -55,6 +55,7 @@ source /usr/share/fzf/completion.zsh
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-completions"
 zplug "caiogondim/bullet-train.zsh", use:bullet-train.zsh-theme, defer:3
+zplug "lukechilds/zsh-nvm"
 
 if ! zplug check --verbose; then
 	printf "Install? [y/N]: "
@@ -64,6 +65,10 @@ if ! zplug check --verbose; then
 fi
 zplug load
 
+# init
+if [[ -z "$TMUX" ]];then
+  init_environment
+fi
 #tmux
 if [[ -z "$TMUX" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] ;then
     ID="$( tmux ls | grep -vm1 attached | cut -d: -f1 )" # get the id of a deattached session

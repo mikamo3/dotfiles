@@ -1,0 +1,58 @@
+init_environment() {
+  set -x
+  INIT_DONE_PATH=~/.init_done
+  FORCE_FLG=
+  if [[ $1 == "force" ]];then
+    FORCE_FLG="true"
+  fi
+
+  if [[ -e $INIT_DONE_PATH && $FORCE_FLG != "true" ]];then 
+    return
+  fi
+  echo "create directory"
+
+  DIR_GOOGLE_DRIVE=googleDrive
+  DIR_DROPBOX=Dropbox
+
+  if [[ ! -e ~/${DIR_GOOGLE_DRIVE} ]]; then
+    mkdir ~/${DIR_GOOGLE_DRIVE}
+  fi
+
+  if [[ ! -e ~/${DIR_DROPBOX} ]]; then
+    mkdir ~/${DIR_DROPBOX}
+  fi
+
+  echo "enable user service"
+
+  if  ! systemctl --user is-active google-drive-ocamlfuse >/dev/null; then
+    systemctl --user enable google-drive-ocamlfuse
+  fi
+
+  if  ! systemctl --user is-active dropbox >/dev/null; then
+    systemctl --user enable dropbox
+  fi
+
+  echo "init node"
+  if [[ $(nvm ls --no-colors|grep -Ec "^rc\s*->\s*v") == 0 ]];then
+    nvm install rc
+    nvm use rc
+  fi
+
+  echo "install npm global modules"
+  if ! npm ls -g commitizen >/dev/null;then
+    npm i -g commitizen
+  fi
+  if ! npm ls -g cz-emoji@1.1.2 >/dev/null;then
+  npm i -g cz-emoji@1.1.2
+  fi
+
+  echo "install tpm plugin"
+  if [[ ! -d ~/.tmux/plugins/tpm ]];then
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && ~/.tmux/plugins/tpm/bin/install_plugins
+  fi
+
+  echo "update xdg user directory"
+  LC_ALL=C xdg-user-dirs-update
+
+  touch $INIT_DONE_PATH
+}
