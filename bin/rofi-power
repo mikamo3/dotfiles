@@ -2,7 +2,7 @@
 command_caption_list=(
   "<span lang='fast-forward'face='Font Awesome 5 Free'>&#xf011;</span> Shutdown"
   "<span lang='fast-forward'face='Font Awesome 5 Free'>&#xf0e2;</span> Reboot"
-  "<span lang='fast-forward'face='Font Awesome 5 Free'>&#xf2f5;</span> Logout"
+  "<span lang='fast-forward'face='Font Awesome 5 Free'>&#xf842;</span> Logout"
 )
 command_exec_list=(
   "systemctl poweroff"
