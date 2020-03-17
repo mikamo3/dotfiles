@@ -1,6 +1,6 @@
 rofi.modi: drun,window,ssh
 rofi.show-icons: true
-rofi.font: Kazesawa 12
+rofi.font: M+ 1p midium 12
 rofi.sort: true
 rofi.sidebar-mode: true
 
