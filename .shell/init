@@ -8,17 +8,25 @@ init_environment() {
   if [[ -e $INIT_DONE_PATH && $FORCE_FLG != "true" ]];then 
     return
   fi
+
+  echo "update xdg user directory"
+  LC_ALL=C xdg-user-dirs-update
+
   echo "create directory"
 
   DIR_GOOGLE_DRIVE=googleDrive
   DIR_DROPBOX=Dropbox
-
+  DIR_WALLPAPER=Pictures/wallpapers
   if [[ ! -e ~/${DIR_GOOGLE_DRIVE} ]]; then
     mkdir ~/${DIR_GOOGLE_DRIVE}
   fi
 
   if [[ ! -e ~/${DIR_DROPBOX} ]]; then
     mkdir ~/${DIR_DROPBOX}
+  fi
+
+  if [[ ! -e ~/${DIR_WALLPAPER} ]]; then
+    mkdir ~/${DIR_WALLPAPER}
   fi
 
   echo "enable user service"
@@ -54,9 +62,6 @@ init_environment() {
   if [[ $(pip list --user|grep -c pynvim) == 0 ]];then
     pip list --user|grep -c pynvim
   fi
-
-  echo "update xdg user directory"
-  LC_ALL=C xdg-user-dirs-update
 
   touch $INIT_DONE_PATH
 }
