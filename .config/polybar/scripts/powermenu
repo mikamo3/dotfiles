@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+command_caption_list=(
+  "<span lang='fast-forward'face='Font Awesome 5 Free'>&#xf011;</span> Shutdown"
+  "<span lang='fast-forward'face='Font Awesome 5 Free'>&#xf0e2;</span> Reboot"
+  "<span lang='fast-forward'face='Font Awesome 5 Free'>&#xf842;</span> Logout"
+)
+command_exec_list=(
+  "systemctl poweroff"
+  "systemctl reboot"
+  "i3-msg exit"
+)
+
+selected="$(
+  for cmd in "${command_caption_list[@]}"; do
+    echo "$cmd"
+  done | rofi -dmenu -markup-rows -i -p system
+)"
+
+for ((i = 0; i < ${#command_caption_list[@]}; i++)); do
+  if [[ "$selected" == "${command_caption_list[$i]}" ]]; then
+    ${command_exec_list[$i]}
+    exit
+  fi
+done
+
