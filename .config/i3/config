@@ -13,6 +13,7 @@
 set $monitor_left DP-0
 set $monitor_right DVI-D-0
 
+#mod
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -39,8 +40,6 @@ bindsym $mod+Return exec i3-sensible-terminal
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# start dmenu (a program launcher)
-bindsym $mod+d exec rofi -show
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -82,7 +81,7 @@ bindsym $mod+f fullscreen toggle
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+t layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -145,6 +144,7 @@ bindsym $mod+Shift+9 move container to workspace $ws9
 assign [class="firefox"] $ws1
 assign [class="Google-chrome"] $ws1
 assign [class="Chromium"] $ws1
+assign [class="Boostnote"] $ws1
 
 # code
 assign [class="Code"] $ws2
@@ -183,7 +183,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 
-bindsym $mod+Shift+e exec --no-startup-id ~/bin/rofi-power
+bindsym $mod+Shift+e exec --no-startup-id ~/.config/rofi/bin/rofi-power
 # resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
@@ -194,7 +194,7 @@ mode "resize" {
         # Pressing down will grow the window’s height.
         bindsym h resize shrink width 10 px or 10 ppt
         bindsym j resize grow height 10 px or 10 ppt
-        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppR
         bindsym l resize grow width 10 px or 10 ppt
 
         # same bindings, but for the arrow keys
@@ -228,20 +228,32 @@ smart_borders on
 # floating
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Authy Desktop"] floating disable
+
 # autostart
 exec --no-startup-id fcitx
-exec --no-startup-id compton -b --config .config/compton/compton.conf
+exec --no-startup-id picom -b --config ~/.config/picom/picom.conf
 exec --no-startup-id ~/bin/wallpaper.sh
 
 # scratchpad
 bindsym $mod+p scratchpad show
 bindsym $mod+Shift+p movescratchpad
 
+# launch mode
+mode "launch" {
+    bindsym s exec ~/.config/rofi/bin/rofi-search-web; mode "default"
+    bindsym b exec ~/.config/rofi/bin/rofi-private-browsing; mode "default"
+    bindsym c exec ~/.config/rofi/bin/rofi-nerd-fonts-icons; mode "default"
+    bindsym v exec ~/.config/rofi/bin/rofi-vscode; mode "default"
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
+
 # keybinding
-bindsym $mod+n exec ~/bin/rofi-nerd-fonts-icons
 bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
-
+bindsym $mod+d exec rofi -show
+bindsym $mod+e exec thunar
+bindsym $mod+z mode "launch"
 
 # color
 client.focused             #1793D0   #1793D0    #FFFFFF

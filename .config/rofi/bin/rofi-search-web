@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+echo "" | rofi -dmenu -location 0 -p search-web| xargs -I{} xdg-open https://www.google.de/search?q={}

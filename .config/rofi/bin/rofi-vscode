@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -x
+BASE_DIR=~/src/github.com
+
+WORK_DIRS=($(ls $BASE_DIR))
+selected="$(
+  for ((i = 0; i < ${#WORK_DIRS[@]}; i++)) do
+    echo "${WORK_DIRS[$i]}"
+  done | rofi -dmenu -markup-rows -i -p system
+)"
+
+if [[ "$selected" != "" ]]; then
+  code --folder-uri ${BASE_DIR}/${selected}
+  exit
+fi
