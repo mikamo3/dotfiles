@@ -3,11 +3,13 @@ command_caption_list=(
   "<span lang='fast-forward'face='Symbols Nerd Font'>&#xf011;</span> Shutdown"
   "<span lang='fast-forward'face='Symbols Nerd Font'>&#xf0e2;</span> Reboot"
   "<span lang='fast-forward'face='Symbols Nerd Font'>&#xf842;</span> Logout"
+  "<span lang='fast-forward'face='Symbols Nerd Font'>&#xf023;</span> Lock"
 )
 command_exec_list=(
   "systemctl poweroff"
   "systemctl reboot"
   "i3-msg exit"
+  "i3lock-fancy"
 )
 
 selected="$(
