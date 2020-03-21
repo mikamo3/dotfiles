@@ -35,10 +35,6 @@ init_environment() {
     systemctl --user enable google-drive-ocamlfuse
   fi
 
-  if  ! systemctl --user is-active dropbox >/dev/null; then
-    systemctl --user enable dropbox
-  fi
-
   echo "init node"
   if [[ $(nvm ls --no-colors|grep -Ec "^rc\s*->\s*v") == 0 ]];then
     nvm install rc

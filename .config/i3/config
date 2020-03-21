@@ -233,6 +233,7 @@ for_window [class="Authy Desktop"] floating disable
 exec --no-startup-id fcitx
 exec --no-startup-id picom -b --config ~/.config/picom/picom.conf
 exec --no-startup-id ~/bin/wallpaper.sh
+exec --no-startup-id /usr/bin/dropbox &
 
 # scratchpad
 bindsym $mod+p scratchpad show
