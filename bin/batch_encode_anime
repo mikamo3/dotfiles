@@ -36,6 +36,7 @@ encoding: $(basename "$RENAME_FILEPATH")"
     exit 1
   fi
   mv "$RENAME_FILEPATH" "$DONE_FILEPATH"
-done 3< <(find "$TARGET_PATH"  -maxdepth 1 -type f -regex ".*\.ts$")
+done 3< <(find "$TARGET_PATH"  -maxdepth 1 -type f -regex ".*\.ts\$")
+
 echo "done"  &>> "$LOG_FILEPATH"
 notify-send --app-name="$APP_NAME" "encode finish"
