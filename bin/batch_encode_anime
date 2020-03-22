@@ -14,13 +14,13 @@ if [[ "$TOTAL" == 0 ]];then
   exit 1
 fi
 
-echo "total file: $TOTAL"
+echo "total file: $TOTAL" &>> "$LOG_FILEPATH"
 NOW=0
 while read -r f <&3; do
   NOW=$(( NOW + 1 ))
   RENAME_FILEPATH="${f//[　 ]/_}"
   if [[ "$f" != "$RENAME_FILEPATH" ]];then
-    echo "rename: $(basename $f) -> $(basename $RENAME_FILEPATH)"
+    echo "rename: $(basename $f) -> $(basename $RENAME_FILEPATH)" &>> "$LOG_FILEPATH"
     mv "$f" "$RENAME_FILEPATH"
   fi
   OUTPUT_FILEPATH="${OUTPUT_PATH}/$(basename "$RENAME_FILEPATH" .ts).mp4"
@@ -29,13 +29,13 @@ while read -r f <&3; do
   notify-send --app-name="$APP_NAME" "$NOW / $TOTAL
 encoding: $(basename "$RENAME_FILEPATH")"
 
-  echo "encoding: $(basename $RENAME_FILEPATH)"
-  encode_anime "$RENAME_FILEPATH" "$OUTPUT_FILEPATH" &> "$LOG_FILEPATH"
+  echo "encoding: $(basename $RENAME_FILEPATH)" &>> "$LOG_FILEPATH"
+  encode_anime "$RENAME_FILEPATH" "$OUTPUT_FILEPATH" &>> "$LOG_FILEPATH"
   if [[ $? != 0 ]];then
     nofity-send --app-name="$APP_NAME" --urgency=critical "error!"
     exit 1
   fi
   mv "$RENAME_FILEPATH" "$DONE_FILEPATH"
 done 3< <(find "$TARGET_PATH"  -maxdepth 1 -type f -regex ".*\.ts$")
-
+echo "done"  &>> "$LOG_FILEPATH"
 notify-send --app-name="$APP_NAME" "encode finish"
