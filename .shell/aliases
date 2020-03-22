@@ -1,5 +1,6 @@
 alias reload="source ~/.zshrc"
 
+#alt command
 alias vi='nvim'
 alias vim='nvim'
 
@@ -8,6 +9,9 @@ alias ll='exa --git -la'
 
 alias -g @g='| grep'
 alias -g @x='| xargs'
+
+#util
+alias cdtemp="cd $(mktemp -d)"
 
 #fzf
 #ghq
