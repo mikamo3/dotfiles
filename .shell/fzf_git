@@ -18,3 +18,7 @@ fzf_git_show() {
                 {}
 FZF-EOF"
 }
+
+fzf_git_add() {
+  t=$(git status -s | fzf) && awk '{print $2}' <<< "$t" | xargs git add
+}

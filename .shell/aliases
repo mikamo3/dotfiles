@@ -17,3 +17,4 @@ alias fghqlog="fzf_ghq_log"
 #git
 alias fgitco="fzf_git_checkout"
 alias fgitshow="fzf_git_show"
+alias fgitadd="fzf_git_add"
