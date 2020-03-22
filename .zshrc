@@ -27,6 +27,7 @@ source ~/.shell/aliases
 source ~/.shell/init
 source ~/.shell/fzf_ghq
 source ~/.shell/fzf_git
+source ~/.shell/fzf_misc
 #export
 export KAWAZU_ROOT_DIR=/usr/lib/kawazu
 
@@ -59,6 +60,7 @@ zplug "zsh-users/zsh-completions"
 zplug "caiogondim/bullet-train.zsh", use:bullet-train.zsh-theme, defer:3
 zplug "lukechilds/zsh-nvm"
 zplug "x-motemen/ghq", as:command, from:gh-r
+zplug "rupa/z", use:z.sh
 
 if ! zplug check --verbose; then
 	printf "Install? [y/N]: "

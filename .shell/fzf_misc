@@ -1,0 +1,8 @@
+fzf_z_search() {
+    local res=$(z | sort -rn | cut -c 12- | fzf)
+    if [ -n "$res" ]; then
+        cd "$res"
+    else
+        return 1
+    fi
+}
