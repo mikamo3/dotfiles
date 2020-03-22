@@ -10,8 +10,9 @@ alias ll='exa --git -la'
 alias -g @g='| grep'
 alias -g @x='| xargs'
 
-#util
+#cd
 alias cdtemp="cd $(mktemp -d)"
+alias ..='cd ..'
 
 #fzf
 #ghq

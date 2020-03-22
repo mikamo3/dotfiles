@@ -28,6 +28,7 @@ source ~/.shell/init
 source ~/.shell/fzf_ghq
 source ~/.shell/fzf_git
 source ~/.shell/fzf_misc
+source ~/.shell/cd
 #export
 export KAWAZU_ROOT_DIR=/usr/lib/kawazu
 
