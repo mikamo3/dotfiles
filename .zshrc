@@ -25,6 +25,7 @@ source /usr/lib/kawazu/kawazu.sh
 source ~/.shell/colors
 source ~/.shell/aliases
 source ~/.shell/init
+source ~/.shell/fzf_ghq
 #export
 export KAWAZU_ROOT_DIR=/usr/lib/kawazu
 
@@ -56,6 +57,7 @@ zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-completions"
 zplug "caiogondim/bullet-train.zsh", use:bullet-train.zsh-theme, defer:3
 zplug "lukechilds/zsh-nvm"
+zplug "x-motemen/ghq", as:command, from:gh-r
 
 if ! zplug check --verbose; then
 	printf "Install? [y/N]: "

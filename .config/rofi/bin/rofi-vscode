@@ -1,15 +1,13 @@
 #!/usr/bin/env bash
-set -x
-BASE_DIR=~/src/github.com
 
-WORK_DIRS=($(ls $BASE_DIR))
+WORK_DIRS=($(ghq list -p))
 selected="$(
   for ((i = 0; i < ${#WORK_DIRS[@]}; i++)) do
     echo "${WORK_DIRS[$i]}"
-  done | rofi -dmenu -markup-rows -i -p system
+  done | rofi -dmenu -i -p workdirectory
 )"
 
-if [[ "$selected" != "" ]]; then
-  code --folder-uri ${BASE_DIR}/${selected}
+if [[ $? == 0 ]];then
+  code --folder-uri ${selected}
   exit
 fi

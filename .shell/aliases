@@ -1,3 +1,15 @@
-alias vi='vim'
+alias reload="source ~/.zshrc"
+
+alias vi='nvim'
 alias vim='nvim'
-alias ll='ls -la'
+
+alias lt='exa --git -lT'
+alias ll='exa --git -la'
+
+alias -g @g='| grep'
+alias -g @x='| xargs'
+
+#fzf
+
+alias fghqcd="fzf_ghq_cd"
+alias fghqlog="fzf_ghq_log"
