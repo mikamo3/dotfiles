@@ -17,16 +17,20 @@ init_environment() {
   DIR_GOOGLE_DRIVE=googleDrive
   DIR_DROPBOX=Dropbox
   DIR_WALLPAPER=Pictures/wallpapers
+  DIR_LOCALLOG=.local/log
+  if [[ ! -e ~/${DIR_LOCALLOG} ]]; then
+    mkdir -p ~/${DIR_LOCALLOG}
+  fi
   if [[ ! -e ~/${DIR_GOOGLE_DRIVE} ]]; then
-    mkdir ~/${DIR_GOOGLE_DRIVE}
+    mkdir -p ~/${DIR_GOOGLE_DRIVE}
   fi
 
   if [[ ! -e ~/${DIR_DROPBOX} ]]; then
-    mkdir ~/${DIR_DROPBOX}
+    mkdir -p ~/${DIR_DROPBOX}
   fi
 
   if [[ ! -e ~/${DIR_WALLPAPER} ]]; then
-    mkdir ~/${DIR_WALLPAPER}
+    mkdir -p ~/${DIR_WALLPAPER}
   fi
 
   echo "enable user service"
