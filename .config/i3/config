@@ -246,6 +246,7 @@ mode "launch" {
     bindsym b exec ~/.config/rofi/bin/rofi-private-browsing; mode "default"
     bindsym c exec ~/.config/rofi/bin/rofi-nerd-fonts-icons; mode "default"
     bindsym v exec ~/.config/rofi/bin/rofi-vscode; mode "default"
+    bindsym r exec ~/.config/rofi/bin/rofi-open-repository; mode "default"
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }

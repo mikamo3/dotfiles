@@ -1,0 +1,12 @@
+set -x
+REPOSITORIES=($(ghq list))
+selected="$(
+  for ((i = 0; i < ${#REPOSITORIES[@]}; i++)) do
+    echo "https://${REPOSITORIES[$i]}"
+  done | rofi -dmenu -i -p "open repository web"
+)"
+
+if [[ $? == 0 ]];then
+  xdg-open $selected
+  exit
+fi
