@@ -10,6 +10,10 @@ alias -g @g='| grep'
 alias -g @x='| xargs'
 
 #fzf
-
+#ghq
 alias fghqcd="fzf_ghq_cd"
 alias fghqlog="fzf_ghq_log"
+
+#git
+alias fgitco="fzf_git_checkout"
+alias fgitshow="fzf_git_show"

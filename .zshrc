@@ -26,6 +26,7 @@ source ~/.shell/colors
 source ~/.shell/aliases
 source ~/.shell/init
 source ~/.shell/fzf_ghq
+source ~/.shell/fzf_git
 #export
 export KAWAZU_ROOT_DIR=/usr/lib/kawazu
 
