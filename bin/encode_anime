@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+set -e
+FFMPEG_PATH=/usr/bin/ffmpeg
+PRESET_PARAM_INPUT="-loglevel error -y -c:v mpeg2_cuvid -deint 2 -drop_second_field 1 -i"
+PRESET_PARAM_OUTPUT="-c:v h264_nvenc -rc vbr_hq -c:a aac -b:a 192k -r:a 48000 -ac 2 -f mp4"
+
+if [[ $# != 2 ]]; then
+  echo "usage: $0 input output"
+  exit 1
+fi
+
+INPUT_PATH="$1"
+OUTPUT_PATH="$2"
+
+if [[ ! -e "$INPUT_PATH" ]]; then
+  echo "$1 does not exist"
+  exit 1
+fi
+
+if [[ ! -e $(dirname "$OUTPUT_PATH") ]]; then
+  echo "$(dirname "$OUTPUT_PATH") does not exist"
+  exit 1
+fi
+
+PARAM="${PRESET_PARAM_INPUT} ${INPUT_PATH} ${PRESET_PARAM_OUTPUT} ${OUTPUT_PATH}"
+$FFMPEG_PATH $PARAM
