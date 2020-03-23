@@ -259,8 +259,10 @@ bindsym $mod+d exec rofi -show
 bindsym $mod+e exec thunar
 bindsym $mod+z mode "launch"
 
+
 # color
-client.focused             #1793D0   #1793D0    #FFFFFF
-client.focused_inactive    #000000   #333333    #FFFFFF
-client.unfocused           #000000   #333333    #FFFFFF
-client.urgent              #FF0000   #FF0000    #333333
+# class                 border    backgr     text
+client.focused          #586e75   #073642    #cb4b16
+client.focused_inactive #93a1a1   #EEE8D5    #586e75
+client.unfocused        #93a1a1   #EEE8D5    #586e75
+client.urgent           #dc322f   #dc322f    #586e75
