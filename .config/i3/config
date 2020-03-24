@@ -232,6 +232,7 @@ for_window [class="Authy Desktop"] floating disable
 exec --no-startup-id fcitx
 exec --no-startup-id picom -b --config ~/.config/picom/picom.conf
 exec --no-startup-id ~/bin/wallpaper.sh &
+exec --no-startup-id ~/.config/i3/scripts/check_updates.sh &
 exec --no-startup-id /usr/bin/dropbox &
 exec --no-startup-id /usr/bin/slack &
 exec --no-startup-id /usr/bin/nm-applet &
