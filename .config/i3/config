@@ -259,6 +259,10 @@ bindsym $mod+d exec rofi -show
 bindsym $mod+e exec thunar
 bindsym $mod+z mode "launch"
 
+## screenshot
+bindsym --release Print exec ~/bin/screenshot window
+bindsym --release Ctrl+Print exec ~/bin/screenshot frame
+bindsym --release Shift+Print exec ~/bin/screenshot
 
 # color
 # class                 border    backgr     text
