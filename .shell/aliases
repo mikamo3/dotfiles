@@ -23,5 +23,11 @@ alias fgco="fzf_git_checkout"
 alias fgshow="fzf_git_show"
 alias fgadd="fzf_git_add"
 
+alias ghis="hub issue -f '%i %t %as%n'"
+alias ghisas="hub_issue_assign"
+alias ghiss="hub_issue_show"
+alias ghise="hub_issue_edit"
+alias ghpr="hub_pull_request"
+
 #z
 alias fzcd="fzf_z_search"

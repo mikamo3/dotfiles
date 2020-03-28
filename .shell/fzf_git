@@ -20,5 +20,12 @@ FZF-EOF"
 }
 
 fzf_git_add() {
-  t=$(git status -s | fzf) && awk '{print $2}' <<< "$t" | xargs git add
+  t=$(git status -s|grep -e "^.[^ ]" | fzf --ansi -m --preview '
+    f() {
+      file=$(echo {} | awk "{print \$2}")
+      git diff --color=always "$file"
+    }
+    f
+  ') && \
+  awk '{print $2}' <<< "$t" | xargs -I{} git add "{}"
 }
