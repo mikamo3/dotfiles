@@ -3,3 +3,12 @@
 [user]
 	name = mikamo3
 	email = kamo3proj@gmail.com
+
+[alias]
+	lol = log --oneline
+	st = status
+	co = checkout
+  sp = stash pop
+  ss = stash save
+	cob = checkout -b
+	bdm = !git branch --merged | grep -v \"\\*\" | grep -v master | grep -v dev | xargs -n 1 git branch -d
