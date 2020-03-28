@@ -22,6 +22,7 @@ alias fglog="fzf_ghq_log"
 alias fgco="fzf_git_checkout"
 alias fgshow="fzf_git_show"
 alias fgadd="fzf_git_add"
+alias fgreview="fzf_git_review"
 
 alias ghis="hub issue -f '%i %t %as%n'"
 alias ghisas="hub_issue_assign"

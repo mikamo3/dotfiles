@@ -29,3 +29,13 @@ fzf_git_add() {
   ') && \
   awk '{print $2}' <<< "$t" | xargs -I{} git add "{}"
 }
+
+fzf_git_review() {
+  local branches branch
+  git checkout master
+  branches=$(git branch --all | grep -v HEAD) &&
+  branch=$(echo "$branches" |
+           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+  git pull origin $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##") &&
+  git diff $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+}
