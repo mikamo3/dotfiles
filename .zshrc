@@ -8,6 +8,16 @@ setopt prompt_subst
 if [[ ! -d ~/.tmux/plugins/tpm ]];then
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && ~/.tmux/plugins/tpm/bin/install_plugins
 fi
+
+#tmux
+if [[ -z "$TMUX" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] ;then
+    ID="$( tmux ls | grep -vm1 attached | cut -d: -f1 )" # get the id of a deattached session
+    if [[ -z "$ID" ]] ;then # if not available create a new one
+        exec tmux new-session
+    else
+        exec tmux attach-session -t "$ID" # if available attach to it
+    fi
+fi
 autoload -U compinit promptinit colors
 compinit
 promptinit
@@ -78,13 +88,4 @@ zplug load
 # init
 if [[ -z "$TMUX" ]];then
   init_environment
-fi
-#tmux
-if [[ -z "$TMUX" ]] && [[ "$TERM_PROGRAM" != "vscode" ]] ;then
-    ID="$( tmux ls | grep -vm1 attached | cut -d: -f1 )" # get the id of a deattached session
-    if [[ -z "$ID" ]] ;then # if not available create a new one
-        exec tmux new-session
-    else
-        exec tmux attach-session -t "$ID" # if available attach to it
-    fi
 fi
