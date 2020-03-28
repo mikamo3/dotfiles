@@ -15,14 +15,13 @@ alias cdtemp="cd $(mktemp -d)"
 alias ..='cd ..'
 
 #fzf
-#ghq
-alias fghqcd="fzf_ghq_cd"
-alias fghqlog="fzf_ghq_log"
-
 #git
-alias fgitco="fzf_git_checkout"
-alias fgitshow="fzf_git_show"
-alias fgitadd="fzf_git_add"
+alias fgcd="fzf_ghq_cd"
+alias fglog="fzf_ghq_log"
+
+alias fgco="fzf_git_checkout"
+alias fgshow="fzf_git_show"
+alias fgadd="fzf_git_add"
 
 #z
 alias fzcd="fzf_z_search"
