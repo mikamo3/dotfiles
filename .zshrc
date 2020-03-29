@@ -72,7 +72,6 @@ zplug "zsh-users/zsh-completions"
 zplug "caiogondim/bullet-train.zsh", use:bullet-train.zsh-theme, defer:3
 zplug "lukechilds/zsh-nvm"
 zplug "x-motemen/ghq", as:command, from:gh-r
-zplug "github/hub", as:command, from:gh-r
 zplug "rupa/z", use:z.sh
 zplug "changyuheng/zsh-interactive-cd"
 
