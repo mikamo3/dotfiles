@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -x
+CHEATSHEET_FILE_PATH="${CHEATSHEET_FILE_PATH:-${HOME}/.cheatsheet}"
+if [[ $# == 0 ]];then
+  selected=$(~/bin/cheatsheet \
+    | rofi -dmenu -i -p "select cheatsheet")
+  if [[ $? == 0 ]];then
+    "$(cd $(dirname $0); pwd)/$(basename $0)" ${selected}
+  fi
+  exit
+fi
+
+sed -e 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g; s/'"'"'/\&#39;/g; s/\(.*\)\t\(.*\)/<span face="monospace"><span foreground="red">\1<\/span>   \2<\/span>/g' ${CHEATSHEET_FILE_PATH}/$1  | rofi -dmenu \
+    -i \
+    -markup-rows \
+    -p "$1" \
+    -lines 20

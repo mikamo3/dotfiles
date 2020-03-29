@@ -40,6 +40,7 @@ source ~/.shell/fzf_git
 source ~/.shell/fzf_hub
 source ~/.shell/fzf_misc
 source ~/.shell/cd
+source ~/.shell/cheatsheet_generate
 #export
 export KAWAZU_ROOT_DIR=/usr/lib/kawazu
 

@@ -19,6 +19,8 @@ init_environment() {
   DIR_WALLPAPER=Pictures/wallpapers
   DIR_SCREENSHOT=Pictures/screenshot
   DIR_LOCALLOG=.local/log
+  DIR_CHEATSHEET=.cheatsheet
+
   if [[ ! -e ~/${DIR_LOCALLOG} ]]; then
     mkdir -p ~/${DIR_LOCALLOG}
   fi
@@ -36,6 +38,10 @@ init_environment() {
 
   if [[ ! -e ~/${DIR_SCREENSHOT} ]]; then
     mkdir -p ~/${DIR_SCREENSHOT}
+  fi
+
+  if [[ ! -e ~/${DIR_CHEATSHEET} ]]; then
+    mkdir -p ~/${DIR_CHEATSHEET}
   fi
 
   echo "enable user service"

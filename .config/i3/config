@@ -254,6 +254,7 @@ mode "launch" {
 
 # keybinding
 bindsym $mod+Shift+e exec --no-startup-id ~/.config/rofi/bin/rofi-power
+bindsym $mod+c exec ~/.config/rofi/bin/rofi-cheatsheet; mode "default"
 bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
 bindsym $mod+d exec rofi -show
