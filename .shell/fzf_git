@@ -22,8 +22,12 @@ FZF-EOF"
 fzf_git_add() {
   t=$(git status -s|grep -e "^.[^ ]" | fzf --ansi -m --preview '
     f() {
+      stat=$(echo {} | awk "{print \$1}")
       file=$(echo {} | awk "{print \$2}")
-      git diff --color=always "$file"
+      case $stat in
+        \?\? ) bat "$file" ;;
+        * ) git diff --color=always "$file" ;;
+      esac
     }
     f
   ') && \
