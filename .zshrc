@@ -39,6 +39,7 @@ source ~/.shell/fzf_ghq
 source ~/.shell/fzf_git
 source ~/.shell/fzf_hub
 source ~/.shell/fzf_misc
+source ~/.shell/fzf_memo
 source ~/.shell/cd
 source ~/.shell/cheatsheet_generate
 #export

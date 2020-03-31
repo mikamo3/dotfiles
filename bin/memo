@@ -1,0 +1,180 @@
+#!/usr/bin/env bash
+MEMO_DIR=${MEMO_DIR:-~/.memo}
+if [[ $# == 0 ]];then
+    cat <<EOF
+private memo.
+Usage: memo COMMAND
+
+Commands:
+  show filename                                       Show memo
+  add                                                 Add memo (open editor)
+  edit filename                                       Edit memo (open editor)
+  del filename                                        Delete memo
+  list [--category | --tag | --title ]                List categories
+  search [--category | --tag | --title ] searchword   Search memo
+EOF
+  exit 1
+fi
+
+function _detect_editor(){
+  for editor in "$EDITOR" nvim vim nano vi; do
+    if command -v "$editor" > /dev/null 2>&1; then
+      break
+    fi
+  done
+  echo "$editor"
+}
+
+function _add(){
+  TEMPLATE='Title:
+Category:
+Tag:
+'
+  if [[ ! -e "$MEMO_DIR" ]];then
+    mkdir -p "$MEMO_DIR"
+  fi
+  editor=$(_detect_editor)
+  memofilepath="$MEMO_DIR/$(date +%s%3N|md5sum |cut -c 1-16)"
+  echo "$TEMPLATE" > "$memofilepath"
+  $editor "$memofilepath"
+  diff "$memofilepath" <(cat <<EOF
+$TEMPLATE
+EOF
+) && rm "$memofilepath" || echo "add memo: $memofilepath"
+}
+
+_show(){
+  if [[ ! -f "${MEMO_DIR}/$1" ]];then
+    echo "$1 does not exist"
+    exit 1
+  fi
+  cat "${MEMO_DIR}/$1"
+}
+
+_edit(){
+  if [[ ! -f "${MEMO_DIR}/$1" ]];then
+    echo "$1 does not exist"
+    exit 1
+  fi
+  editor=$(_detect_editor)
+  $editor "${MEMO_DIR}/$1"
+}
+
+_del(){
+  if [[ "$MEMO_DIR" != "" && -f "${MEMO_DIR}/$1" ]];then
+    rm "${MEMO_DIR}/$1" && echo "delete memo: $1"
+  fi
+  echo "$1 does not exist"
+  exit 1
+}
+
+_list(){
+  case "$1" in
+    "--title" )
+      find ${MEMO_DIR} -type f |xargs -i% sed -n 1p % | sed -e 's/^.*: *\(.*\) *$/\1/'|sort|uniq
+      ;;
+    "--category" )
+      find ${MEMO_DIR} -type f |xargs -i% sed -n 2p % | sed -e 's/^.*: *\(.*\) *$/\1/'|sort|uniq
+      ;;
+    "--tag" )
+      find ${MEMO_DIR} -type f |xargs -i% sed -n 3p % | sed -e 's/^.*: *\(.*\) *$/\1/'|awk '{for(i=1;i<=NF;i++) print $i}'|sort|uniq
+      ;;
+  esac
+}
+_search(){
+  DISPLAY_COMMAND_TEMPLATE='
+        header=$(sed -e "s/^.*: *\(.*\) *$/\1/" %)
+        title=$(sed -n 1p <<<"$header")
+        category=$(sed -n 2p <<<"$header")
+        tag=$(sed -n 3p <<<"$header")
+        filename=$(sed -e "s/^.*\/\(.*\)$/\1/" <<<%)
+        grep -c "%WORD%" 1>/dev/null <<< $(sed -n 1p <<< "$%TARGET%") && echo -e "\e[32m[$category]\e[m \e[33m[$tag]\e[m $title \e[36m$filename\e[m"
+        '
+  local display_command
+  if [[ $# == 0 ]];then
+      display_command="$(sed -e "s/%WORD%//g" -e "s/%TARGET%/title/g" <<< "$DISPLAY_COMMAND_TEMPLATE")"
+  else
+    case "$1" in
+      "--title" )
+        display_command="$(sed -e "s/%WORD%/$2/g" -e "s/%TARGET%/title/g" <<< "$DISPLAY_COMMAND_TEMPLATE")"
+        ;;
+      "--category" )
+        display_command="$(sed -e "s/%WORD%/$2/g" -e "s/%TARGET%/category/g" <<< "$DISPLAY_COMMAND_TEMPLATE")"
+        ;;
+      "--tag" )
+        display_command="$(sed -e "s/%WORD%/$2/g" -e "s/%TARGET%/tag/g" <<< "$DISPLAY_COMMAND_TEMPLATE")"
+        ;;
+    esac
+  fi
+  find ${MEMO_DIR} -type f \
+  | xargs -i% /usr/bin/env bash -c "$display_command" | sort
+
+}
+case "$1" in
+  "add" )
+    _add
+    ;;
+  "show" )
+    shift
+    if [[ $1 == "" ]];then
+      echo "need filename"
+      exit 1
+    fi
+      _show "$1"
+    ;;
+  "edit" )
+    shift
+    if [[ $1 == "" ]];then
+      echo "need filename"
+      exit 1
+    fi
+      _edit "$1"
+    ;;
+  "del" )
+    shift
+    if [[ $1 == "" ]];then
+      echo "need filename"
+      exit 1
+    fi
+      _del "$1"
+    ;;
+  "list" )
+    shift
+    if [[ $# == 1 ]];then
+      case "$1" in
+        "--category"|"--tag"|"--title" )
+          _list $1
+          ;;
+        * )
+          echo "unknown option"
+          exit 1
+        ;;
+      esac
+    else
+      echo "need optiion"
+      exit 1
+    fi
+    ;;
+  "search" )
+    shift
+    if [[ $# == 0 ]];then
+      _search
+    elif [[ $# == 2 ]];then
+      case "$1" in
+        "--category"|"--tag"|"--title" )
+          _search  "$1" "$2"
+          ;;
+        * )
+          echo "unknown option"
+          exit 1
+        ;;
+      esac
+    else
+      echo "invalid param"
+      exit 1
+    fi
+    ;;
+  * )
+    echo "unknown command"
+    exit 1
+esac

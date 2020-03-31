@@ -31,5 +31,10 @@ alias ghiss="hub_issue_show"
 alias ghise="hub_issue_edit"
 alias ghpr="hub_pull_request"
 
+#memo
+alias memoa="fzf_memo_search"
+alias memoc="fzf_memo_list category"
+alias memot="fzf_memo_list tag"
+
 #z
 alias fzcd="fzf_z_search"
