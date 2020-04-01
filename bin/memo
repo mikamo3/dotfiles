@@ -41,7 +41,7 @@ Tag:
   diff "$memofilepath" <(cat <<EOF
 $TEMPLATE
 EOF
-) && rm "$memofilepath" || echo "add memo: $memofilepath"
+) &> /dev/null && rm "$memofilepath" || echo "add memo: $memofilepath"
 }
 
 _show(){

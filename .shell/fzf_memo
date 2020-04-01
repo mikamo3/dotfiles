@@ -6,7 +6,6 @@ fzf_memo_list(){
   while : ;do
     t=$1
     out=$(memo list --$t | fzf --expect=ctrl-a --preview "
-    set -x
     memo search --$t {}
     ") 
     local key=$(head -1 <<<"$out")
