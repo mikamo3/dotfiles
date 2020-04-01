@@ -29,6 +29,7 @@ function _add(){
   TEMPLATE='Title:
 Category:
 Tag:
+================================================================================
 '
   if [[ ! -e "$MEMO_DIR" ]];then
     mkdir -p "$MEMO_DIR"

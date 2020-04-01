@@ -9,8 +9,9 @@ fzf_memo_list(){
     set -x
     memo search --$t {}
     ") 
-    key=$(head -1 <<<"$out")
-    search="$(head -2 <<<"$out" | tail -1)"
+    local key=$(head -1 <<<"$out")
+    local search="$(head -2 <<<"$out" | tail -1)"
+    
     if [[ "$key" != "" ]]; then
       memo add
       return 
@@ -39,16 +40,22 @@ fzf_memo_search(){
     bat "${MEMO_DIR}/${filename}"
     ')
   ret=$?
-  if [[ "$ret" != 0 ]];then
-    return $ret
-  fi
-  key=$(head -1 <<<"$out")
-  file="$(head -2 <<<"$out" | tail -1 | sed -e "s/.* \(.*\)\$/\1/")"
+
+  local key=$(head -1 <<<"$out")
+  local file="$(head -2 <<<"$out" | tail -1 | sed -e "s/.* \(.*\)\$/\1/")"
   if [[ "$key" == "Esc" ]];then
     return $RET_MEMO_SEARCH_BACK
   elif [[ "$key" == "ctrl-a" ]];then
     memo add
-  elif [[ "$key" == "ctrl-y" ]];then
+    return 0
+  fi
+
+  if [[ "$ret" != 0 ]];then
+    return $ret
+  fi
+
+  
+  if [[ "$key" == "ctrl-y" ]];then
     memo show $file | sed -n "5,\$p" | xsel -i -p && xsel -o -p | xsel -i -b
   else
     memo edit "$file"
