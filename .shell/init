@@ -1,11 +1,11 @@
 init_environment() {
   INIT_DONE_PATH=~/.init_done
   FORCE_FLG=
-  if [[ $1 == "force" ]];then
+  if [[ $1 == "force" ]]; then
     FORCE_FLG="true"
   fi
 
-  if [[ -e $INIT_DONE_PATH && $FORCE_FLG != "true" ]];then 
+  if [[ -e $INIT_DONE_PATH && $FORCE_FLG != "true" ]]; then
     return
   fi
 
@@ -46,32 +46,32 @@ init_environment() {
 
   echo "enable user service"
 
-  if  ! systemctl --user is-active google-drive-ocamlfuse >/dev/null; then
+  if ! systemctl --user is-active google-drive-ocamlfuse >/dev/null; then
     systemctl --user enable google-drive-ocamlfuse
   fi
 
   echo "init node"
-  if [[ $(nvm ls --no-colors|grep -Ec "^rc\s*->\s*v") == 0 ]];then
+  if [[ $(nvm ls --no-colors | grep -Ec "^rc\\s*->\\s*v") == 0 ]]; then
     nvm install rc
     nvm use rc
   fi
 
   echo "install npm global modules"
-  if ! npm ls -g commitizen >/dev/null;then
+  if ! npm ls -g commitizen >/dev/null; then
     npm i -g commitizen
   fi
-  if ! npm ls -g cz-emoji@1.1.2 >/dev/null;then
-  npm i -g cz-emoji@1.1.2
+  if ! npm ls -g cz-emoji@1.1.2 >/dev/null; then
+    npm i -g cz-emoji@1.1.2
   fi
 
   echo "install tpm plugin"
-  if [[ ! -d ~/.tmux/plugins/tpm ]];then
+  if [[ ! -d ~/.tmux/plugins/tpm ]]; then
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && ~/.tmux/plugins/tpm/bin/install_plugins
   fi
 
   echo "install pynvim for nvim"
-  if [[ $(pip list --user|grep -c pynvim) == 0 ]];then
-    pip list --user|grep -c pynvim
+  if [[ $(pip list --user | grep -c pynvim) == 0 ]]; then
+    pip list --user | grep -c pynvim
   fi
 
   touch $INIT_DONE_PATH

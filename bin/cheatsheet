@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 CHEATSHEET_FILE_PATH="${CHEATSHEET_FILE_PATH:-${HOME}/.cheatsheet}"
-if [[ $# == 0 ]];then
-   find $CHEATSHEET_FILE_PATH -type f,l -printf "%f\n"
-   exit
+if [[ $# == 0 ]]; then
+  find "$CHEATSHEET_FILE_PATH" -type f,l -printf "%f\\n"
+  exit
 fi
 cat "${CHEATSHEET_FILE_PATH}/$1"

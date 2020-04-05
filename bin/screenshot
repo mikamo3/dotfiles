@@ -5,10 +5,14 @@ SAVE_DIR=~/Pictures/screenshot
 FILENAME="screenshot_$(date +%Y%m%d%H%M%S).png"
 
 case "$1" in
-  "frame" ) PARAM=" -frame" ;;
-  "window" ) PARAM=" -window root" ;;
-  *) PARAM=""
+"frame") PARAM=" -frame" ;;
+"window") PARAM=" -window root" ;;
+*) PARAM="" ;;
 esac
 
-/usr/bin/import $PARAM ${SAVE_DIR}/${FILENAME} && notify-send --app-name="$APP_NAME" "captured
-${SAVE_DIR}/${FILENAME}" || notify-send --app-name="$APP_NAME" --urgency=critical "capture failed"
+if /usr/bin/import $PARAM "${SAVE_DIR}/${FILENAME}"; then
+  notify-send --app-name="$APP_NAME" "captured
+${SAVE_DIR}/${FILENAME}"
+else
+  notify-send --app-name="$APP_NAME" --urgency=critical "capture failed"
+fi

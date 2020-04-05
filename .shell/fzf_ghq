@@ -1,8 +1,10 @@
-fzf_ghq_cd () {
-   t=$(ghq  list -p | fzf) && cd "$t"
+fzf_ghq_cd() {
+  if t=$(ghq list -p | fzf); then
+    cd "$t" || return
+  fi
 }
 
-fzf_ghq_log () {
+fzf_ghq_log() {
   # https://qiita.com/tomoyamachi/items/e51d2906a5bb24cf1684
   ghq list | fzf --preview "git --git-dir $(ghq root)/{}/.git log --date=short --pretty=format:'-%C(yellow)%d%Creset %s %Cgreen(%cd) %C(bold blue)<%an>%Creset' --color"
 }

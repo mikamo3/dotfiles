@@ -1,21 +1,21 @@
-_hub_get_id(){
-  t=$(hub issue -f "%i %t (%as)%n" |fzf) && \
-    sed 's/^#\([0-9]\+\).*/\1/g' <<<"$t"
+_hub_get_id() {
+  t=$(hub issue -f "%i %t (%as)%n" | fzf) \
+    && sed 's/^#\([0-9]\+\).*/\1/g' <<<"$t"
 }
-hub_issue_assign(){
+hub_issue_assign() {
   ASSIGN=$(git config user.name)
-  ID=$(_hub_get_id) && echo $ID | xargs -I{} hub issue update {} -a $ASSIGN
+  ID=$(_hub_get_id) && echo "$ID" | xargs -I{} hub issue update {} -a "$ASSIGN"
 }
 
-hub_issue_show(){
-  ID=$(_hub_get_id) && echo $ID | xargs -I{} hub issue show {} "%i %t (%as)%n%n%b%n"
+hub_issue_show() {
+  ID=$(_hub_get_id) && echo "$ID" | xargs -I{} hub issue show {} "%i %t (%as)%n%n%b%n"
 }
 
-hub_issue_edit(){
-  ID=$(_hub_get_id) && echo $ID | xargs -I{} hub issue update {} -e
+hub_issue_edit() {
+  ID=$(_hub_get_id) && echo "$ID" | xargs -I{} hub issue update {} -e
 }
 
-hub_pull_request(){
+hub_pull_request() {
   ASSIGN=$(git config user.name)
-  ID=$(_hub_get_id) && echo $ID | xargs -I{} hub pull-request {} -e -p -a $ASSIGN
+  ID=$(_hub_get_id) && echo "$ID" | xargs -I{} hub pull-request {} -e -p -a "$ASSIGN"
 }

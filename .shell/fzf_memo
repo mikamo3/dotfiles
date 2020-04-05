@@ -1,21 +1,21 @@
 RET_MEMO_SEARCH_BACK=16
-fzf_memo_list(){
-  local search_back t out
+fzf_memo_list() {
+  local t out key search
   local -a add_param
-  while : ;do
+  while :; do
     t=$1
-    out=$(memo list --$t | fzf --prompt="list:$t >" --expect=ctrl-a --preview-window="up:70%" --preview "
+    out=$(memo list "--$t" | fzf --prompt="list:$t >" --expect=ctrl-a --preview-window="up:70%" --preview "
     memo search --$t {}
-    ") 
-    local key=$(head -1 <<<"$out")
-    local search="$(head -2 <<<"$out" | tail -1)"
-    
+    ")
+    key=$(head -1 <<<"$out")
+    search="$(head -2 <<<"$out" | tail -1)"
+
     if [[ "$key" != "" ]]; then
-      add_param=(--$t $search)
-      memo add $add_param[@]
-      return 
+      add_param=("--$t" "$search")
+      memo add "${add_param[@]}"
+      return
     fi
-    if [[ "$search" != "" ]];then
+    if [[ "$search" != "" ]]; then
       fzf_memo_search "$t" "$search"
       [[ "$?" != "$RET_MEMO_SEARCH_BACK" ]] && return
     else
@@ -24,17 +24,17 @@ fzf_memo_list(){
   done
 }
 
-fzf_memo_search(){
-  local t w add_param_category add_param_tags
+fzf_memo_search() {
+  local t w add_param_category add_param_tags key file
   local -a add_param
-  if [[ $# == 0 ]];then
+  if [[ $# == 0 ]]; then
     t="title"
     w=""
   else
     t="$1"
     w="$2"
   fi
-  out=$(memo search --$t "$w" | fzf --prompt="search >" \
+  out=$(memo search "--$t" "$w" | fzf --prompt="search >" \
     --ansi --expect=Esc,ctrl-a,ctrl-y,ctrl-d \
     --preview-window="up:70%" \
     --preview '
@@ -44,36 +44,36 @@ fzf_memo_search(){
     ')
   ret=$?
 
-  local key=$(head -1 <<<"$out")
-  local file="$(head -2 <<<"$out" | tail -1 | sed -e "s/.* \(.*\)\$/\1/")"
-  if [[ "$key" == "Esc" ]];then
+  key=$(head -1 <<<"$out")
+  file="$(head -2 <<<"$out" | tail -1 | sed -e "s/.* \\(.*\\)\$/\\1/")"
+  if [[ "$key" == "Esc" ]]; then
     return $RET_MEMO_SEARCH_BACK
-  elif [[ "$key" == "ctrl-a" ]];then
-    add_param_category="$(head -2 <<<"$out" | tail -1 |sed -e "s/^\[\(.*\)\] \[\(.*\)\] .*/\1/g")"
-    add_param_tags="$(head -2 <<<"$out" | tail -1 |sed -e "s/^\[\(.*\)\] \[\(.*\)\] .*/\2/g")"
+  elif [[ "$key" == "ctrl-a" ]]; then
+    add_param_category="$(head -2 <<<"$out" | tail -1 | sed -e "s/^\\[\\(.*\\)\\] \[\\(.*\\)\\] .*/\\1/g")"
+    add_param_tags="$(head -2 <<<"$out" | tail -1 | sed -e "s/^\\[\\(.*\\)\\] \\[\\(.*\\)\\] .*/\\2/g")"
 
-    if [[ "$add_param_category" != "" ]];then
-      add_param=(--category $add_param_category)
+    if [[ "$add_param_category" != "" ]]; then
+      add_param=(--category "$add_param_category")
     fi
-    if [[ "$add_param_tags" != "" ]];then
-      add_param=($add_param --tag $add_param_tags)
+    if [[ "$add_param_tags" != "" ]]; then
+      add_param=(${add_param[@]} --tag "$add_param_tags")
     fi
-    memo add ${add_param[@]}
+    memo add "${add_param[@]}"
     return 0
-  elif [[ "$key" == "ctrl-d" ]];then
-    if read -q "?delete?:"; then; 
-      memo del $file
+  elif [[ "$key" == "ctrl-d" ]]; then
+    if read -q "?delete?:"; then
+      memo del "$file"
       return 0
     fi
     return 1
   fi
 
-  if [[ "$ret" != 0 ]];then
+  if [[ "$ret" != 0 ]]; then
     return $ret
   fi
 
-  if [[ "$key" == "ctrl-y" ]];then
-    memo show $file | sed -n "5,\$p" | xsel -i -p && xsel -o -p | xsel -i -b
+  if [[ "$key" == "ctrl-y" ]]; then
+    memo show "$file" | sed -n "5,\$p" | xsel -i -p && xsel -o -p | xsel -i -b
   else
     memo edit "$file"
   fi
