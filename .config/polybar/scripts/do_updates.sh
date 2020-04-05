@@ -1,10 +1,10 @@
 #!/usr/bin/env sh
 APP_NAME="arch update"
-UPDATE_RESULT_PATH="~/.local/log/arch_update"
-LOCALLOG="~/.local/log/arch_update_$(date +%Y%m%d%H%M%S.log)"
+UPDATE_RESULT_PATH="$HOME/.local/log/arch_update"
+LOCALLOG="$HOME/.local/log/arch_update_$(date +%Y%m%d%H%M%S.log)"
 
 sh -c "
-if [[ $(ps auwx|grep -c "yay -Sy") != 1 ]];then
+if [[ $(pgrep -f "yay -Sy" | wc -l) != 0 ]];then
   notify-send --app-name=\"$APP_NAME\" \"now updating\"
   exit 1
 fi

@@ -24,4 +24,3 @@ for ((i = 0; i < ${#command_caption_list[@]}; i++)); do
     exit
   fi
 done
-

@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 
-WORK_DIRS=($(ghq list -p))
-selected="$(
-  for ((i = 0; i < ${#WORK_DIRS[@]}; i++)) do
+mapfile -t WORK_DIRS < <(ghq list -p)
+
+if selected="$(
+  for ((i = 0; i < ${#WORK_DIRS[@]}; i++)); do
     echo "${WORK_DIRS[$i]}"
   done | rofi -dmenu -i -p vscode:workdirectory
-)"
-
-if [[ $? == 0 ]];then
-  code --folder-uri ${selected}
+)"; then
+  code --folder-uri "$selected"
   exit
 fi

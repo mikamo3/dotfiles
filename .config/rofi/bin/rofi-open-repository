@@ -1,11 +1,12 @@
-REPOSITORIES=($(ghq list))
-selected="$(
-  for ((i = 0; i < ${#REPOSITORIES[@]}; i++)) do
+#!/usr/bin/env bash
+set -x
+mapfile -t REPOSITORIES < <(ghq list)
+
+if selected="$(
+  for ((i = 0; i < ${#REPOSITORIES[@]}; i++)); do
     echo "https://${REPOSITORIES[$i]}"
   done | rofi -dmenu -i -p "open repository web"
-)"
-
-if [[ $? == 0 ]];then
-  xdg-open $selected
+)"; then
+  xdg-open "$selected"
   exit
 fi

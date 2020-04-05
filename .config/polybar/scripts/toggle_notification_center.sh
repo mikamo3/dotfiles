@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-kill -s USR1 $(pidof deadd-notification-center)
+kill -s USR1 "$(pidof deadd-notification-center)"

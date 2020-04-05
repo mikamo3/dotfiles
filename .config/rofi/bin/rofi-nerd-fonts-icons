@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 NERD_FONTS_ICONS=$HOME/.config/rofi/share/.nerd-fonts-icons
 [[ ! -e $NERD_FONTS_ICONS ]] && exit 1
-selected=$(sed s'/\(.*\),\(.*\),\(.*\)/<span face="Symbols Nerd Font" >[\\U\1] <big>\2<\/big> \3<\/span>/' $NERD_FONTS_ICONS \
+selected=$(sed s'/\(.*\),\(.*\),\(.*\)/<span face="Symbols Nerd Font" >[\\U\1] <big>\2<\/big> \3<\/span>/' "$NERD_FONTS_ICONS" \
   | rofi -dmenu \
     -i \
     -markup-rows \

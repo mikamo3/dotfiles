@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 command_caption_list=(
   "firefox"
   "chromium"
