@@ -7,11 +7,13 @@ Usage: memo COMMAND
 
 Commands:
   show filename                                       Show memo
-  add                                                 Add memo (open editor)
+  add [--category categoryname]
+      [--tag tagname...]
+      [--title title]                                 Add memo (open editor)
   edit filename                                       Edit memo (open editor)
   del filename                                        Delete memo
-  list [--category | --tag | --title ]                List categories
-  search [--category | --tag | --title ] searchword   Search memo
+  list --category | --tag | --title                   List categories
+  search --category | --tag | --title searchword      Search memo
 EOF
   exit 1
 fi
@@ -26,11 +28,54 @@ function _detect_editor(){
 }
 
 function _add(){
-  TEMPLATE='Title:
-Category:
-Tag:
+  set -x
+  local title
+  local category
+  local tags
+  while [[ "$1" != "" ]]; do
+    case "$1" in
+      "--title" )
+        shift
+        if [[ "$1" == "" ]];then
+          echo "need title" &2>/dev/null
+          exit 1
+        fi
+        title="$1"
+      ;;
+      "--category" )
+        shift
+        if [[ "$1" == "" ]];then
+          echo "need categoryname" &2>/dev/null
+          exit 1
+        fi
+        category="$1"
+        ;;
+      "--tag" )
+        if [[ "$2" == "" || "$2" =~ ^--(title|category)$ ]];then
+          echo "need tagname" &2>/dev/null
+          exit 1
+        fi
+        while [[ "$2" != "" ]];do
+          if [[ "$2" == "" || "$2" =~ ^--(title|category)$ ]];then
+            break
+          fi
+            tags="$(echo "$tags $2")"
+            shift
+        done
+        ;;
+      * )
+        echo "invalid option" &2>/dev/null
+        exit 1
+      ;;
+    esac
+    shift 
+  done
+  TEMPLATE="Title: $title
+Category: $category
+Tag:$tags
 ================================================================================
-'
+"
+
   if [[ ! -e "$MEMO_DIR" ]];then
     mkdir -p "$MEMO_DIR"
   fi
@@ -42,11 +87,16 @@ Tag:
 $TEMPLATE
 EOF
 ) &> /dev/null && rm "$memofilepath" || echo "add memo: $memofilepath"
+
 }
 
 _show(){
+  if [[ "$1" == "" ]];then
+    echo "need filename" &2>/dev/null
+    exit 1
+  fi
   if [[ ! -f "${MEMO_DIR}/$1" ]];then
-    echo "$1 does not exist"
+    echo "$1 does not exist" &2>/dev/null
     exit 1
   fi
   cat "${MEMO_DIR}/$1"
@@ -54,7 +104,7 @@ _show(){
 
 _edit(){
   if [[ ! -f "${MEMO_DIR}/$1" ]];then
-    echo "$1 does not exist"
+    echo "$1 does not exist" &2>/dev/null
     exit 1
   fi
   editor=$(_detect_editor)
@@ -62,11 +112,15 @@ _edit(){
 }
 
 _del(){
-  if [[ "$MEMO_DIR" != "" && -f "${MEMO_DIR}/$1" ]];then
-    rm "${MEMO_DIR}/$1" && echo "delete memo: $1"
+  if [[ "$1" == "" ]];then
+    echo "need filename" &2>/dev/null
+    exit 1
   fi
-  echo "$1 does not exist"
-  exit 1
+  if [[ ! -f "${MEMO_DIR}/$1" ]];then
+    echo "$1 does not exist" &2>/dev/null
+    exit 1
+  fi
+  rm "${MEMO_DIR}/$1" && echo "delete memo: $1"
 }
 
 _list(){
@@ -80,8 +134,11 @@ _list(){
     "--tag" )
       find ${MEMO_DIR} -type f |xargs -i% sed -n 3p % | sed -e 's/^.*: *\(.*\) *$/\1/'|awk '{for(i=1;i<=NF;i++) print $i}'|sort|uniq
       ;;
+    * )
+      echo "need --title | --category | --tag"
   esac
 }
+
 _search(){
   DISPLAY_COMMAND_TEMPLATE='
         header=$(sed -e "s/^.*: *\(.*\) *$/\1/" %)
@@ -105,6 +162,10 @@ _search(){
       "--tag" )
         display_command="$(sed -e "s/%WORD%/$2/g" -e "s/%TARGET%/tag/g" <<< "$DISPLAY_COMMAND_TEMPLATE")"
         ;;
+      * )
+      echo "invalid option" &2>/dev/null
+      exit 1
+      ;;
     esac
   fi
   find ${MEMO_DIR} -type f \
@@ -113,69 +174,26 @@ _search(){
 }
 case "$1" in
   "add" )
-    _add
+    shift
+    _add "$@" 
     ;;
   "show" )
-    shift
-    if [[ $1 == "" ]];then
-      echo "need filename"
-      exit 1
-    fi
-      _show "$1"
+      _show "$2"
     ;;
   "edit" )
-    shift
-    if [[ $1 == "" ]];then
-      echo "need filename"
-      exit 1
-    fi
-      _edit "$1"
+      _edit "$2"
     ;;
   "del" )
-    shift
-    if [[ $1 == "" ]];then
-      echo "need filename"
-      exit 1
-    fi
-      _del "$1"
+      _del "$2"
     ;;
   "list" )
-    shift
-    if [[ $# == 1 ]];then
-      case "$1" in
-        "--category"|"--tag"|"--title" )
-          _list $1
-          ;;
-        * )
-          echo "unknown option"
-          exit 1
-        ;;
-      esac
-    else
-      echo "need optiion"
-      exit 1
-    fi
+    _list $2
     ;;
   "search" )
     shift
-    if [[ $# == 0 ]];then
-      _search
-    elif [[ $# == 2 ]];then
-      case "$1" in
-        "--category"|"--tag"|"--title" )
-          _search  "$1" "$2"
-          ;;
-        * )
-          echo "unknown option"
-          exit 1
-        ;;
-      esac
-    else
-      echo "invalid param"
-      exit 1
-    fi
+    _search "$@"
     ;;
   * )
-    echo "unknown command"
+    echo "unknown command" &2>/dev/null
     exit 1
 esac
