@@ -1,4 +1,3 @@
-set -x
 REPOSITORIES=($(ghq list))
 selected="$(
   for ((i = 0; i < ${#REPOSITORIES[@]}; i++)) do

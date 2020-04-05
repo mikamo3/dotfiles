@@ -49,7 +49,6 @@ fzf_memo_search(){
   if [[ "$key" == "Esc" ]];then
     return $RET_MEMO_SEARCH_BACK
   elif [[ "$key" == "ctrl-a" ]];then
-    set -x
     add_param_category="$(head -2 <<<"$out" | tail -1 |sed -e "s/^\[\(.*\)\] \[\(.*\)\] .*/\1/g")"
     add_param_tags="$(head -2 <<<"$out" | tail -1 |sed -e "s/^\[\(.*\)\] \[\(.*\)\] .*/\2/g")"
 

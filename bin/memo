@@ -28,7 +28,6 @@ function _detect_editor(){
 }
 
 function _add(){
-  set -x
   local title
   local category
   local tags

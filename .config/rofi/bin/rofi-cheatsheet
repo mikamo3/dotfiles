@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -x
 CHEATSHEET_FILE_PATH="${CHEATSHEET_FILE_PATH:-${HOME}/.cheatsheet}"
 if [[ $# == 0 ]];then
   selected=$(~/bin/cheatsheet \
