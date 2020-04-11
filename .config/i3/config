@@ -248,6 +248,7 @@ mode "launch" {
     bindsym c exec ~/.config/rofi/bin/rofi-nerd-fonts-icons; mode "default"
     bindsym v exec ~/.config/rofi/bin/rofi-vscode; mode "default"
     bindsym r exec ~/.config/rofi/bin/rofi-open-repository; mode "default"
+    bindsym k exec ~/.config/rofi/bin/rofi-change-keytable; mode "default"
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }
