@@ -29,5 +29,5 @@ repourl="$(git remote get-url origin)"
 repopath="${repourl#*:}"
 repopath="${repopath//.git/}"
 
-ghq get "$repopath"
+ghq get -p "$repopath"
 rm -rf "$tempdir"
