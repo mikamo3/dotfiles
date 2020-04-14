@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 APP_NAME="arch update"
-UPDATE_RESULT_PATH="$HOME/.local/log/arch_update"
+UPDATE_RESULT_PATH="/tmp/arch_update"
 LOCALLOG="$HOME/.local/log/arch_update_$(date +%Y%m%d%H%M%S.log)"
 
 sh -c "
