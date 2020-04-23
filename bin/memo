@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-
+set -e
 MEMO_DIR=${MEMO_DIR:-~/.memo}
+CACHE_FILE=${MEMO_DIR}/.cache
 if [[ $# == 0 ]]; then
   cat <<EOF
 private memo.
@@ -15,9 +16,38 @@ Commands:
   del filename                                        Delete memo
   list --category | --tag | --title                   List categories
   search --category | --tag | --title searchword      Search memo
+  genindex                                            Regenerate search index
 EOF
   exit 1
 fi
+function _regenerate_index() {
+  : >"$CACHE_FILE"
+  while read -r f; do
+    _add_index "$f"
+  done < <(find "$MEMO_DIR" -type f -not -name "${CACHE_FILE##*/}")
+
+}
+function _add_index() {
+  local content
+  local title
+  local category
+  local tags
+  local filename
+  local index
+  content=$(sed -n 1,3p "$1")
+  filename=${1##*/}
+  title=$(echo "$content" | sed -n 1p | sed -e 's/^.*: *\(.*\) *$/\1/')
+  category=$(echo "$content" | sed -n 2p | sed -e 's/^.*: *\(.*\) *$/\1/')
+  tags=$(echo "$content" | sed -n 3p | sed -e 's/^.*: *\(.*\) *$/\1/')
+  index="${filename}\t${title}\t${category}\t${tags}"
+  sed -i -e "/^$filename/d" "${CACHE_FILE}"
+  echo -e "$index" >>"${CACHE_FILE}"
+}
+function _del_index() {
+  local filename
+  filename=${1##*/}
+  sed -i -e "/^$filename/d" "${CACHE_FILE}"
+}
 
 function _detect_editor() {
   for editor in "$EDITOR" nvim vim nano vi; do
@@ -83,10 +113,14 @@ Tag:$tags
   memofilepath="$MEMO_DIR/$(date +%s%3N | md5sum | cut -c 1-16)"
   echo "$TEMPLATE" >"$memofilepath"
   $editor "$memofilepath"
-  diff "$memofilepath" <(
+  if diff "$memofilepath" <(
     echo "$TEMPLATE"
-  ) &>/dev/null && rm "$memofilepath" || echo "add memo: $memofilepath"
-
+  ) &>/dev/null; then
+    rm "$memofilepath"
+  else
+    _add_index "$memofilepath"
+    echo "add memo: $memofilepath"
+  fi
 }
 
 _show() {
@@ -108,6 +142,7 @@ _edit() {
   fi
   editor=$(_detect_editor)
   $editor "${MEMO_DIR}/$1"
+  _add_index "${MEMO_DIR}/$1"
 }
 
 _del() {
@@ -119,48 +154,60 @@ _del() {
     echo "$1 does not exist" 1>&2
     exit 1
   fi
+  _del_index "${MEMO_DIR}/$1"
   rm "${MEMO_DIR}/$1" && echo "delete memo: $1"
 }
 
 _list() {
+  local POS_TITLE
+  local POS_CATEGORY
+  local POS_TAGS
+  POS_TITLE=2
+  POS_CATEGORY=3
+  POS_TAGS=4
+
   case "$1" in
   "--title")
-    find "${MEMO_DIR}" -type f -print0 | xargs --null -i% sed -n 1p % | sed -e 's/^.*: *\(.*\) *$/\1/' | sort | uniq
+    cut -f $POS_TITLE "${CACHE_FILE}" | sort | uniq
     ;;
   "--category")
-    find "${MEMO_DIR}" -type f -print0 | xargs --null -i% sed -n 2p % | sed -e 's/^.*: *\(.*\) *$/\1/' | sort | uniq
+    cut -f $POS_CATEGORY "${CACHE_FILE}" | sort | uniq
     ;;
   "--tag")
-    find "${MEMO_DIR}" -type f -print0 | xargs --null -i% sed -n 3p % | sed -e 's/^.*: *\(.*\) *$/\1/' | awk '{for(i=1;i<=NF;i++) print $i}' | sort | uniq
+    cut -f $POS_TAGS "${CACHE_FILE}" | awk '{for(i=1;i<=NF;i++) print $i}' | sort | uniq
     ;;
   *)
     echo "need --title | --category | --tag" 1>&2
     ;;
   esac
-}
 
+}
 _search() {
-  DISPLAY_COMMAND_TEMPLATE='
-        header=$(sed -e "s/^.*: *\(.*\) *$/\1/" %)
-        title=$(sed -n 1p <<<"$header")
-        category=$(sed -n 2p <<<"$header")
-        tag=$(sed -n 3p <<<"$header")
-        filename=$(sed -e "s/^.*\/\(.*\)$/\1/" <<<%)
-        grep -c "%WORD%" 1>/dev/null <<< $(sed -n 1p <<< "$%TARGET%") && echo -e "\e[32m[$category]\e[m \e[33m[$tag]\e[m $title \e[36m$filename\e[m"
-        '
-  local display_command
+  local POS_TITLE
+  local POS_CATEGORY
+  local POS_TAGS
+  local awk_program
+  POS_TITLE=2
+  POS_CATEGORY=3
+  POS_TAGS=4
+  AWK_PROGRAM_TEMPLATE='
+  BEGIN{FS="\t"}
+  { if (match($%POS%, "%WORD%")) {
+      printf ("\033[32m["$3"]\033[m \033[33m["$4"]\033[m "$2" \033[36m"$1"\033[m\n")
+    }
+  }'
   if [[ $# == 0 ]]; then
-    display_command="$(sed -e "s/%WORD%//g" -e "s/%TARGET%/title/g" <<<"$DISPLAY_COMMAND_TEMPLATE")"
+    awk_program="$(sed -e "s/%POS%/${POS_TITLE}/g" -e "s/%WORD%//g" <<<"${AWK_PROGRAM_TEMPLATE}")"
   else
     case "$1" in
     "--title")
-      display_command="$(sed -e "s/%WORD%/$2/g" -e "s/%TARGET%/title/g" <<<"$DISPLAY_COMMAND_TEMPLATE")"
+      awk_program="$(sed -e "s/%POS%/${POS_TITLE}/g" -e "s/%WORD%/$2/g" <<<"${AWK_PROGRAM_TEMPLATE}")"
       ;;
     "--category")
-      display_command="$(sed -e "s/%WORD%/$2/g" -e "s/%TARGET%/category/g" <<<"$DISPLAY_COMMAND_TEMPLATE")"
+      awk_program="$(sed -e "s/%POS%/${POS_CATEGORY}/g" -e "s/%WORD%/$2/g" <<<"${AWK_PROGRAM_TEMPLATE}")"
       ;;
     "--tag")
-      display_command="$(sed -e "s/%WORD%/$2/g" -e "s/%TARGET%/tag/g" <<<"$DISPLAY_COMMAND_TEMPLATE")"
+      awk_program="$(sed -e "s/%POS%/${POS_TAGS}/g" -e "s/%WORD%/$2/g" <<<"${AWK_PROGRAM_TEMPLATE}")"
       ;;
     *)
       echo "invalid option" 1>&2
@@ -168,10 +215,9 @@ _search() {
       ;;
     esac
   fi
-  find "${MEMO_DIR}" -type f -print0 \
-    | xargs --null -i% /usr/bin/env bash -c "$display_command" | sort
-
+  awk "${awk_program}" "${CACHE_FILE}" | sort
 }
+
 case "$1" in
 "add")
   shift
@@ -192,6 +238,9 @@ case "$1" in
 "search")
   shift
   _search "$@"
+  ;;
+"genindex")
+  _regenerate_index
   ;;
 *)
   echo "unknown command" 1>&2
