@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+<action>
+	<icon>catfish</icon>
+	<name>catfish</name>
+	<unique-id>1587549550467632-1</unique-id>
+	<command>catfish --path=%f</command>
+	<description>catfish</description>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<directories/>
+</action>
+<action>
+	<icon>utilities-terminal</icon>
+	<name>ここで Terminal を開く</name>
+	<unique-id>1584034919988687-1</unique-id>
+	<command>exo-open --working-directory %f --launch TerminalEmulator</command>
+	<description>Terminal</description>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<directories/>
+</action>
+</actions>
