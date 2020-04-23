@@ -2,8 +2,8 @@
 
 set -e
 FFMPEG_PATH=/usr/bin/ffmpeg
-PRESET_PARAM_INPUT="-loglevel error -y -c:v mpeg2_cuvid -deint 2 -drop_second_field 1 -i"
-PRESET_PARAM_OUTPUT="-c:v h264_nvenc -rc vbr_hq -c:a aac -b:a 192k -r:a 48000 -ac 2 -f mp4"
+PRESET_PARAM_INPUT="  -err_detect ignore_err -loglevel error -y -c:v mpeg2_cuvid -deint 2 -drop_second_field 1 -i"
+PRESET_PARAM_OUTPUT=" -c:v h264_nvenc -rc vbr_hq -acodec copy -f mp4"
 
 if [[ $# != 2 ]]; then
   echo "usage: $0 input output"

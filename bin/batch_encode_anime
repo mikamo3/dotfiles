@@ -31,8 +31,8 @@ encoding: $(basename "$RENAME_FILEPATH")"
 
   echo "encoding: $(basename "$RENAME_FILEPATH")" &>>"$LOG_FILEPATH"
 
-  if encode_anime "$RENAME_FILEPATH" "$OUTPUT_FILEPATH" &>>"$LOG_FILEPATH"; then
-    nofity-send --app-name="$APP_NAME" --urgency=critical "error!"
+  if ! encode_anime "$RENAME_FILEPATH" "$OUTPUT_FILEPATH" &>>"$LOG_FILEPATH"; then
+    notify-send --app-name="$APP_NAME" --urgency=critical "error!"
     exit 1
   fi
   mv "$RENAME_FILEPATH" "$DONE_FILEPATH"
