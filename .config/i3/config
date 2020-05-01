@@ -116,6 +116,7 @@ workspace $ws1 output $monitor_left
 
 # bind workspace for monitor_right
 workspace $ws2 output $monitor_right
+workspace $ws4 output $monitor_right
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -236,7 +237,7 @@ exec --no-startup-id ~/.config/i3/scripts/check_updates.sh &
 exec --no-startup-id /usr/bin/dropbox &
 exec --no-startup-id /usr/bin/slack &
 exec --no-startup-id /usr/bin/nm-applet &
-exec --no-startup-id xrandr --output HDMI-0 --primary --pos 2560x0 --output DP-0 --pos 0x0 --scale 1.333x1.333
+#exec --no-startup-id xrandr --fb 9000x2160 --output HDMI-0 --primary --pos 3840x0 --panning 5160x2160+3840+0 --scale 1.5x1.5 --output DP-0 --pos 0x0
 
 # scratchpad
 bindsym $mod+p scratchpad show

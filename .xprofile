@@ -1,3 +1,5 @@
+xrdb -merge $HOME/.Xresources
+
 export XDG_CONFIG_HOME=$HOME/.config
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
@@ -8,3 +10,4 @@ eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
 
 export QT_AUTO_SCREEN_SCALE_FACTOR=0
+xrandr --fb 9000x2160 --output HDMI-0 --primary --pos 3840x0 --panning 5160x2160+3840+0 --scale 1.5x1.5 --output DP-0 --pos 0x0
