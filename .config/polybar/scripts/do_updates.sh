@@ -10,9 +10,10 @@ if [[ $(pgrep -f "yay -Sy" | wc -l) != 0 ]];then
 fi
 
 notify-send --app-name=\"$APP_NAME\" \"start update\"
-yay -Syu --noconfirm  &> $LOCALLOG 
+yay -Syu --noconfirm &> $LOCALLOG 
 if [[ $? != 0 ]]; then
   notify-send --urgency=critical --app-name=\"$APP_NAME\" \"update failure\"
+  exit 1
 fi
 notify-send --app-name=\"$APP_NAME\" \"update success\"
 echo 0 >> $UPDATE_RESULT_PATH
