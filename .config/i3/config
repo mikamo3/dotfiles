@@ -10,8 +10,8 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 # monitor
-set $monitor_left DP-0
-set $monitor_right HDMI-0
+set $monitor_left DP-2
+set $monitor_right DP-0
 
 #mod
 set $mod Mod4
