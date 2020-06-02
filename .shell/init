@@ -46,8 +46,12 @@ init_environment() {
 
   echo "enable user service"
 
-  if ! systemctl --user is-active google-drive-ocamlfuse >/dev/null; then
-    systemctl --user enable google-drive-ocamlfuse
+  if ! systemctl --user is-active grive-changes@$(systemd-escape "$DIR_GOOGLE_DRIVE").service >/dev/null; then
+    systemctl --user enable grive-changes@$(systemd-escape "$DIR_GOOGLE_DRIVE").service
+  fi
+
+  if ! systemctl --user is-active grive-timer@$(systemd-escape "$DIR_GOOGLE_DRIVE").timer >/dev/null; then
+    systemctl --user enable grive-timer@$(systemd-escape "$DIR_GOOGLE_DRIVE").timer
   fi
 
   echo "init node"
