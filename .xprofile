@@ -9,5 +9,4 @@ export TERMINAL=alacritty
 eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
 export SSH_AUTH_SOCK
 
-export QT_AUTO_SCREEN_SCALE_FACTOR=0
-xrandr --fb 9000x2160 --output DP-0 --primary --pos 3840x0 --panning 5160x2160+3840+0 --scale 1.5x1.5 --output DP-2 --pos 0x0
+xrandr --fb 9000x2160 --output DP-0 --primary --pos 0x0 --scale 1.5x1.5 --output DP-2 --pos 5160x0
