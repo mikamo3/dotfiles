@@ -75,7 +75,7 @@ init_environment() {
 
   echo "install pynvim for nvim"
   if [[ $(pip list --user | grep -c pynvim) == 0 ]]; then
-    pip list --user | grep -c pynvim
+    pip install --user pynvim
   fi
 
   touch $INIT_DONE_PATH
