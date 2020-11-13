@@ -10,7 +10,7 @@ init_environment() {
   fi
 
   echo "update xdg user directory"
-  LC_ALL=C xdg-user-dirs-update
+  LC_ALL=C xdg-user-dirs-update --force
 
   echo "create directory"
 
