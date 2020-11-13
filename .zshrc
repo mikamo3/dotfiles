@@ -42,8 +42,10 @@ source ~/.shell/fzf_misc
 source ~/.shell/fzf_memo
 source ~/.shell/cd
 source ~/.shell/cheatsheet_generate
+
 #export
 export KAWAZU_ROOT_DIR=/usr/lib/kawazu
+export MEMO_DIR=~/googleDrive/.memo
 
 path=(
 	~/bin
@@ -94,4 +96,10 @@ bindkey -v
 # init
 if [[ -z "$TMUX" ]];then
   init_environment
+fi
+
+# gnome-keyring
+if [ -n "$DESKTOP_SESSION" ];then
+    eval $(gnome-keyring-daemon --start)
+    export SSH_AUTH_SOCK
 fi
