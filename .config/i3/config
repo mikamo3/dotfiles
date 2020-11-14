@@ -110,11 +110,11 @@ set $ws9 "9"
 workspace_layout tabbed
 
 # bind workspace for monitor_left
-workspace $ws1 output $monitor_left
+workspace $ws1 output $monitor_right
 
 # bind workspace for monitor_right
-workspace $ws2 output $monitor_right
-workspace $ws4 output $monitor_right
+workspace $ws2 output $monitor_left
+workspace $ws4 output $monitor_left
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
