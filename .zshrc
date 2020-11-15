@@ -43,6 +43,9 @@ source ~/.shell/fzf_memo
 source ~/.shell/cd
 source ~/.shell/cheatsheet_generate
 
+# github cli auto ompletion
+eval "$(gh completion -s zsh)"
+
 #export
 export KAWAZU_ROOT_DIR=/usr/lib/kawazu
 export MEMO_DIR=~/googleDrive/.memo
