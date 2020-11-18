@@ -1,0 +1,11 @@
+[Unit]
+Description=Runs check_update 
+
+[Timer]
+OnBootSec=1min
+# 実行する時間の間隔
+OnUnitActiveSec=3600s
+Unit=check_update.service
+
+[Install]
+WantedBy=multi-user.target
