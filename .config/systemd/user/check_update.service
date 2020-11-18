@@ -3,7 +3,7 @@ Description=check update
 
 [Service]
 Type=simple
-ExecStart=%h/.local/bin/check_update
+ExecStart=%h/bin/check_update
 
 [Install]
 WantedBy=multi-user.target
