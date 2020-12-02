@@ -1,8 +1,8 @@
 [Unit]
-Description=check update 
+Description=check update
 
 [Service]
-Type=simple
+Type=oneshot
 ExecStart=%h/bin/check_update
 
 [Install]
