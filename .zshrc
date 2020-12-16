@@ -82,7 +82,7 @@ zplug "x-motemen/ghq", as:command, from:gh-r
 zplug "rupa/z", use:z.sh
 zplug "changyuheng/zsh-interactive-cd"
 zplug "zsh-users/zsh-autosuggestions"
-
+zplug "mattberther/zsh-pyenv"
 
 if ! zplug check --verbose; then
 	printf "Install? [y/N]: "
