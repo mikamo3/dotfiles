@@ -54,6 +54,10 @@ init_environment() {
     systemctl --user enable grive-timer@$(systemd-escape "$DIR_GOOGLE_DRIVE").timer
   fi
 
+  if ! systemctl --user is-active check-update.timer >/dev/null; then
+    systemctl --user enable check-update.timer
+  fi
+
   echo "init node"
   if [[ $(nvm ls --no-colors | grep -Ec "^rc\\s*->\\s*v") == 0 ]]; then
     nvm install rc

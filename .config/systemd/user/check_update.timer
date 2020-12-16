@@ -8,4 +8,4 @@ OnUnitActiveSec=3600s
 Unit=check_update.service
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target

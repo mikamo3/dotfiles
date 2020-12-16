@@ -224,11 +224,8 @@ smart_borders on
 
 
 # autostart
-exec --no-startup-id fcitx
+exec --no-startup-id dex -a
 exec --no-startup-id picom -b --config ~/.config/picom/picom.conf
-exec --no-startup-id /usr/bin/dropbox &
-exec --no-startup-id /usr/bin/slack &
-exec --no-startup-id /usr/bin/nm-applet &
 
 # scratchpad
 bindsym $mod+p scratchpad show

@@ -5,5 +5,3 @@ Description=check update
 Type=oneshot
 ExecStart=%h/bin/check_update
 
-[Install]
-WantedBy=multi-user.target
