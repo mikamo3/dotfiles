@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -x
 mapfile -t REPOSITORIES < <(ghq list)
 
 if selected="$(

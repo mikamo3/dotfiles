@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -x
 KITCHENTIMER_CONFIG_PATH=$HOME/.local/kitchentimer_config
 KITCHENTIMER_COUNT=/tmp/kitchintimer_count
 
