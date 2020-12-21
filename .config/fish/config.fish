@@ -1,5 +1,6 @@
 set -U EDITOR nvim
-set PATH ~/bin ~/.local/bin /usr/sbin $PATH
+set PATH ~/bin ~/.local/bin $PATH
+
 set -U KAWAZU_ROOT_DIR /usr/lib/kawazu
 set -U MEMO_DIR ~/googleDrive/.memo
 
