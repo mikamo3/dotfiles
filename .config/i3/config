@@ -148,23 +148,23 @@ assign [class="Chromium"] $ws1
 assign [class="Code"] $ws2
 
 # video
-assign [class="vlc"] $ws4
+#assign [class="vlc"] $ws4
 
 # file
-assign [class="Thunar"] $ws5
+#assign [class="Thunar"] $ws5
 
 # document
-assign [class="okular"] $ws6
-assign [class="MuPDF"] $ws6
+#assign [class="okular"] $ws6
+#assign [class="MuPDF"] $ws6
 
 # chat
 assign [class="Slack"] $ws7
 
 # virtual
-assign [class="VirtualBox Manager"] $ws8
+#assign [class="VirtualBox Manager"] $ws8
 
 # remote
-assign [class="org.remmina.Remmina"] $ws9
+#assign [class="org.remmina.Remmina"] $ws9
 
 # floating
 for_window [class="Pavucontrol"] floating enable
