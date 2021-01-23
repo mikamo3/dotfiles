@@ -1,29 +1,6 @@
 #!/usr/bin/env bash
 RET_MEMO_SEARCH_BACK=16
-fzf_memo_list() {
-  local t out key search
-  local -a add_param
-  while :; do
-    t=$1
-    out=$(memo list "--$t" | fzf --prompt="list:$t >" --expect=ctrl-a --preview-window="up:70%" --preview "
-    memo search --$t {}
-    ")
-    key=$(head -1 <<<"$out")
-    search="$(head -2 <<<"$out" | tail -1)"
-
-    if [[ "$key" != "" ]]; then
-      add_param=("--$t" "$search")
-      memo add "${add_param[@]}"
-      return
-    fi
-    if [[ "$search" != "" ]]; then
-      fzf_memo_search "$t" "$search"
-      [[ "$?" != "$RET_MEMO_SEARCH_BACK" ]] && return
-    else
-      return
-    fi
-  done
-}
+SHELL="/bin/bash"
 
 fzf_memo_search() {
   local t w add_param_category add_param_tags key file
