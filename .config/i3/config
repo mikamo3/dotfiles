@@ -224,7 +224,6 @@ smart_borders on
 
 
 # autostart
-exec --no-startup-id dex -a
 exec --no-startup-id picom -b --config ~/.config/picom/picom.conf
 
 # scratchpad
