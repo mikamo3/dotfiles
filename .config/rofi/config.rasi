@@ -13,4 +13,5 @@ configuration {
 	kb-mode-previous: "Shift+Left,Control+ISO_Left_Tab,Control+h";
 	kb-row-up: "Up,Control+k,ISO_Left_Tab";
 	kb-row-down: "Down,Control+j";
+  kb-mode-complete: "";
 }
