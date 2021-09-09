@@ -1,8 +1,8 @@
-set -U EDITOR nvim
+set -Ux EDITOR nvim
 set PATH ~/bin ~/.local/bin $PATH
 
-set -U KAWAZU_ROOT_DIR /usr/lib/kawazu
-set -U MEMO_DIR ~/googleDrive/.memo
+set -Ux KAWAZU_ROOT_DIR /usr/lib/kawazu
+set -Ux MEMO_DIR ~/googleDrive/.memo
 
 set -g theme_display_vagrant yes
 set -g theme_display_nvm yes
@@ -21,9 +21,6 @@ set -g theme_color_scheme solarized-light
 set -g theme_project_dir_length 0
 set -g theme_newline_cursor yes
 set -g theme_newline_prompt '>> '
-
-pyenv init - | source
-nvm use latest
 
 fish_vi_key_bindings
 
