@@ -5,7 +5,6 @@ function initenv -d "initialize shell environment"
   echo "create directory"
 
   set  DIR_GOOGLE_DRIVE googleDrive
-  set  DIR_DROPBOX Dropbox
   set  DIR_WALLPAPER Pictures/wallpapers
   set  DIR_SCREENSHOT Pictures/screenshot
   set  DIR_LOCALLOG .local/log
@@ -13,7 +12,6 @@ function initenv -d "initialize shell environment"
 
   mkdir -p ~/$DIR_LOCALLOG
   mkdir -p ~/$DIR_GOOGLE_DRIVE
-  mkdir -p ~/$DIR_DROPBOX
   mkdir -p ~/$DIR_WALLPAPER
   mkdir -p ~/$DIR_SCREENSHOT
   mkdir -p ~/$DIR_CHEATSHEET
