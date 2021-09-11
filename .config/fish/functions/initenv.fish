@@ -20,7 +20,7 @@ function initenv -d "initialize shell environment"
 
   systemctl --user enable grive-changes@(systemd-escape "$DIR_GOOGLE_DRIVE").service
   systemctl --user enable grive-timer@(systemd-escape "$DIR_GOOGLE_DRIVE").timer
-
+  systemctl --user enable psd.service
   echo "install tpm plugin"
   if test ! -d ~/.tmux/plugins/tpm
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm

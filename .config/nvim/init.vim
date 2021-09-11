@@ -17,7 +17,6 @@ set wrapscan
 set showtabline=2
 set hidden
 
-let g:python3_host_prog = $HOME.'/.pyenv/versions/3.7.9/bin/python'
 " }}}
 
 " vim-plug {{{

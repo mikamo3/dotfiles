@@ -10,8 +10,8 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 # monitor
-set $monitor_left DisplayPort-0
-set $monitor_right DisplayPort-1
+set $monitor_left HDMI-A-0
+set $monitor_right DisplayPort-0
 
 #mod
 set $mod Mod4
@@ -227,6 +227,11 @@ smart_borders on
 exec --no-startup-id picom -b --config ~/.config/picom/picom.conf
 
 # scratchpad
+    # You can "split" the current object of your focus with
+    # $mod+b or $mod+v, for horizontal and vertical splits
+    # respectively.
+    bindsym $mod+b splith
+    bindsym $mod+v splitv
 bindsym $mod+p scratchpad show
 bindsym $mod+Shift+p move scratchpad
 
