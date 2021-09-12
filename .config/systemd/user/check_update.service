@@ -1,7 +1,0 @@
-[Unit]
-Description=check update
-
-[Service]
-Type=oneshot
-ExecStart=%h/bin/check_update
-
