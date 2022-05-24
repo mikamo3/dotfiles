@@ -4,13 +4,13 @@
 # environment variables. Some entries may override variables
 # set by alacritty itself.
 env:
-  TERM: alacritty
+  #TERM: alacritty
   #
   # This value is used to set the `$TERM` environment variable for
   # each instance of Alacritty. If it is not present, alacritty will
   # check the local terminfo database and use 'alacritty' if it is
   # available, otherwise 'xterm-256color' is used.
-  #TERM: xterm-256color
+  TERM: xterm-256color
 
 window:
   # Window dimensions (changes require restart)
@@ -106,30 +106,32 @@ font:
 colors:
   # Default colors
   primary:
-    background: '0x002b36' # base03
-    foreground: '0x839496' # base0
+    background: '0x121420'
+    foreground: '0xe9e9e9'
 
   # Normal colors
   normal:
-    black:   '0x073642' # base02
-    red:     '0xdc322f' # red
-    green:   '0x859900' # green
-    yellow:  '0xb58900' # yellow
-    blue:    '0x268bd2' # blue
-    magenta: '0xd33682' # magenta
-    cyan:    '0x2aa198' # cyan
-    white:   '0xeee8d5' # base2
+    black:   '0x282a2e'
+    red:     '0xfc464e'
+    green:   '0x50ca8d'
+    yellow:  '0xffd452'
+    blue:    '0x46c6f7'
+    magenta: '0xd33682'
+    cyan:    '0xff9352'
+    white:   '0x9267ff'
 
   # Bright colors
   bright:
-    black:   '0x002b36' # base03
-    red:     '0xcb4b16' # orange
-    green:   '0x586e75' # base01
-    yellow:  '0x657b83' # base00
-    blue:    '0x839496' # base0
-    magenta: '0x6c71c4' # violet
-    cyan:    '0x93a1a1' # base1
-    white:   '0xfdf6e3' # base3
+    black:   '0x373b41'
+    red:     '0xbd353b'
+    green:   '0x399165'
+    yellow:  '0xae9038'
+    blue:    '0x3189ab'
+    magenta: '0x9b285f'
+    cyan:    '0xa96136'
+    white:   '0x553c95'
+
+
   # Dim colors
   #
   # If the dim colors are not set, they will be calculated automatically based
@@ -180,7 +182,7 @@ bell:
 #
 # Window opacity as a floating point number from `0.0` to `1.0`.
 # The value `0.0` is completely transparent and `1.0` is opaque.
-background_opacity: 1.0
+window.opacity: 1.0
 
 # Mouse bindings
 #

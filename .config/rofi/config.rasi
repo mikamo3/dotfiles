@@ -5,7 +5,6 @@ configuration {
 	sort: true;
 	sidebar-mode: true;
 	dpi: 144;
-	theme: "/usr/share/rofi/themes/solarized_alternate.rasi";
 	kb-remove-char-back: "BackSpace";
 	kb-remove-to-eol: "Control+C";
 	kb-accept-entry: "Return,KP_Enter";
@@ -15,3 +14,4 @@ configuration {
 	kb-row-down: "Down,Control+j";
   kb-mode-complete: "";
 }
+@theme "/usr/share/rofi/themes/solarized_alternate.rasi"
