@@ -31,6 +31,7 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'Shougo/neco-vim'
   Plug 'airblade/vim-gitgutter'
   Plug 'altercation/vim-colors-solarized'
+  Plug 'lifepillar/vim-solarized8'
   Plug 'bronson/vim-trailing-whitespace'
   Plug 'easymotion/vim-easymotion'
   Plug 'editorconfig/editorconfig-vim'
