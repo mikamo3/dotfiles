@@ -145,7 +145,7 @@ assign [class="Google-chrome"] $ws1
 assign [class="Chromium"] $ws1
 
 # code
-assign [class="Code"] $ws2
+#assign [class="Code"] $ws2
 
 # video
 #assign [class="vlc"] $ws4
@@ -158,7 +158,7 @@ assign [class="Code"] $ws2
 #assign [class="MuPDF"] $ws6
 
 # chat
-assign [class="Slack"] $ws7
+#assign [class="Slack"] $ws7
 
 # virtual
 #assign [class="VirtualBox Manager"] $ws8
