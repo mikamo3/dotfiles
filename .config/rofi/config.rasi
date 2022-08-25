@@ -8,9 +8,9 @@ configuration {
 	kb-remove-char-back: "BackSpace";
 	kb-remove-to-eol: "Control+C";
 	kb-accept-entry: "Return,KP_Enter";
-	kb-mode-next: "Shift+Right,Control+Tab,Control+l";
-	kb-mode-previous: "Shift+Left,Control+ISO_Left_Tab,Control+h";
-	kb-row-up: "Up,Control+k,ISO_Left_Tab";
+	kb-mode-next: "Control+l";
+	kb-mode-previous: "Control+h";
+	kb-row-up: "Up,Control+k";
 	kb-row-down: "Down,Control+j";
   kb-mode-complete: "";
 }
