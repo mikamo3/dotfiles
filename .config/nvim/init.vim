@@ -30,8 +30,6 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'simeji/winresizer'
   Plug 'Shougo/neco-vim'
   Plug 'airblade/vim-gitgutter'
-  Plug 'altercation/vim-colors-solarized'
-  Plug 'lifepillar/vim-solarized8'
   Plug 'bronson/vim-trailing-whitespace'
   Plug 'easymotion/vim-easymotion'
   Plug 'editorconfig/editorconfig-vim'
@@ -95,7 +93,6 @@ nmap s <Plug>(easymotion-s2)
 " }}}
 
 " vim-airline {{{
-colorscheme solarized
 let g:girline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_left_sep = ' '
