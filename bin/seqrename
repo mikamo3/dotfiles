@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [ $# != 1 ];then
+  echo "usage $0 ext"
+  exit
+fi
+ls *.$1 | awk '{ printf "%s %03d\n", $0, NR }'|sed -e "s/\(.*\)\(\..* \)\([0-9]*\)$/mv \1\2\3\2/g"|sh
