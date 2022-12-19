@@ -7,7 +7,14 @@ killall -q polybar
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
 # Launch Polybar, using default config location ~/.config/polybar/config
-polybar -r -c ~/.config/polybar/config.ini top  &
-polybar -r -c ~/.config/polybar/config.ini bottom  &
+if type "xrandr"; then
+  for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
+    MONITOR=$m polybar --reload -c ~/.config/polybar/config.ini top &
+    MONITOR=$m polybar --reload -c ~/.config/polybar/config.ini bottom &
+  done
+else
+  polybar -r -c ~/.config/polybar/config.ini top  &
+  polybar -r -c ~/.config/polybar/config.ini bottom  &
+fi
 
 echo "Polybar launched..."
