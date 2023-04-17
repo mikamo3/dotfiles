@@ -19,7 +19,7 @@ fi
 
 tmpdir=$(mktemp -d)
 cd "$tmpdir"
-gh repo create "$REPOS_NAME" "${REPOS_FLG}" -y
+gh repo create "$REPOS_NAME" "${REPOS_FLG}"
 
 #FIXME: username
 ghq get mikamo3/"${REPOS_NAME}"
