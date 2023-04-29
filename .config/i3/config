@@ -222,11 +222,10 @@ gaps inner 10
 smart_gaps on
 smart_borders on
 
-
 # autostart
 exec --no-startup-id picom -b --config ~/.config/picom/picom.conf
 exec --no-startup-id dunst
-exec --no-startup-id feh --bg-max ~/Pictures/wallpapers/svyoyaku_a2_1920x1080.jpg --bg-max ~/Pictures/wallpapers/svyoyaku_b1_1920x1080.jpg
+exec --no-startup-id dwall -s mojave
 exec --no-startup-id xrandr --output HDMI-A-0 --scale 0.9999x0.9999
 exec --no-startup-id ulauncher --hide-window
 # scratchpad
@@ -238,25 +237,11 @@ bindsym $mod+v splitv
 bindsym $mod+p scratchpad show
 bindsym $mod+Shift+p move scratchpad
 
-# launch mode
-mode "launch" {
-    bindsym s exec ~/.config/rofi/bin/rofi-search-web; mode "default"
-    bindsym b exec ~/.config/rofi/bin/rofi-private-browsing; mode "default"
-    bindsym c exec ~/.config/rofi/bin/rofi-nerd-fonts-icons; mode "default"
-    bindsym v exec ~/.config/rofi/bin/rofi-vscode; mode "default"
-    bindsym r exec ~/.config/rofi/bin/rofi-open-repository; mode "default"
-    bindsym Escape mode "default"
-    bindsym Return mode "default"
-}
-
 # keybinding
-bindsym $mod+Shift+e exec --no-startup-id ~/.config/rofi/bin/rofi-power
-bindsym $mod+c exec ~/.config/rofi/bin/rofi-cheatsheet; mode "default"
 bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
 bindsym $mod+d exec ulauncher-toggle
 bindsym $mod+e exec nemo
-bindsym $mod+z mode "launch"
 
 ## screenshot
 bindsym --release Print exec flameshot gui 
