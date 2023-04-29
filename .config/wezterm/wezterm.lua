@@ -5,18 +5,23 @@ local config={}
 if wezterm.config_builder then
   config = wezterm.config_builder()
 end
-wezterm.on('update-right-status', function(window, pane)
-  local name = window:active_key_table()
-  if name then
-    name = 'TABLE: ' .. name
-  end
-  window:set_right_status(name or '')
-end)
-config.leader = { key = '/', mods = 'ALT' }
+
+config.font=wezterm.font("monospace")
+config.font_size=14
+config.use_ime=true
+config.color_scheme="Solarized (dark) (terminal.sexy)"
+config.selection_word_boundary = " \t\n{}[]()\"'`,;:│=&!%"
+config.use_fancy_tab_bar=false
+config.adjust_window_size_when_changing_font_size = false
+config.warn_about_missing_glyphs = false
+config.animation_fps = 1
+config.cursor_blink_ease_in = 'Constant'
+config.cursor_blink_ease_out = 'Constant'
+
 config.keys = {
   {
-    key = 'a',
-    mods = 'LEADER',
+    key = '/',
+    mods = 'ALT',
     action = act.ActivateKeyTable {
       name = 'resize_pane',
       one_shot = false,
@@ -60,24 +65,23 @@ config.key_tables = {
   },
 }
 
-config.font=wezterm.font("monospace")
-config.font_size=14
-config.use_ime=true
-config.color_scheme="Solarized (dark) (terminal.sexy)"
-config.selection_word_boundary = " \t\n{}[]()\"'`,;:│=&!%"
-config.use_fancy_tab_bar=false
-config.adjust_window_size_when_changing_font_size = false
-config.warn_about_missing_glyphs = false
-config.animation_fps = 1
-config.cursor_blink_ease_in = 'Constant'
-config.cursor_blink_ease_out = 'Constant'
 
 wezterm.on("update-right-status", function(window, pane)
 	local cwd = " "..pane:get_current_working_dir():sub(8).." "; -- remove file:// uri prefix
 	local date = wezterm.strftime(" %H:%M:%S  %Y/%m/%d ");
 	local hostname = " "..wezterm.hostname().." ";
-
+	local name = window:active_key_table()
+	if name then
+		name = "Mode: " .. name
+  else
+    name =""
+	end
 	window:set_right_status(
+		wezterm.format({
+			{Foreground={Color="#ffffff"}},
+			{Background={Color="#00875f"}},
+			{Text=name},
+		})..
 		wezterm.format({
 			{Foreground={Color="#ffffff"}},
 			{Background={Color="#005f5f"}},
