@@ -2,7 +2,7 @@ set -Ux EDITOR nvim
 set PATH ~/bin ~/.local/bin $PATH
 
 set -Ux KAWAZU_ROOT_DIR /usr/lib/kawazu
-set -Ux MEMO_DIR ~/googleDrive/.memo
+set -Ux MEMO_DIR ~/google-drive/.memo
 
 set -g theme_display_vagrant yes
 set -g theme_display_nvm yes

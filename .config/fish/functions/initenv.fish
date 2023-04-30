@@ -4,7 +4,7 @@ function initenv -d "initialize shell environment"
 
   echo "create directory"
 
-  set  DIR_GOOGLE_DRIVE googleDrive
+  set  DIR_GOOGLE_DRIVE google-drive
   set  DIR_WALLPAPER Pictures/wallpapers
   set  DIR_SCREENSHOT Pictures/screenshot
   set  DIR_LOCALLOG .local/log
