@@ -9,7 +9,7 @@ end
 config.font=wezterm.font("monospace")
 config.font_size=14
 config.use_ime=true
-config.color_scheme="Solarized (dark) (terminal.sexy)"
+config.color_scheme="Solarized Dark (Gogh)"
 config.selection_word_boundary = " \t\n{}[]()\"'`,;:│=&!%"
 config.use_fancy_tab_bar=false
 config.adjust_window_size_when_changing_font_size = false
@@ -19,52 +19,29 @@ config.cursor_blink_ease_in = 'Constant'
 config.cursor_blink_ease_out = 'Constant'
 
 config.keys = {
-  {
-    key = '/',
-    mods = 'ALT',
-    action = act.ActivateKeyTable {
-      name = 'resize_pane',
-      one_shot = false,
-    },
-  },
 
 	{ key = "=", mods = "ALT", action = "ResetFontSize" },
 	{ key = "+", mods = "CTRL|SHIFT", action = "IncreaseFontSize" },
 	{ key = "-", mods = "CTRL|SHIFT", action = "DecreaseFontSize" },
   { key = "-", mods = "ALT", action = act({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
   { key = "\\", mods = "ALT", action = act({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
+	{ key = 'LeftArrow', mods = "ALT", action = act.AdjustPaneSize { 'Left', 1 } },
+	{ key = 'h', mods = "ALT", action = act.AdjustPaneSize { 'Left', 1 } },
+	{ key = 'RightArrow', mods = "ALT", action = act.AdjustPaneSize { 'Right', 1 } },
+	{ key = 'l', mods = "ALT", action = act.AdjustPaneSize { 'Right', 1 } },
+	{ key = 'UpArrow', mods = "ALT", action = act.AdjustPaneSize { 'Up', 1 } },
+	{ key = 'k', mods = "ALT", action = act.AdjustPaneSize { 'Up', 1 } },
+	{ key = 'DownArrow', mods = "ALT", action = act.AdjustPaneSize { 'Down', 1 } },
+	{ key = 'j', mods = "ALT", action = act.AdjustPaneSize { 'Down', 1 } },
+	{ key = 'LeftArrow', mods = "ALT", mods = "SHIFT", action = act.ActivatePaneDirection 'Left' },
+	{ key = 'h', mods = "ALT|SHIFT", action = act.ActivatePaneDirection 'Left' },
+	{ key = 'RightArrow', mods = "ALT|SHIFT", action = act.ActivatePaneDirection 'Right' },
+	{ key = 'l', mods = "ALT|SHIFT", action = act.ActivatePaneDirection 'Right' },
+	{ key = 'UpArrow', mods = "ALT|SHIFT", action = act.ActivatePaneDirection 'Up' },
+	{ key = 'k', mods = "ALT|SHIFT", action = act.ActivatePaneDirection 'Up' },
+	{ key = 'DownArrow', mods = "ALT|SHIFT", action = act.ActivatePaneDirection 'Down' },
+	{ key = 'j', mods = "ALT|SHIFT", action = act.ActivatePaneDirection 'Down' },
 }
-config.key_tables = {
-  resize_pane = {
-    { key = 'LeftArrow', action = act.AdjustPaneSize { 'Left', 1 } },
-    { key = 'h', action = act.AdjustPaneSize { 'Left', 1 } },
-
-    { key = 'RightArrow', action = act.AdjustPaneSize { 'Right', 1 } },
-    { key = 'l', action = act.AdjustPaneSize { 'Right', 1 } },
-
-    { key = 'UpArrow', action = act.AdjustPaneSize { 'Up', 1 } },
-    { key = 'k', action = act.AdjustPaneSize { 'Up', 1 } },
-
-    { key = 'DownArrow', action = act.AdjustPaneSize { 'Down', 1 } },
-    { key = 'j', action = act.AdjustPaneSize { 'Down', 1 } },
-
-    { key = 'LeftArrow', mods = "SHIFT", action = act.ActivatePaneDirection 'Left' },
-    { key = 'h',mods = "SHIFT", action = act.ActivatePaneDirection 'Left' },
-
-    { key = 'RightArrow',mods = "SHIFT", action = act.ActivatePaneDirection 'Right' },
-    { key = 'l',mods = "SHIFT", action = act.ActivatePaneDirection 'Right' },
-
-    { key = 'UpArrow',mods = "SHIFT", action = act.ActivatePaneDirection 'Up' },
-    { key = 'k',mods = "SHIFT", action = act.ActivatePaneDirection 'Up' },
-
-    { key = 'DownArrow',mods = "SHIFT", action = act.ActivatePaneDirection 'Down' },
-    { key = 'j',mods = "SHIFT", action = act.ActivatePaneDirection 'Down' },
-
-    { key = 'Escape', action = 'PopKeyTable' },
-    { key = 'Enter', action = 'PopKeyTable' },
-  },
-}
-
 
 wezterm.on("update-right-status", function(window, pane)
 	local cwd = " "..pane:get_current_working_dir():sub(8).." "; -- remove file:// uri prefix
