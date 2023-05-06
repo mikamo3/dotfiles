@@ -3,9 +3,9 @@ HEADSET_MACADDRESS="F4:4E:FD:00:39:23"
 
 print_status() {
   if bluetoothctl info $HEADSET_MACADDRESS | grep -q "Connected: yes"; then
-    echo ""
+    echo "󰗾"
   else
-    echo ""
+    echo "󰗿"
   fi
 }
 toggle_connect() {
