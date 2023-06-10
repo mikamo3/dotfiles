@@ -244,7 +244,7 @@ bindsym $mod+d exec ulauncher-toggle
 bindsym $mod+e exec nemo
 
 ## screenshot
-bindsym --release Print exec flameshot gui 
+bindsym --release Print exec flameshot gui
 bindsym --release Ctrl+Print exec flameshot full
 bindsym --release Shift+Print exec flameshot screen
 

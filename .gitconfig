@@ -17,3 +17,8 @@
 	protocol = https
 [credential]
 	helper = /usr/lib64/git-core/git-credential-libsecret
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
