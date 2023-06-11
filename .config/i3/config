@@ -9,10 +9,6 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
-# monitor
-set $monitor_left HDMI-A-0
-set $monitor_right DisplayPort-0
-
 #mod
 set $mod Mod4
 
@@ -108,13 +104,6 @@ set $ws9 "9"
 
 # workspace layout
 workspace_layout tabbed
-
-# bind workspace for monitor_left
-workspace $ws1 output $monitor_right
-
-# bind workspace for monitor_right
-workspace $ws2 output $monitor_left
-workspace $ws4 output $monitor_left
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
