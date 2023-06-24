@@ -5,8 +5,6 @@ export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 
-eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
-export SSH_AUTH_SOCK
+export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh
 
-#xrandr --fb 9000x2160 --output HDMI-A-0 --primary --pos 0x0 --scale 1.5x1.5 --mode 3440x1440 --output DisplayPort-0 --pos 5160x0 --mode 3840x2160 --rate 60
 dex -a
