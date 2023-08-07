@@ -9,6 +9,7 @@ end
 config.font=wezterm.font("monospace")
 config.font_size=14
 config.use_ime=true
+config.xim_im_name = "fcitx"
 config.color_scheme="Solarized Dark (Gogh)"
 config.selection_word_boundary = " \t\n{}[]()\"'`,;:│=&!%"
 config.use_fancy_tab_bar=false
