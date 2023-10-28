@@ -223,8 +223,8 @@ bindsym $mod+e exec nemo
 # for rotary encorder
 bindsym $mod+Left resize shrink width 10 px or 10 ppt
 bindsym $mod+Right resize grow width 10 px or 10 ppt
-bindsym $mod+Up focus next
-bindsym $mod+Down focus prev
+bindsym $mod+Up move right
+bindsym $mod+Down move left
 
 ## screenshot
 bindsym --release Print exec flameshot gui
