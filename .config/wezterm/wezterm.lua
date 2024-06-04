@@ -6,7 +6,7 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
-config.font=wezterm.font("monospace")
+config.font=wezterm.font("PlemolJP Console NF")
 config.font_size=14
 config.use_ime=true
 config.xim_im_name = "fcitx"
