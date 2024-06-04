@@ -9,7 +9,7 @@ killall -q polybar
 
 # Wait until the processes have been shut down
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
-profile=$(autorandr --detected)
+profile=$(autorandr --detected|head -n1)
 if [[ "$profile" == "minipc_single_usbc" ]];then
   master="DisplayPort-0"
   slave=""

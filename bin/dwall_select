@@ -6,4 +6,4 @@ len=${#arr[@]}
 rand_index=$(($RANDOM % $len))
 element=${arr[$rand_index]}
 
- /usr/bin/dwall -s $element 
+/usr/bin/dwall -s $element
