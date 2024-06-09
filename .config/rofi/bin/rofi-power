@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 command_caption_list=(
-  "<span lang='fast-forward'face='Symbols Nerd Font'>&#xf011;</span> Shutdown"
-  "<span lang='fast-forward'face='Symbols Nerd Font'>&#xf0e2;</span> Reboot"
-  "<span lang='fast-forward'face='Symbols Nerd Font'>&#xf842;</span> Logout"
-  "<span lang='fast-forward'face='Symbols Nerd Font'>&#xf023;</span> Lock"
+  "Shutdown"
+  "Reboot"
+  "Logout"
+  "Lock"
 )
 command_exec_list=(
   "systemctl poweroff"
@@ -12,15 +12,7 @@ command_exec_list=(
   "i3lock-fancy"
 )
 
-selected="$(
-  for cmd in "${command_caption_list[@]}"; do
-    echo "$cmd"
-  done | rofi -dmenu -markup-rows -i -p system
-)"
-
 for ((i = 0; i < ${#command_caption_list[@]}; i++)); do
-  if [[ "$selected" == "${command_caption_list[$i]}" ]]; then
-    ${command_exec_list[$i]}
-    exit
-  fi
+  [[ -z "$@" ]] && echo "${command_caption_list[$i]}" && continue
+  [[ "$@" == "${command_caption_list[$i]}" ]] && eval "${command_exec_list[$i]}" && exit
 done

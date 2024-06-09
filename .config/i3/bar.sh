@@ -5,7 +5,7 @@ if [ -z "$1" ]; then
     exit 1
 elif [ "$1" == "top" ]; then
 bumblebee-status \
-               -m hostname date time xrandr bluetooth2  \
+               -m hostname xrandr bluetooth2 date time \
                -p date.format="%Y-%m-%d" \
                time.format="%T" \
                interval=1 \

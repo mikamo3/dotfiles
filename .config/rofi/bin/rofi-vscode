@@ -2,11 +2,7 @@
 
 mapfile -t WORK_DIRS < <(ghq list -p)
 
-if selected="$(
-  for ((i = 0; i < ${#WORK_DIRS[@]}; i++)); do
-    echo "${WORK_DIRS[$i]}"
-  done | rofi -dmenu -i -p vscode:workdirectory
-)"; then
-  code --folder-uri "$selected"
-  exit
-fi
+for WORK_DIR in "${WORK_DIRS[@]}"; do
+  [[ -z "$@" ]] && echo "$WORK_DIR" && continue
+  [[ "$@" == "${WORK_DIR}" ]] && eval code "$WORK_DIR" & exit
+done

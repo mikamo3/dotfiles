@@ -1,7 +1,6 @@
 # autostart
 exec --no-startup-id picom -b --config ~/.config/picom/picom.conf
 exec --no-startup-id ~/bin/dwall_select
-exec --no-startup-id ulauncher --hide-window
 #mod
 set $mod Mod4
 
@@ -85,7 +84,7 @@ bindsym $mod+Shift+p move scratchpad
 
 bindsym $mod+Tab workspace next
 bindsym $mod+Shift+Tab workspace prev
-bindsym $mod+d exec ulauncher-toggle
+bindsym $mod+d exec rofi -show drun
 bindsym $mod+e exec nemo
 
 # for rotary encorder
@@ -113,33 +112,33 @@ bindsym $mod+Shift+r restart
 
 bindsym $mod+r mode "resize"
 mode "resize" {
-				bindsym h resize shrink width 10 px or 10 ppt
-				bindsym j resize grow height 10 px or 10 ppt
-				bindsym k resize shrink height 10 px or 10 ppt
-				bindsym l resize grow width 10 px or 10 ppt
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
 
-				bindsym Return mode "default"
-				bindsym Escape mode "default"
-				bindsym $mod+r mode "default"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
 }
 
 bar {
-	id 1
-	position top
-	font pango:Cica 14
-	output primary
-	tray_output primary
-	status_command ~/.config/i3/bar.sh top
+  id 1
+  position top
+  font pango:Cica 14
+  output primary
+  tray_output primary
+  status_command ~/.config/i3/bar.sh top
 }
 
 bar {
-	id 2
-	position bottom
-	font pango:Cica 14
-	output primary
-	tray_output none
-	workspace_buttons no
-	status_command ~/.config/i3/bar.sh bottom
+  id 2
+  position bottom
+  font pango:Cica 14
+  output primary
+  tray_output none
+  workspace_buttons no
+  status_command ~/.config/i3/bar.sh bottom
 }
 
 # gaps
