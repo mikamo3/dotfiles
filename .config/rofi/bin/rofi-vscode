@@ -4,5 +4,5 @@ mapfile -t WORK_DIRS < <(ghq list -p)
 
 for WORK_DIR in "${WORK_DIRS[@]}"; do
   [[ -z "$@" ]] && echo "$WORK_DIR" && continue
-  [[ "$@" == "${WORK_DIR}" ]] && eval code "$WORK_DIR" & exit
+  [[ "$@" == "${WORK_DIR}" ]] && eval code "$WORK_DIR" && exit
 done
