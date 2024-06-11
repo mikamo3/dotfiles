@@ -126,7 +126,6 @@ bar {
   id 1
   position top
   font pango:Cica 14
-  output primary
   tray_output primary
   status_command ~/.config/i3/bar.sh top
 }
