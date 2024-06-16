@@ -5,7 +5,7 @@ if [ -z "$1" ]; then
     exit 1
 elif [ "$1" == "top" ]; then
 bumblebee-status \
-               -m  xrandr bluetooth2 date time uptime dunst \
+               -m  xrandr bluetooth2 date time  dunst \
                -p date.format="%Y-%m-%d" \
                time.format="%T" \
                interval=1 \
@@ -13,7 +13,7 @@ bumblebee-status \
 elif [ "$1" == "bottom" ]; then
   bumblebee-status \
                -m hostname  nic cpu2 memory disk arch-update \
-               -p nic.exclude=lo,br-,docker,virbr \
+               -p nic.exclude=lo,br-,docker,virbr,vnet \
                interval=1 \
                cpu2.layout="cpu2.cpuload cpu2.coresload"  \
                -t solarized-powerline
