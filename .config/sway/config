@@ -1,0 +1,153 @@
+# autostart
+exec wl-paste -t text --watch clipman store --no-persist
+#exec --no-startup-id picom -b --config ~/.config/picom/picom.conf
+#exec --no-startup-id ~/bin/dwall_select
+#mod
+set $mod Mod4
+
+floating_modifier $mod
+
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+
+# workspace layout
+workspace_layout tabbed
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+
+font pango:PlemolJP Console NF 12
+
+
+bindsym $mod+Return exec alacritty
+
+bindsym $mod+Shift+q kill
+
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+bindsym $mod+bar split h
+bindsym $mod+minus split v
+
+bindsym $mod+f fullscreen toggle
+
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+t layout toggle split
+
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+bindsym $mod+a focus parent
+
+bindsym $mod+b splith
+bindsym $mod+v splitv
+bindsym $mod+p scratchpad show
+bindsym $mod+Shift+p move scratchpad
+
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
+bindsym $mod+d exec rofi -show drun
+bindsym $mod+e exec nemo
+
+# for rotary encorder
+bindsym $mod+Left resize shrink width 10 px or 10 ppt
+bindsym $mod+Right resize grow width 10 px or 10 ppt
+bindsym $mod+Up move right
+bindsym $mod+Down move left
+
+## screenshot
+bindsym --release Print exec flameshot gui
+bindsym --release Ctrl+Print exec flameshot full
+bindsym --release Shift+Print exec flameshot screen
+
+# floating
+for_window [class="Pavucontrol"] floating enable
+for_window [class="Authy Desktop"] move window to scratchpad, scratchpad show
+for_window [class="KeePassXC"] move window to scratchpad, scratchpad show
+
+# move current workspace to the next output
+bindsym $mod+Ctrl+l move workspace to output right
+bindsym $mod+Ctrl+h move workspace to output left
+
+bindsym $mod+Shift+r exec swaymsg reload
+
+bindsym $mod+r mode "resize"
+mode "resize" {
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bar {
+  id 1
+  position top
+  font pango:Cica 14
+  tray_output primary
+  status_command ~/.config/i3/bar.sh top
+}
+
+bar {
+  id 2
+  position bottom
+  font pango:Cica 14
+  tray_output none
+  workspace_buttons no
+  status_command ~/.config/i3/bar.sh bottom
+}
+
+# gaps
+gaps outer 0
+gaps inner 10
+smart_gaps on
+smart_borders on
+
+# color
+# class                 border    backgr     text
+client.focused          #859900   #073642    #cb4b16
+client.focused_inactive #586e75   #586e75    #93a1a1
+client.unfocused        #586e75   #586e75    #93a1a1
+client.urgent           #dc322f   #dc322f    #eee8d5
