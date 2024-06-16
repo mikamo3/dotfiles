@@ -1,6 +1,5 @@
 # autostart
-exec --no-startup-id picom -b --config ~/.config/picom/picom.conf
-exec --no-startup-id ~/bin/dwall_select
+exec_always "systemctl --user start i3-session.target"
 #mod
 set $mod Mod4
 
