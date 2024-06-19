@@ -1,5 +1,7 @@
 # autostart
 exec_always "systemctl --user start i3-session.target"
+# workspace layout
+workspace_layout tabbed
 #mod
 set $mod Mod4
 
@@ -15,8 +17,6 @@ set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
 
-# workspace layout
-workspace_layout tabbed
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
