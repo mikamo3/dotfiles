@@ -1,6 +1,11 @@
 # autostart
-exec_always "systemctl --user import-environment; systemctl --user start sway-session.target"
+exec "systemctl --user import-environment {,WAYLAND_}DISPLAY SWAYSOCK; systemctl --user start sway-session.target"
+exec hash dbus-update-activation-environment 2>/dev/null && \
+     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+exec swaymsg -t subscribe '["shutdown"]' && systemctl --user stop sway-session.target
 exec wl-paste -t text --watch clipman store --no-persist
+exec nm-applet --indicator
+exec mako
 
 seat seat0 xcursor_theme volantes_cursors 64
 
@@ -33,7 +38,7 @@ floating_modifier $mod
 
 bindsym $mod+Return exec $term
 bindsym $mod+d exec $menu
-bindsym $mod+Shift+r exec swaymsg reload
+bindsym $mod+Shift+r reload
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1

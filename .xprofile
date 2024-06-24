@@ -7,4 +7,6 @@ export XMODIFIERS=@im=fcitx
 
 export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh
 
-dex -a
+if [ "$XDG_SESSION_TYPE" = "x11" ]; then
+  dex -a
+fi
