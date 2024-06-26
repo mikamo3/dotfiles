@@ -1,4 +1,5 @@
 # autostart
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_CURRENT_SESSION
 exec "systemctl --user import-environment {,WAYLAND_}DISPLAY SWAYSOCK; systemctl --user start sway-session.target"
 exec hash dbus-update-activation-environment 2>/dev/null && \
      dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
@@ -6,7 +7,8 @@ exec swaymsg -t subscribe '["shutdown"]' && systemctl --user stop sway-session.t
 exec wl-paste -t text --watch clipman store --no-persist
 exec nm-applet --indicator
 exec mako
-
+exec kanshi
+for_window [app_id="flameshot"] border pixel 0, floating enable, fullscreen disable, move absolute position 0 0
 seat seat0 xcursor_theme volantes_cursors 64
 
 # workspace layout
@@ -38,7 +40,7 @@ floating_modifier $mod
 
 bindsym $mod+Return exec $term
 bindsym $mod+d exec $menu
-bindsym $mod+Shift+r reload
+bindsym $mod+Shift+r reload;exec kanshictl reload
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
