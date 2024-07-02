@@ -77,7 +77,7 @@ let g:ale_fixers = {
 " }}}
 
 " deoplete {{{
-let g:deoplete#enable_at_startup = 1
+"let g:deoplete#enable_at_startup = 1
 " }}}
 
 " vim-gitgutter {{{
