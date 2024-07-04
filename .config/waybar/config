@@ -9,8 +9,7 @@
     "sway/window"
   ],
   "modules-right": [
-    "cpu",
-    "memory",
+    "wireplumber",
     "clock",
     "network",
     "tray"
@@ -32,24 +31,54 @@
     }
   },
   "sway/mode": {
-    "format": "<span style=\"italic\">{}</span>"
+    "format": "<span style=\"italic\">  {}</span>",
+    "tooltip": false
+  },
+  "sway/window": {
+    "format": "{}",
+    "max-length": 120
   },
   "cpu": {
-    "format": " {usage}%"
+    "format": " {usage}%"
   },
   "memory": {
-    "format": " {}%"
+    "format": " {}%"
+  },
+  "disk": {
+    "interval": 30,
+    "format": " {used}/{total}",
+    "path": "/",
+    "unit": "GB"
   },
   "clock": {
+    "interval": 1,
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-    "format": "{:L%Y-%m-%d<small>[%a]</small> %H:%M:%S}"
+    "format": "{:%Y-%m-%d [%a] %H:%M:%S}"
   },
   "network": {
     "format-wifi": "{essid} ({signalStrength}%) ",
-    "format-ethernet": " {ifname}",
+    "format-ethernet": "󰌗 {ifname}: {ipaddr}/{cidr}",
     "tooltip-format": " {ifname} via {gwaddr}",
     "format-linked": " {ifname} (No IP)",
     "format-disconnected": "Disconnected ⚠ {ifname}",
-    "format-alt": " {ifname}: {ipaddr}/{cidr}"
+    "format-alt": "󰌗 {ifname}: {ipaddr}/{cidr}"
   },
+  "bluetooth": {
+    "format": " {status}",
+    "format-connected": " {device_alias}",
+    "format-disabled": "",
+    "format-off": "",
+    "format-connected-battery": " {device_alias} {device_battery_percentage}%",
+    "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%"
+  },
+  "wireplumber": {
+    "format": "{volume}%",
+    "format-muted": "",
+    "on-click": "helvum",
+    "max-volume": 150,
+    "scroll-step": 5
+  }
 }
