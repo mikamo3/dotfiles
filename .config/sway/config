@@ -10,6 +10,8 @@ exec kanshi
 for_window [app_id="flameshot"] border pixel 0, floating enable, fullscreen disable, move absolute position 0 0
 seat seat0 xcursor_theme volantes_cursors 64
 
+output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fit
+
 # workspace layout
 workspace_layout tabbed
 
@@ -112,8 +114,10 @@ bindsym $mod+r mode "resize"
 #
 # Read `man 5 sway-bar` for more information about this section.
 bar {
+    id 1
     position top
     swaybar_command waybar
+    tray_output primary
 }
 
 #include /etc/sway/config.d/*

@@ -1,84 +1,41 @@
-{
-  "height": 24,
-  "modules-left": [
-    "sway/workspaces",
-    "sway/mode",
-    "sway/scratchpad"
-  ],
-  "modules-center": [
-    "sway/window"
-  ],
-  "modules-right": [
-    "wireplumber",
-    "clock",
-    "network",
-    "tray"
-  ],
-  "sway/workspaces": {
-    "disable-scroll": true,
-    "all-outputs": true,
-    "warp-on-scroll": false,
-    "format": "{name}: {icon}",
-    "format-icons": {
-      "1": "",
-      "2": "",
-      "3": "",
-      "4": "",
-      "5": "",
-      "urgent": "",
-      "focused": "",
-      "default": ""
-    }
+[
+  {
+    "height": 24,
+    "layer": "top",
+    "position": "top",
+    "spacing": 4,
+    "margin-top": 5,
+    "margin-bottom": 5,
+    "modules-left": [
+      "sway/workspaces",
+      "sway/mode",
+      "sway/scratchpad"
+    ],
+    "modules-center": [
+      "sway/window"
+    ],
+    "modules-right": [
+      "wireplumber",
+      "bluetooth",
+      "clock",
+      "tray"
+    ],
+    "include": "~/.config/waybar/modules.json"
   },
-  "sway/mode": {
-    "format": "<span style=\"italic\">  {}</span>",
-    "tooltip": false
-  },
-  "sway/window": {
-    "format": "{}",
-    "max-length": 120
-  },
-  "cpu": {
-    "format": " {usage}%"
-  },
-  "memory": {
-    "format": " {}%"
-  },
-  "disk": {
-    "interval": 30,
-    "format": " {used}/{total}",
-    "path": "/",
-    "unit": "GB"
-  },
-  "clock": {
-    "interval": 1,
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-    "format": "{:%Y-%m-%d [%a] %H:%M:%S}"
-  },
-  "network": {
-    "format-wifi": "{essid} ({signalStrength}%) ",
-    "format-ethernet": "󰌗 {ifname}: {ipaddr}/{cidr}",
-    "tooltip-format": " {ifname} via {gwaddr}",
-    "format-linked": " {ifname} (No IP)",
-    "format-disconnected": "Disconnected ⚠ {ifname}",
-    "format-alt": "󰌗 {ifname}: {ipaddr}/{cidr}"
-  },
-  "bluetooth": {
-    "format": " {status}",
-    "format-connected": " {device_alias}",
-    "format-disabled": "",
-    "format-off": "",
-    "format-connected-battery": " {device_alias} {device_battery_percentage}%",
-    "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
-    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
-    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-    "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%"
-  },
-  "wireplumber": {
-    "format": "{volume}%",
-    "format-muted": "",
-    "on-click": "helvum",
-    "max-volume": 150,
-    "scroll-step": 5
+  {
+    "height": 16,
+    "spacing": 4,
+    "layer": "top",
+    "position": "bottom",
+    "margin-top": 10,
+    "modules-left": [],
+    "modules-center": [],
+    "modules-right": [
+      "network",
+      "disk",
+      "memory",
+      "user"
+    ],
+    "include": "~/.config/waybar/modules.json"
   }
-}
+]
