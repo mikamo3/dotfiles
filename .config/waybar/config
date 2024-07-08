@@ -4,8 +4,6 @@
     "layer": "top",
     "position": "top",
     "spacing": 4,
-    "margin-top": 5,
-    "margin-bottom": 5,
     "modules-left": [
       "sway/workspaces",
       "sway/mode",
@@ -23,11 +21,10 @@
     "include": "~/.config/waybar/modules.json"
   },
   {
-    "height": 16,
+    "height": 24,
     "spacing": 4,
     "layer": "top",
     "position": "bottom",
-    "margin-top": 10,
     "modules-left": [],
     "modules-center": [],
     "modules-right": [
