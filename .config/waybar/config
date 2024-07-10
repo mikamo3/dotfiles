@@ -25,13 +25,17 @@
     "spacing": 4,
     "layer": "top",
     "position": "bottom",
-    "modules-left": [],
+    "modules-left": [
+      "custom/weather"
+    ],
     "modules-center": [],
     "modules-right": [
       "network",
+      "cpu",
       "disk",
       "memory",
-      "user"
+      "user",
+      "custom/updates"
     ],
     "include": "~/.config/waybar/modules.json"
   }

@@ -8,7 +8,8 @@ exec mako
 exec dex -a
 exec kanshi
 for_window [app_id="flameshot"] border pixel 0, floating enable, fullscreen disable, move absolute position 0 0
-seat seat0 xcursor_theme volantes_cursors 64
+for_window [app_id="org.keepassxc.KeePassXC"] move window to scratchpad, scratchpad show
+seat seat0 xcursor_theme volantes_cursors 48
 
 output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fit
 
@@ -42,6 +43,7 @@ floating_modifier $mod
 bindsym $mod+Return exec $term
 bindsym $mod+d exec $menu
 bindsym $mod+Shift+r reload;exec kanshictl reload
+bindsym --release Print exec flameshot gui
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1

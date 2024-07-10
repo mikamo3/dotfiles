@@ -2,7 +2,10 @@
   "sway/scratchpad": {
     "format": "{icon} {count}",
     "show-empty": false,
-    "format-icons": ["", " "],
+    "format-icons": [
+      "",
+      " "
+    ],
     "tooltip": true,
     "tooltip-format": "{app}: {title}"
   },
@@ -61,7 +64,7 @@
     "format-alt": "󰌗 {ifname}: {ipaddr}/{cidr}"
   },
   "bluetooth": {
-    "format": " {status}",
+    "format-on": "󰂲",
     "format-connected": " {device_alias}",
     "format-disabled": "",
     "format-off": "",
@@ -77,5 +80,22 @@
     "on-click": "helvum",
     "max-volume": 150,
     "scroll-step": 5
+  },
+  "custom/weather": {
+    "format": "{}°",
+    "tooltip": true,
+    "interval": 3600,
+    "exec": "wttrbar --location yokohama --lang ja",
+    "return-type": "json"
+  },
+  "custom/updates": {
+    "format": "{} {icon}",
+    "return-type": "json",
+    "format-icons": {
+      "has-updates": "󱍷",
+      "updated": "󰂪"
+    },
+    "exec-if": "which waybar-module-pacman-updates",
+    "exec": "waybar-module-pacman-updates  --interval-seconds 5 --network-interval-seconds 300"
   }
 }
