@@ -55,8 +55,8 @@
   },
   "network": {
     "interval": 1,
-    "interface": "wlp1s0",
-    "format-wifi": " {essid} ({signalStrength}%)  :{bandwidthUpBytes}  :{bandwidthDownBytes}",
+    "interface": "wlp2s0",
+    "format-wifi": " {ifname} ({signalStrength}%)  :{bandwidthUpBytes}  :{bandwidthDownBytes}",
     "format-ethernet": "󰌗 {ifname}: {ipaddr}/{cidr}",
     "tooltip-format": " {ifname} via {gwaddr}",
     "format-linked": " {ifname} (No IP)",
@@ -97,5 +97,10 @@
     },
     "exec-if": "which waybar-module-pacman-updates",
     "exec": "waybar-module-pacman-updates  --interval-seconds 5 --network-interval-seconds 300"
+  },
+  "custom/topproc": {
+    "interval": 1,
+    "format": "{}",
+    "exec": "ps -eo %cpu,cmd --sort=-%cpu | awk 'NR==2{print $2}' | awk -F'/' '{print $NF}'"
   }
 }

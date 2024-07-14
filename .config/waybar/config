@@ -31,6 +31,7 @@
     "modules-center": [],
     "modules-right": [
       "network",
+      "custom/topproc",
       "cpu",
       "disk",
       "memory",

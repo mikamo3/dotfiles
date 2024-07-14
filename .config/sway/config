@@ -3,7 +3,7 @@ exec "systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_C
 exec hash dbus-update-activation-environment 2>/dev/null && \
      dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
 exec swaymsg -t subscribe '["shutdown"]' && systemctl --user stop sway-session.target
-exec wl-paste -t text --watch clipman store --no-persist
+exec wl-paste -t text --watch ~/.config/sway/exclude_clipman
 exec mako
 exec dex -a
 exec kanshi
@@ -43,7 +43,9 @@ floating_modifier $mod
 bindsym $mod+Return exec $term
 bindsym $mod+d exec $menu
 bindsym $mod+Shift+r reload;exec kanshictl reload
-bindsym --release Print exec flameshot gui
+bindsym $mod+c exec clipman pick -t rofi
+bindsym --release Print exec flameshot gui --raw | wl-copy
+
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -133,5 +135,5 @@ client.urgent           #dc322f   #dc322f    #eee8d5
 # gaps
 gaps outer 0
 gaps inner 10
-smart_gaps on
-smart_borders on
+#smart_gaps on
+#smart_borders on
