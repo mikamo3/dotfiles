@@ -10,8 +10,12 @@ exec kanshi
 for_window [app_id="flameshot"] border pixel 0, floating enable, fullscreen disable, move absolute position 0 0
 for_window [app_id="org.keepassxc.KeePassXC"] move window to scratchpad, scratchpad show
 seat seat0 xcursor_theme volantes_cursors 48
+exec_always setrandom /usr/share/backgrounds/archlinux/
 
-output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fit
+#idle
+exec swayidle -w \
+	timeout 1800 'swaymsg "output * power off"' \
+	resume 'swaymsg "output * power on"'
 
 # workspace layout
 workspace_layout tabbed
@@ -45,6 +49,7 @@ bindsym $mod+d exec $menu
 bindsym $mod+Shift+r reload;exec kanshictl reload
 bindsym $mod+c exec clipman pick -t rofi
 bindsym --release Print exec flameshot gui --raw | wl-copy
+bindsym $mod+e exec nemo
 
 
 # switch to workspace
@@ -68,6 +73,9 @@ bindsym $mod+Shift+6 move container to workspace $ws6
 bindsym $mod+Shift+7 move container to workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
+
+bindsym $mod+Ctrl+l move workspace to output right
+bindsym $mod+Ctrl+h move workspace to output left
 
 bindsym $mod+Shift+q kill
 

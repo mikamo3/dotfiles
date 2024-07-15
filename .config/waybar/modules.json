@@ -64,6 +64,7 @@
     "format-alt": "󰌗 {ifname}: {ipaddr}/{cidr}"
   },
   "bluetooth": {
+    "on-click": "blueman-manager",
     "format-on": "󰂲",
     "format-connected": " {device_alias}",
     "format-disabled": "",
