@@ -5,7 +5,7 @@ if ! gh auth status; then
   exit 1
 fi
 
-repos="$(gh repo list --json url|jq -r '.[].url')"
+repos="$(gh repo list --json url -L 200|jq -r '.[].url')"
 repo=$(echo "$repos"|fzf)
 
 if [ $? -ne 0 ]; then

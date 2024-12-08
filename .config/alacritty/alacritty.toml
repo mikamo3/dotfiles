@@ -1,10 +1,5 @@
-live_config_reload = true
 
-import = [
-  "~/.config/alacritty/solarized.toml",
-]
-
-[shell]
+[terminal.shell]
 program = "fish"
 args = ["-l","-c","tmux new-session"]
 
@@ -57,5 +52,14 @@ bindings = [
   {key = "C", mods = "Control|Shift", action = "Copy"},
   {key = "Q", mode="Vi|~Search",      action="ToggleViMode"},
 ]
+
+[general]
+live_config_reload = true
+
+import = [
+  "~/.config/alacritty/solarized.toml",
+]
+
+[terminal]
 
 
