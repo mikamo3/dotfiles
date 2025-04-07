@@ -13,12 +13,10 @@
 	cob = checkout -b
 	bd = !git branch --merged master | grep -v -e master -e develop | sed -e 's/^ *\\* *//'| xargs -r -I% git branch -d %
 	rbd = !git branch -r --merged master | grep -v -e master -e develop | sed -e 's% *origin/%%' | xargs -r -I% git push --delete origin %
-[hub]
-	protocol = https
-[credential]
-	helper = /usr/lib64/git-core/git-credential-libsecret
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
 	clean = git-lfs clean -- %f
+[http]
+	version = HTTP/1.1

@@ -48,7 +48,7 @@ bindsym $mod+Return exec $term
 bindsym $mod+d exec $menu
 bindsym $mod+Shift+r reload;exec kanshictl reload
 bindsym $mod+c exec clipman pick -t rofi
-bindsym --release Print exec flameshot gui --raw | wl-copy
+bindsym --release Print exec grim -g "$(slurp)" - | wl-copy
 bindsym $mod+e exec nemo
 
 
