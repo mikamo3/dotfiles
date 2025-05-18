@@ -102,6 +102,6 @@
   "custom/topproc": {
     "interval": 1,
     "format": "{}",
-    "exec": "ps -eo %cpu,cmd --sort=-%cpu | awk 'NR==2{print $2}' | awk -F'/' '{print $NF}'"
+    "exec": "ps -eo %cpu,args --sort=-%cpu | awk 'NR==2{print $2}'"
   }
 }
