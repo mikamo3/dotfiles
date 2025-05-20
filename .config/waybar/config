@@ -1,0 +1,42 @@
+[
+  {
+    "height": 24,
+    "layer": "top",
+    "position": "top",
+    "spacing": 4,
+    "modules-left": [
+      "sway/workspaces",
+      "sway/mode",
+      "sway/scratchpad"
+    ],
+    "modules-center": [
+      "sway/window"
+    ],
+    "modules-right": [
+      "wireplumber",
+      "bluetooth",
+      "clock",
+      "tray"
+    ],
+    "include": "~/.config/waybar/modules.json"
+  },
+  {
+    "height": 24,
+    "spacing": 4,
+    "layer": "top",
+    "position": "bottom",
+    "modules-left": [
+      "custom/weather"
+    ],
+    "modules-center": [],
+    "modules-right": [
+      "network",
+      "cpu",
+      "disk",
+      "memory",
+      "user",
+      "custom/updates"
+    ],
+    "include": "~/.config/waybar/modules.json"
+  }
+]
