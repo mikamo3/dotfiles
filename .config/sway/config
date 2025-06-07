@@ -20,7 +20,7 @@ exec swayidle -w \
 # workspace layout
 workspace_layout tabbed
 
-font pango:PlemolJP Console NF 12
+font pango:BIZTER 11
 
 # alias
 set $mod Mod4
