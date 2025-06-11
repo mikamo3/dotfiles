@@ -1,7 +1,7 @@
 
 [terminal.shell]
 program = "fish"
-args = ["-l","-c","tmux new-session"]
+args = ["-l","-c","zellij"]
 
 [cursor]
 style = "Block"

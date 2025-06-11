@@ -1,15 +1,5 @@
 {
-  "sway/scratchpad": {
-    "format": "{icon} {count}",
-    "show-empty": false,
-    "format-icons": [
-      "",
-      " "
-    ],
-    "tooltip": true,
-    "tooltip-format": "{app}: {title}"
-  },
-  "sway/workspaces": {
+  "hyprland/workspaces": {
     "disable-scroll": true,
     "all-outputs": true,
     "warp-on-scroll": false,
@@ -25,11 +15,11 @@
       "default": ""
     }
   },
-  "sway/mode": {
+  "hyprland/submap": {
     "format": "  {}",
     "tooltip": false
   },
-  "sway/window": {
+  "hyprland/window": {
     "format": "{}",
     "max-length": 40
   },
@@ -97,7 +87,7 @@
       "updated": "󰂪"
     },
     "exec-if": "which waybar-module-pacman-updates",
-    "exec": "waybar-module-pacman-updates  --interval-seconds 5 --network-interval-seconds 300"
+    "exec": "waybar-module-pacman-updates  --interval-seconds 600 --network-interval-seconds 1800"
   },
   "custom/topproc": {
     "interval": 1,

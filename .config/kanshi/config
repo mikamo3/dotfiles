@@ -1,0 +1,12 @@
+profile docked {
+    # LG Electronics LG HDR WQHD (HDMI-A-1)
+    output HDMI-A-1 mode 3440x1440@60.00Hz position 0,0 scale 1.0
+
+    # YCT InnoView (DP-1)
+    output DP-1 mode 1920x1080@60.00Hz position 3440,0 scale 1.0
+}
+
+profile undocked {
+    # DP-1が抜かれた場合
+    output HDMI-A-1 mode 3440x1440@60.00Hz position 0,0 scale 1.0
+}

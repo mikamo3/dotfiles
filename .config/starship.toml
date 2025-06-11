@@ -1,15 +1,42 @@
 [git_branch]
-symbol = " "
+symbol = " "
+style = "bold purple"
 
 [git_status]
-conflicted = ' '
-ahead = ' '
-behind = ' '
-diverged = ' '
-up_to_date = ' '
-untracked = ' '
-stashed = ' '
-modified = ' '
-staged = '[ \($count\)](green)'
-renamed = ' '
-deleted = ' '
+conflicted = '[](bold red) '
+ahead = '[](bold green) '
+behind = '[](bold yellow) '
+diverged = '[](bold red) '
+up_to_date = '[](bold blue) '
+untracked = '[](bold cyan) '
+stashed = '[](bold magenta) '
+modified = '[](bold yellow) '
+staged = '[ \($count\)](bold green)'
+renamed = '[](bold purple) '
+deleted = '[](bold red) '
+
+[directory]
+style = "bold blue"
+read_only = " "
+truncation_length = 3
+truncation_symbol = "…/"
+
+[hostname]
+ssh_only = false
+style = "bold dimmed green"
+format = "[$hostname](bold green) "
+
+[username]
+style_user = "bold yellow"
+style_root = "bold red"
+format = "[$user]($style) "
+
+[character]
+success_symbol = "[➜](bold green)"
+error_symbol = "[✗](bold red)"
+vicmd_symbol = "[V](bold blue)"
+
+[time]
+disabled = false
+format = "[$time](bold cyan) "
+time_format = "%H:%M:%S"

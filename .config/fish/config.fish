@@ -9,3 +9,5 @@ fish_vi_key_bindings
 source ~/.config/fish/functions/fzf.fish
 source /usr/lib/kawazu/kawazu.fish
 starship init fish | source
+zoxide init fish | source
+
