@@ -16,11 +16,12 @@
     }
   },
   "hyprland/submap": {
-    "format": "  {}",
+    "format": "   {} ",
     "tooltip": false
   },
   "hyprland/window": {
     "format": "{}",
+    "icon": true,
     "max-length": 40
   },
   "cpu": {
@@ -67,7 +68,7 @@
   },
   "wireplumber": {
     "format": "{node_name} {volume}%",
-    "format-muted": "",
+    "format-muted": " muted",
     "on-click": "helvum",
     "max-volume": 150,
     "scroll-step": 5
@@ -93,5 +94,12 @@
     "interval": 1,
     "format": "{}",
     "exec": "ps -eo %cpu,args --sort=-%cpu | awk 'NR==2{print $2}'"
+  },
+  "custom/display": {
+    "format": "\uea7a ",
+    "on-click": "~/.config/waybar/reflesh-display.sh"
+  },
+  "tray": {
+    "icon-size": 24
   }
 }

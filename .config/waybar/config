@@ -12,6 +12,7 @@
       "hyprland/window"
     ],
     "modules-right": [
+      "custom/display",
       "wireplumber",
       "bluetooth",
       "clock",
