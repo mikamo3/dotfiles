@@ -1,3 +1,0 @@
-[submodule ".vscode-remotecontainer-template"]
-	path = .vscode-remotecontainer-template
-	url = https://github.com/mikamo3/vscode-remotecontainer-template.git

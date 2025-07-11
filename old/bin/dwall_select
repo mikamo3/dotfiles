@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-theme='aurora beach bitday chihuahuan cliffs colony desert earth exodus factory firewatch forest gradient home island lake lakeside market mojave moon mountains room sahara street tokyo'
-
-arr=($theme)
-len=${#arr[@]}
-rand_index=$(($RANDOM % $len))
-element=${arr[$rand_index]}
-
-/usr/bin/dwall -s $element
