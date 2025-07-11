@@ -1,4 +1,8 @@
 # autostart
+#exec "systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_CURRENT_SESSION; systemctl --user start sway-session.target"
+#exec hash dbus-update-activation-environment 2>/dev/null && \
+#     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+exec swaymsg -t subscribe '["shutdown"]' && systemctl --user stop sway-session.target
 exec wl-paste -t text --watch ~/.config/sway/exclude_clipman
 exec mako
 exec dex -a
@@ -15,7 +19,7 @@ exec swayidle -w \
 # workspace layout
 workspace_layout tabbed
 
-font pango:PlemolJP Console NF 12
+font pango:BIZTER 11
 
 # alias
 set $mod Mod4
@@ -45,7 +49,6 @@ bindsym $mod+Shift+r reload;exec kanshictl reload
 bindsym $mod+c exec clipman pick -t rofi
 bindsym --release Print exec grim -g "$(slurp)" - | wl-copy
 bindsym $mod+e exec nemo
-
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
