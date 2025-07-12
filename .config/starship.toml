@@ -24,7 +24,7 @@ truncation_symbol = "…/"
 [hostname]
 ssh_only = true
 style = "bold red"
-format = "[🌐 SSH:$hostname](bold red on yellow) "
+format = "[🌐 SSH:$hostname](bold red) "
 
 [username]
 style_user = "bold yellow"
