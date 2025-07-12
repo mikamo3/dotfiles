@@ -22,14 +22,14 @@ truncation_length = 3
 truncation_symbol = "…/"
 
 [hostname]
-ssh_only = false
-style = "bold dimmed green"
-format = "[$hostname](bold green) "
+ssh_only = true
+style = "bold red"
+format = "[🌐 SSH:$hostname](bold red on yellow) "
 
 [username]
 style_user = "bold yellow"
 style_root = "bold red"
-format = "[$user]($style) "
+format = "[$user]($style) 
 
 [character]
 success_symbol = "[➜](bold green)"
