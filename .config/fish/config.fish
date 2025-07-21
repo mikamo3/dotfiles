@@ -10,4 +10,4 @@ source ~/.config/fish/functions/fzf.fish
 source /usr/lib/kawazu/kawazu.fish
 starship init fish | source
 zoxide init fish | source
-
+mise activate fish | source
