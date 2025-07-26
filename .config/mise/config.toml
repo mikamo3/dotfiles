@@ -1,0 +1,9 @@
+[tools]
+# Runtime languages
+node = "latest"
+ruby = "latest"
+go = "latest"
+java = "latest"
+
+pnpm = "latest"
+yarn = "latest"
