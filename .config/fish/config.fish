@@ -12,7 +12,7 @@ starship init fish | source
 zoxide init fish | source
 mise activate fish | source
 
-# Zellij auto-start (only if not already in a zellij session)
-if status is-interactive; and not set -q ZELLIJ
+# Zellij auto-start (only if not already in a zellij session and not in excluded terminals)
+if status is-interactive; and not set -q ZELLIJ; and not string match -q "*vscode*" $TERM_PROGRAM
     exec zellij
 end
