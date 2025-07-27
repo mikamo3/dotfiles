@@ -1,7 +1,7 @@
 
 [terminal.shell]
 program = "fish"
-args = ["-l","-c","zellij"]
+args = ["-l"]
 
 [cursor]
 style = "Block"

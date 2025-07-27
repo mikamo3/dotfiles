@@ -11,3 +11,8 @@ source /usr/lib/kawazu/kawazu.fish
 starship init fish | source
 zoxide init fish | source
 mise activate fish | source
+
+# Zellij auto-start (only if not already in a zellij session)
+if status is-interactive; and not set -q ZELLIJ
+    exec zellij
+end
