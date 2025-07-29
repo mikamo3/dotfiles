@@ -1,10 +1,14 @@
 set -Ux EDITOR nvim
+set -Ux PAGER bat
+set -Ux MANPAGER "sh -c 'col -bx | bat -l man -p'"
 set PATH ~/bin ~/.local/bin $PATH
 
 set -Ux KAWAZU_ROOT_DIR /usr/lib/kawazu
 set -Ux MEMO_DIR ~/google-drive/.memo
 
 fish_vi_key_bindings
+
+# Catppuccin Mocha theme is already applied via themes directory
 
 source ~/.config/fish/functions/fzf.fish
 source /usr/lib/kawazu/kawazu.fish
