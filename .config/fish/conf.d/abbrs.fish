@@ -1,32 +1,32 @@
 # Modern replacements for traditional tools
-alias ls 'eza'
-alias ll 'eza -la --icons --git'
-alias la 'eza -la --icons --git'
-alias lt 'eza --tree --icons'
-alias vim 'nvim'
-alias cat 'bat'
+abbr -a ls eza
+abbr -a ll 'eza -la --icons --git'
+abbr -a la 'eza -la --icons --git'
+abbr -a lt 'eza --tree --icons'
+abbr -a vim nvim
+abbr -a cat bat
 
 # Useful shortcuts
-alias cdt 'cd (mktemp -d)'
-alias grep 'rg'
-alias find 'fd'
-alias ps 'procs'
-alias top 'btop'
-alias du 'dust'
-alias diff 'delta'
+abbr -a cdt 'cd (mktemp -d)'
+abbr -a grep rg
+abbr -a find fd
+abbr -a ps procs
+abbr -a top btop
+abbr -a du dust
+abbr -a diff delta
 
 # Git shortcuts
-alias gs 'git status'
-alias ga 'git add'
-alias gc 'git commit'
-alias gp 'git push'
-alias gl 'git pull'
-alias gd 'git diff'
-alias gco 'git checkout'
-alias gb 'git branch'
+abbr -a gs 'git status'
+abbr -a ga 'git add'
+abbr -a gc 'git commit'
+abbr -a gp 'git push'
+abbr -a gl 'git pull'
+abbr -a gd 'git diff'
+abbr -a gco 'git checkout'
+abbr -a gb 'git branch'
 
 # Docker shortcuts
-alias d 'docker'
-alias dc 'docker-compose'
-alias dps 'docker ps'
-alias di 'docker images'
+abbr -a d docker
+abbr -a dc docker-compose
+abbr -a dps 'docker ps'
+abbr -a di 'docker images'

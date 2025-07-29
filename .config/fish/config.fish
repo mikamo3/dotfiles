@@ -1,3 +1,12 @@
+# Fish settings
+set -U fish_greeting ""
+set -U fish_history_time_format "%Y-%m-%d %H:%M:%S"
+set -U fish_history_size 10000
+set -U fish_command_timer_enabled 1
+set -U fish_command_timer_color brred
+set -U fish_color_error red --bold
+set -U fish_color_command green
+
 set -Ux EDITOR nvim
 set -Ux PAGER bat
 set -Ux MANPAGER "sh -c 'col -bx | bat -l man -p'"
@@ -10,7 +19,7 @@ fish_vi_key_bindings
 
 # Catppuccin Mocha theme is already applied via themes directory
 
-source ~/.config/fish/functions/fzf.fish
+# fzf integration is now handled by PatrickF1/fzf.fish plugin
 source /usr/lib/kawazu/kawazu.fish
 starship init fish | source
 zoxide init fish | source
