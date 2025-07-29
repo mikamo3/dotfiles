@@ -14,4 +14,4 @@ configuration {
 	kb-row-down: "Down,Control+j";
   kb-mode-complete: "";
 }
-@theme "/usr/share/rofi/themes/solarized_alternate.rasi"
+@theme "~/.config/rofi/catppuccin-mocha.rasi"

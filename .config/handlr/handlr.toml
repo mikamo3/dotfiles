@@ -1,0 +1,4 @@
+enable_selector = true
+selector = "rofi -dmenu -i -p 'Open with:' -theme-str 'window {width: 40%; height: 50%;} listview {lines: 10;}'"
+term_exec_args = '-e'
+expand_wildcards = true

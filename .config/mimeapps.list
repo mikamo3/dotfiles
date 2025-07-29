@@ -1,0 +1,35 @@
+[Added Associations]
+application/x-extension-htm=firefox.desktop;
+application/x-extension-html=firefox.desktop;
+application/x-extension-shtml=firefox.desktop;
+application/x-extension-xht=firefox.desktop;
+application/x-extension-xhtml=firefox.desktop;
+application/xhtml+xml=firefox.desktop;
+text/html=firefox.desktop;
+x-scheme-handler/chrome=firefox.desktop;
+x-scheme-handler/http=firefox.desktop;
+x-scheme-handler/https=firefox.desktop;
+[Default Applications]
+application/gzip=peazip.desktop;
+application/json=featherpad.desktop;
+application/toml=featherpad.desktop;
+application/x-extension-htm=firefox.desktop;
+application/x-extension-html=firefox.desktop;
+application/x-extension-shtml=firefox.desktop;
+application/x-extension-xht=firefox.desktop;
+application/x-extension-xhtml=firefox.desktop;
+application/x-tar=peazip.desktop;
+application/xhtml+xml=firefox.desktop;
+application/zip=peazip.desktop;
+image/gif=org.gnome.gThumb.desktop;
+image/jpeg=org.gnome.gThumb.desktop;
+image/png=org.gnome.gThumb.desktop;
+image/webp=org.gnome.gThumb.desktop;
+text/html=firefox.desktop;
+text/plain=featherpad.desktop;nvim.desktop;
+video/*=vlc.desktop;
+x-scheme-handler/about=chromium.desktop;
+x-scheme-handler/chrome=firefox.desktop;
+x-scheme-handler/http=firefox.desktop;
+x-scheme-handler/https=firefox.desktop;
+x-scheme-handler/unknown=chromium.desktop;

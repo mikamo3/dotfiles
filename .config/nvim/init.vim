@@ -45,7 +45,15 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
   Plug 'w0rp/ale'
+  " Catppuccin colorscheme
+  Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 call plug#end()
+" }}}
+
+" colorscheme {{{
+" Set Catppuccin Mocha theme
+colorscheme catppuccin-mocha
+set termguicolors
 " }}}
 
 " keymap {{{
@@ -93,7 +101,7 @@ nmap s <Plug>(easymotion-s2)
 " }}}
 
 " vim-airline {{{
-let g:girline_powerline_fonts = 0
+let g:airline_powerline_fonts = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''

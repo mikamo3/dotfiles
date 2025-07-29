@@ -1,3 +1,29 @@
+/* Catppuccin Mocha Color Palette */
+/*
+  @define-color base #1e1e2e;
+  @define-color mantle #181825;
+  @define-color surface0 #313244;
+  @define-color surface1 #45475a;
+  @define-color surface2 #585b70;
+  @define-color text #cdd6f4;
+  @define-color subtext1 #bac2de;
+  @define-color subtext0 #a6adc8;
+  @define-color lavender #b4befe;
+  @define-color blue #89b4fa;
+  @define-color sapphire #74c7ec;
+  @define-color sky #89dceb;
+  @define-color teal #94e2d5;
+  @define-color green #a6e3a1;
+  @define-color yellow #f9e2af;
+  @define-color peach #fab387;
+  @define-color maroon #eba0ac;
+  @define-color red #f38ba8;
+  @define-color mauve #cba6f7;
+  @define-color pink #f5c2e7;
+  @define-color flamingo #f2cdcd;
+  @define-color rosewater #f5e0dc;
+*/
+
 * {
   /* `otf-font-awesome` is required to be installed for icons */
   font-family: monospace;
@@ -9,7 +35,7 @@ window#waybar {
   /* `otf-font-awesome` is required to be installed for icons */
   background-color: transparent;
   border-bottom: 0px;
-  color: #ebdbb2;
+  color: #cdd6f4; /* text */
   transition-property: background-color;
   transition-duration: .5s;
 }
@@ -57,13 +83,13 @@ button:hover {
 } */
 
 #workspaces {
-  background-color: #282828;
+  background-color: #1e1e2e; /* base */
 }
 
 #workspaces button {
   padding: 0 5px;
   background-color: transparent;
-  color: #ebdbb2;
+  color: #cdd6f4; /* text */
   border-radius: 0;
 }
 
@@ -76,16 +102,16 @@ button:hover {
 }
 
 #workspaces button:hover {
-  color: #d79921;
+  color: #f9e2af; /* yellow */
 }
 
 #workspaces button.focused {
-  background-color: #665c54;
+  background-color: #45475a; /* surface1 */
   /* box-shadow: inset 0 -3px #ffffff; */
 }
 
 #workspaces button.urgent {
-  background-color: #b16286;
+  background-color: #f38ba8; /* red */
 }
 
 #idle_inhibitor,
@@ -112,13 +138,13 @@ button:hover {
 #custom-display,
 #user {
   padding: 0 10px;
-  background-color: #282828;
-  color: #ebdbb2;
+  background-color: #1e1e2e; /* base */
+  color: #cdd6f4; /* text */
 }
 
 #submap {
-  background-color: #689d6a;
-  color: #282828;
+  background-color: #a6e3a1; /* green */
+  color: #1e1e2e; /* base */
   /* box-shadow: inset 0 -3px #ffffff; */
 }
 
@@ -138,21 +164,21 @@ button:hover {
 
 #battery.charging,
 #battery.plugged {
-  background-color: #98971a;
-  color: #282828;
+  background-color: #a6e3a1; /* green */
+  color: #1e1e2e; /* base */
 }
 
 @keyframes blink {
   to {
-    background-color: #282828;
-    color: #ebdbb2;
+    background-color: #1e1e2e; /* base */
+    color: #cdd6f4; /* text */
   }
 }
 
 /* Using steps() instead of linear as a timing function to limit cpu usage */
 #battery.critical:not(.charging) {
-  background-color: #cc241d;
-  color: #ebdbb2;
+  background-color: #f38ba8; /* red */
+  color: #cdd6f4; /* text */
   animation-name: blink;
   animation-duration: 0.5s;
   animation-timing-function: steps(12);
@@ -161,11 +187,11 @@ button:hover {
 }
 
 label:focus {
-  background-color: #000000;
+  background-color: #45475a; /* surface1 */
 }
 
 #wireplumber.muted {
-  background-color: #458588;
+  background-color: #89b4fa; /* blue */
 }
 
 #tray>.passive {
@@ -177,8 +203,8 @@ label:focus {
 }
 
 #mpris.playing {
-  background-color: #d79921;
-  color: #282828;
+  background-color: #f9e2af; /* yellow */
+  color: #1e1e2e; /* base */
 }
 
 #tray menu {
