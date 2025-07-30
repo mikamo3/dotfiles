@@ -1,0 +1,52 @@
+# ripgrep configuration file
+# See: https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file
+
+# Search case insensitively if the pattern is all lowercase
+--smart-case
+
+# Follow symbolic links
+--follow
+
+# Don't respect .gitignore files
+# --no-ignore
+
+# Don't respect global ignore files
+# --no-ignore-global
+
+# Include hidden files and directories
+--hidden
+
+# Exclude common build directories and files
+--glob=!.git/
+--glob=!node_modules/
+--glob=!.vscode/
+--glob=!target/
+--glob=!build/
+--glob=!dist/
+--glob=!.next/
+--glob=!coverage/
+--glob=!.nyc_output/
+--glob=!*.min.js
+--glob=!*.min.css
+--glob=!package-lock.json
+--glob=!yarn.lock
+
+# Set the colors for matches
+--colors=match:fg:yellow
+--colors=match:bg:black
+--colors=match:style:bold
+--colors=path:fg:cyan
+--colors=path:style:bold
+--colors=line:fg:green
+
+# Show line numbers
+--line-number
+
+# Show column numbers
+--column
+
+# Use heading format for multiple files
+--heading
+
+# Add context lines
+--context=2

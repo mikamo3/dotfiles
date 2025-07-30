@@ -188,6 +188,44 @@ fi
 # Application-specific setup
 info "Setting up applications..."
 
+# Setup Hyprland plugins with hyprpm
+if command -v hyprpm >/dev/null 2>&1 && command -v hyprctl >/dev/null 2>&1; then
+    info "Checking Hyprland plugins..."
+    
+    # Check if hyprexpo plugin is already installed
+    if hyprpm list 2>/dev/null | grep -q "hyprexpo.*enabled"; then
+        success "Hyprland plugins already installed and enabled"
+    else
+        info "Installing Hyprland plugins..."
+        
+        # Add plugin repository if not exists
+        if ! hyprpm list 2>/dev/null | grep -q "hyprland-plugins"; then
+            info "Adding hyprland-plugins repository..."
+            if hyprpm add https://github.com/hyprwm/hyprland-plugins; then
+                success "Plugin repository added"
+            else
+                warn "Failed to add plugin repository"
+            fi
+        fi
+        
+        # Enable hyprexpo plugin
+        if hyprpm enable hyprexpo 2>/dev/null; then
+            info "Hyprexpo plugin enabled"
+        else
+            warn "Failed to enable hyprexpo plugin"
+        fi
+        
+        # Reload plugins
+        if hyprpm reload 2>/dev/null; then
+            success "Hyprland plugins loaded successfully"
+        else
+            warn "Failed to reload Hyprland plugins"
+        fi
+    fi
+else
+    warn "Skipping Hyprland plugin setup (hyprpm/hyprctl not available)"
+fi
+
 # Update fish plugins with fisher
 if command -v fish >/dev/null 2>&1 && fish -c "functions -q fisher" >/dev/null 2>&1; then
     info "Checking fish plugins..."

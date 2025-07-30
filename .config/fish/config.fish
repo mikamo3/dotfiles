@@ -21,6 +21,7 @@ fish_vi_key_bindings
 
 # fzf integration is now handled by PatrickF1/fzf.fish plugin
 source /usr/lib/kawazu/kawazu.fish
+source ~/.config/op/plugins.sh
 starship init fish | source
 zoxide init fish | source
 mise activate fish | source
