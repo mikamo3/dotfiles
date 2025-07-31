@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Firefox AI Profile Launcher
+PROFILE_DIR="$HOME/.mozilla/firefox/ai"
+
+# プロファイルディレクトリが存在しない場合は作成
+if [ ! -d "$PROFILE_DIR" ]; then
+    echo "Creating AI profile directory..."
+    mkdir -p "$PROFILE_DIR"
+    
+    # 基本的なprefs.jsを作成（オプション）
+    cat > "$PROFILE_DIR/prefs.js" << 'EOF'
+// Firefox AI Profile Configuration
+user_pref("browser.startup.homepage", "about:blank");
+user_pref("browser.startup.page", 0);
+EOF
+fi
+
+# Firefoxを起動
+exec firefox --new-instance --profile "$PROFILE_DIR"
