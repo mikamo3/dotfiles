@@ -1,42 +1,33 @@
 [
   {
     "height": 24,
-    "layer": "top",
+    "layer": "top", 
     "position": "top",
-    "spacing": 4,
+    "spacing": 6,
+    "margin-top": 4,
+    "margin-left": 16,
+    "margin-right": 16,
     "modules-left": [
       "hyprland/workspaces",
-      "hyprland/submap"
+      "hyprland/submap",
+      "hyprland/window"
     ],
     "modules-center": [
-      "hyprland/window"
+      "clock",
+      "custom/weather"
     ],
     "modules-right": [
       "custom/display",
-      "wireplumber",
       "bluetooth",
-      "clock",
-      "tray"
-    ],
-    "include": "~/.config/waybar/modules.json"
-  },
-  {
-    "height": 24,
-    "spacing": 4,
-    "layer": "top",
-    "position": "bottom",
-    "modules-left": [
-      "custom/weather"
-    ],
-    "modules-center": [],
-    "modules-right": [
+      "wireplumber", 
       "network",
       "cpu",
-      "custom/topproc",
-      "disk",
       "memory",
-      "user",
-      "custom/updates"
+      "disk",
+      "custom/topproc",
+      "custom/uptime",
+      "custom/updates",
+      "tray"
     ],
     "include": "~/.config/waybar/modules.json"
   }

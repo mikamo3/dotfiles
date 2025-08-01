@@ -20,83 +20,112 @@
     "tooltip": false
   },
   "hyprland/window": {
-    "format": "{}",
+    "format": "  {}",
     "icon": true,
-    "max-length": 40
+    "max-length": 60,
+    "separate-outputs": true
   },
   "cpu": {
-    "format": " {usage}%"
+    "interval": 2,
+    "format": "󰻠 {usage}%",
+    "tooltip": true,
+    "tooltip-format": "CPU Usage: {usage}%\nLoad: {load}"
   },
   "memory": {
-    "format": " {percentage}% {used}GiB/{total}GiB"
+    "interval": 2,
+    "format": "󰍛 {percentage}%",
+    "tooltip": true,
+    "tooltip-format": "Memory: {used:0.1f}G/{total:0.1f}G ({percentage}%)\nSwap: {swapUsed:0.1f}G/{swapTotal:0.1f}G"
   },
   "disk": {
     "interval": 30,
-    "format": " {used}/{total}",
+    "format": "󰋊 {percentage_used}%",
     "path": "/",
-    "unit": "GB"
+    "tooltip": true,
+    "tooltip-format": "Disk Usage: {used}/{total} ({percentage_used}%)\nAvailable: {free}"
   },
   "clock": {
     "interval": 1,
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-    "format": "{:%Y-%m-%d [%a] %H:%M:%S}"
+    "format": "󰥔 {:%Y/%m/%d %H:%M:%S}",
+    "format-alt": "󰃭 {:%Y年%m月%d日 (%a)}",
+    "tooltip-format": "<big>{:%Y年 %B}</big>\n<tt><small>{calendar}</small></tt>"
   },
   "user": {
     "format": " {work_d}:{work_H}:{work_M}"
   },
   "network": {
-    "interval": 1,
+    "interval": 2,
     "interface": "wlp2s0",
-    "format-wifi": " {ifname} ({signalStrength}%)  :{bandwidthUpBytes}  :{bandwidthDownBytes}",
-    "format-ethernet": "󰌗 {ifname}: {ipaddr}/{cidr}",
-    "tooltip-format": " {ifname} via {gwaddr}",
-    "format-linked": " {ifname} (No IP)",
-    "format-disconnected": "Disconnected ⚠ {ifname}",
-    "format-alt": "󰌗 {ifname}: {ipaddr}/{cidr}"
+    "format-wifi": "󰖩 {signalStrength}% 󰕒{bandwidthDownBytes:>7} 󰇚{bandwidthUpBytes:>7}",
+    "format-ethernet": "󰌗 󰕒{bandwidthDownBytes:>7} 󰇚{bandwidthUpBytes:>7}",
+    "format-linked": "󰌘 No IP",
+    "format-disconnected": "󰌙 Disconnected",
+    "tooltip": true,
+    "tooltip-format-wifi": "Interface: {ifname}\nSSID: {essid}\nSignal: {signalStrength}%\nFrequency: {frequency}MHz\nIP: {ipaddr}/{cidr}\nGateway: {gwaddr}\n↓ {bandwidthDownBytes}/s ↑ {bandwidthUpBytes}/s",
+    "tooltip-format-ethernet": "Interface: {ifname}\nIP: {ipaddr}/{cidr}\nGateway: {gwaddr}\n↓ {bandwidthDownBytes}/s ↑ {bandwidthUpBytes}/s",
+    "on-click": "nm-connection-editor"
   },
   "bluetooth": {
-    "on-click": "blueman-manager",
+    "format": "󰂯",
     "format-on": "󰂲",
-    "format-connected": " {device_alias}",
-    "format-disabled": "",
-    "format-off": "",
-    "format-connected-battery": " {device_alias} {device_battery_percentage}%",
-    "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
-    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
-    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-    "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%"
+    "format-off": "󰂲",
+    "format-disabled": "󰂲",
+    "format-connected": "󰂱 {num_connections}",
+    "format-connected-battery": "󰂱 {device_battery_percentage}%",
+    "tooltip": true,
+    "tooltip-format": "Bluetooth {status}",
+    "tooltip-format-connected": "Connected: {num_connections} device(s)
+{device_enumerate}",
+    "tooltip-format-enumerate-connected": "• {device_alias} ({device_address})",
+    "tooltip-format-enumerate-connected-battery": "• {device_alias} ({device_address}) - {device_battery_percentage}%",
+    "on-click": "blueman-manager"
   },
   "wireplumber": {
-    "format": "{node_name} {volume}%",
-    "format-muted": " muted",
+    "format": "󰕾 {volume}%",
+    "format-muted": "󰖁 Muted",
+    "tooltip": true,
+    "tooltip-format": "Audio: {node_name}
+Volume: {volume}%",
     "on-click": "helvum",
+    "on-click-right": "pavucontrol",
     "max-volume": 150,
     "scroll-step": 5
   },
   "custom/weather": {
-    "format": "{}°",
+    "format": "🌤 {}°",
     "tooltip": true,
-    "interval": 3600,
+    "interval": 1800,
     "exec": "wttrbar --location yokohama --lang ja",
     "return-type": "json"
   },
   "custom/updates": {
-    "format": "{} {icon}",
+    "format": "󰏖 {} {icon}",
     "return-type": "json",
     "format-icons": {
       "has-updates": "󱍷",
       "updated": "󰂪"
     },
     "exec-if": "which waybar-module-pacman-updates",
-    "exec": "waybar-module-pacman-updates  --interval-seconds 600 --network-interval-seconds 1800"
+    "exec": "waybar-module-pacman-updates --interval-seconds 900 --network-interval-seconds 3600",
+    "on-click": "kitty -e sudo pacman -Syu"
   },
   "custom/topproc": {
-    "interval": 1,
-    "format": "{}",
-    "exec": "ps -eo %cpu,args --sort=-%cpu | awk 'NR==2{print $2}'"
+    "interval": 2,
+    "format": "󰻠 {:>12}",
+    "exec": "ps -eo %cpu,comm --sort=-%cpu --no-headers | head -1 | awk '{printf \"%.1f%% %s\", $1, substr($2,1,8)}'",
+    "tooltip": true,
+    "tooltip-format": "Top CPU Process: {}"
+  },
+  "custom/uptime": {
+    "interval": 60,
+    "format": "󰅐 {:>8}",
+    "exec": "awk '{days=int($1/86400); hours=int(($1%86400)/3600); mins=int(($1%3600)/60); printf \"%d:%02d:%02d\", days*24+hours, mins, int($1%60)}' /proc/uptime",
+    "tooltip": true,
+    "tooltip-format": "System Uptime: {}"
   },
   "custom/display": {
-    "format": "\uea7a ",
+    "format": "󰍹 ",
+    "tooltip": "Display Manager - Click to refresh displays",
     "on-click": "~/.config/waybar/reflesh-display.sh"
   },
   "tray": {

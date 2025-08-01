@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=PeaZip (Fixed)
+Comment=Archive Manager with Qt High DPI fix
+Icon=peazip
+Exec=/home/mikamo/.local/bin/peazip-launcher %F
+Categories=Utility;Archiving;Compression;
+MimeType=application/gzip;application/x-tar;application/zip;application/x-7z-compressed;application/x-rar;application/x-bzip2;application/x-xz;
+StartupNotify=true
+Terminal=false
