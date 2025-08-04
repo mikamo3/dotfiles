@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=LINE (Extension)
+Exec=chromium --app="chrome-extension://ophjlpahpchlmihnnnihgmmeilfjmjjc/index.html#/"
+Icon=/home/mikamo/.config/chromium/Default/Extensions/ophjlpahpchlmihnnnihgmmeilfjmjjc/3.7.0_0/line_logo_128x128_on.png
+Type=Application
+Categories=Network;Chat;
