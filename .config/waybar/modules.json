@@ -107,14 +107,14 @@ Volume: {volume}%",
     },
     "exec-if": "which waybar-module-pacman-updates",
     "exec": "waybar-module-pacman-updates --interval-seconds 900 --network-interval-seconds 3600",
-    "on-click": "kitty -e sudo pacman -Syu"
+    "on-click": "kitty -e yay -Syu"
   },
   "custom/topproc": {
     "interval": 2,
-    "format": "󰻠 {:>12}",
-    "exec": "ps -eo %cpu,comm --sort=-%cpu --no-headers | head -1 | awk '{printf \"%.1f%% %s\", $1, substr($2,1,8)}'",
-    "tooltip": true,
-    "tooltip-format": "Top CPU Process: {}"
+    "format": "󰻠 {:>18}",
+    "exec-on-event": true,
+    "return-type": "json",
+    "exec": "~/.config/waybar/topproc.sh"
   },
   "custom/uptime": {
     "interval": 60,
