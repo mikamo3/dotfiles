@@ -7,3 +7,4 @@ java = "latest"
 
 pnpm = "latest"
 yarn = "latest"
+uv = "latest"

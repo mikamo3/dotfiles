@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 sleep 1
-WALLPAPER_DIR="/usr/share/backgrounds/"
+WALLPAPER_DIR="/usr/share/backgrounds/pokemon"
 CURRENT_WALL=$(hyprctl hyprpaper listloaded)
 
 # Get a random wallpaper that is not the current one

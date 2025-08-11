@@ -86,6 +86,7 @@ directories=(
     ~/Pictures/screenshots ~/Pictures/wallpapers
     ~/.local/bin ~/.local/share/applications
     ~/src
+    ~/google-drive
 )
 
 missing_dirs=()
