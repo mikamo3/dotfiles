@@ -6,10 +6,10 @@ PartOf=graphical-session.target
 [Service]
 Type=simple
 ExecStart=/usr/bin/swayidle -w \
-    timeout 600 'loginctl lock-session' \
+    timeout 600 'hyprlock &' \
     timeout 630 'hyprctl dispatch dpms off' \
         resume 'hyprctl dispatch dpms on' \
-    before-sleep 'loginctl lock-session'
+    before-sleep 'hyprlock'
 Restart=on-failure
 RestartSec=1
 
