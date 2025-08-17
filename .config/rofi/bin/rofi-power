@@ -2,17 +2,23 @@
 command_caption_list=(
   "Shutdown"
   "Reboot"
-  "Logout"
   "Lock"
-)
-command_exec_list=(
-  "systemctl poweroff"
-  "systemctl reboot"
-  "i3-msg exit"
-  "i3lock-fancy"
 )
 
 for ((i = 0; i < ${#command_caption_list[@]}; i++)); do
   [[ -z "$@" ]] && echo "${command_caption_list[$i]}" && continue
-  [[ "$@" == "${command_caption_list[$i]}" ]] && eval "${command_exec_list[$i]}" && exit
+  case "$@" in
+    "Shutdown")
+      systemctl poweroff
+      exit
+      ;;
+    "Reboot")
+      systemctl reboot
+      exit
+      ;;
+    "Lock")
+      hyprlock > /dev/null 2>&1 &
+      exit
+      ;;
+  esac
 done

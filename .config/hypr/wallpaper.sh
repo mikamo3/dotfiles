@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-sleep 1
+sleep 5
 WALLPAPER_DIR="/usr/share/backgrounds/pokemon"
 CURRENT_WALL=$(hyprctl hyprpaper listloaded)
 

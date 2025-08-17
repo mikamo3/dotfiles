@@ -1,0 +1,114 @@
+#!/bin/bash
+
+# GitHub Repository Creator and Cloner
+# Creates a new repository with gh and clones it with ghq
+
+set -e
+
+# Usage function
+usage() {
+    echo "Usage: $0 <repository-name> [options]"
+    echo "Options:"
+    echo "  -d, --description <desc>    Repository description"
+    echo "  --private                   Create private repository (default: public)"
+    echo "  --public                    Create public repository"
+    echo "  -h, --help                  Show this help message"
+    exit 1
+}
+
+# Default values
+REPO_NAME=""
+DESCRIPTION=""
+VISIBILITY="public"
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -d|--description)
+            DESCRIPTION="$2"
+            shift 2
+            ;;
+        --private)
+            VISIBILITY="private"
+            shift
+            ;;
+        --public)
+            VISIBILITY="public"
+            shift
+            ;;
+        -h|--help)
+            usage
+            ;;
+        -*)
+            echo "Unknown option: $1"
+            usage
+            ;;
+        *)
+            if [[ -z "$REPO_NAME" ]]; then
+                REPO_NAME="$1"
+            else
+                echo "Error: Multiple repository names specified"
+                usage
+            fi
+            shift
+            ;;
+    esac
+done
+
+# Check if repository name is provided
+if [[ -z "$REPO_NAME" ]]; then
+    echo "Error: Repository name is required"
+    usage
+fi
+
+# Check if gh is installed
+if ! command -v gh &> /dev/null; then
+    echo "Error: gh command not found. Please install GitHub CLI"
+    exit 1
+fi
+
+# Check if ghq is installed
+if ! command -v ghq &> /dev/null; then
+    echo "Error: ghq command not found. Please install ghq"
+    exit 1
+fi
+
+# Check if user is logged in to GitHub
+if ! gh auth status &> /dev/null; then
+    echo "Error: Not logged in to GitHub. Please run 'gh auth login'"
+    exit 1
+fi
+
+echo "Creating repository: $REPO_NAME"
+
+# Build gh repo create command
+GH_CMD="gh repo create $REPO_NAME --$VISIBILITY"
+if [[ -n "$DESCRIPTION" ]]; then
+    GH_CMD="$GH_CMD --description \"$DESCRIPTION\""
+fi
+
+# Create repository
+echo "Running: $GH_CMD"
+eval $GH_CMD
+
+if [[ $? -eq 0 ]]; then
+    echo "Repository created successfully!"
+    
+    # Get the current user
+    GITHUB_USER=$(gh api user --jq '.login')
+    
+    # Clone with ghq
+    echo "Cloning repository with ghq..."
+    ghq get "github.com/$GITHUB_USER/$REPO_NAME"
+    
+    if [[ $? -eq 0 ]]; then
+        echo "Repository cloned successfully!"
+        echo "Location: $(ghq root)/github.com/$GITHUB_USER/$REPO_NAME"
+    else
+        echo "Error: Failed to clone repository"
+        exit 1
+    fi
+else
+    echo "Error: Failed to create repository"
+    exit 1
+fi
