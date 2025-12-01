@@ -1,7 +1,8 @@
 [
   {
+    "output": "HDMI-A-2",
     "height": 24,
-    "layer": "top", 
+    "layer": "top",
     "position": "top",
     "spacing": 6,
     "margin-top": 4,
@@ -19,7 +20,7 @@
     "modules-right": [
       "custom/display",
       "bluetooth",
-      "wireplumber", 
+      "wireplumber",
       "network",
       "cpu",
       "memory",
@@ -28,6 +29,26 @@
       "custom/uptime",
       "custom/updates",
       "tray"
+    ],
+    "include": "~/.config/waybar/modules.json"
+  },
+  {
+    "output": "DP-1",
+    "height": 24,
+    "layer": "top",
+    "position": "top",
+    "spacing": 6,
+    "margin-top": 4,
+    "margin-left": 16,
+    "margin-right": 16,
+    "modules-left": [
+      "hyprland/workspaces",
+      "hyprland/submap",
+      "hyprland/window"
+    ],
+    "modules-center": [
+      "clock",
+      "custom/weather"
     ],
     "include": "~/.config/waybar/modules.json"
   }

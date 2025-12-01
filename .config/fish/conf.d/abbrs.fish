@@ -8,12 +8,12 @@ abbr -a cat bat
 
 # Useful shortcuts
 abbr -a cdt 'cd (mktemp -d)'
-abbr -a grep rg
-abbr -a find fd
-abbr -a ps procs
-abbr -a top btop
-abbr -a du dust
-abbr -a diff delta
+#abbr -a grep rg
+#abbr -a find fd
+#abbr -a ps procs
+#abbr -a top btop
+#abbr -a du dust
+#abbr -a diff delta
 
 # Git shortcuts
 abbr -a gs 'git status'
