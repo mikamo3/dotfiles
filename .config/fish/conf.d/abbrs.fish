@@ -1,8 +1,8 @@
 # Modern replacements for traditional tools
-abbr -a ls eza
-abbr -a ll 'eza -la --icons --git'
-abbr -a la 'eza -la --icons --git'
-abbr -a lt 'eza --tree --icons'
+abbr -a ls lsd
+abbr -a ll 'lsd -la --git'
+abbr -a la 'lsd -la --git'
+abbr -a lt 'lsd --tree '
 abbr -a vim nvim
 abbr -a cat bat
 

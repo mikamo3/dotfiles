@@ -25,6 +25,8 @@ source ~/.config/op/plugins.sh
 starship init fish | source
 zoxide init fish | source
 mise activate fish | source
+set -Ux MCFLY_INTERFACE_VIEW BOTTOM
+mcfly init fish | source
 
 # Zellij auto-start (only if not already in a zellij session, not in excluded terminals, and not via SSH)
 if status is-interactive; and not set -q ZELLIJ; and not string match -q "*vscode*" $TERM_PROGRAM; and not set -q SSH_CONNECTION
