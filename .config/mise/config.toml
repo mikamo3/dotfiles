@@ -4,6 +4,7 @@ node = "latest"
 ruby = "latest"
 go = "latest"
 java = "latest"
+python = "latest"
 
 pnpm = "latest"
 yarn = "latest"

@@ -1,6 +1,6 @@
 [
   {
-    "output": "HDMI-A-2",
+    "output": "HDMI-A-1",
     "height": 24,
     "layer": "top",
     "position": "top",
@@ -33,7 +33,7 @@
     "include": "~/.config/waybar/modules.json"
   },
   {
-    "output": "DP-1",
+    "output": "HDMI-A-2",
     "height": 24,
     "layer": "top",
     "position": "top",
