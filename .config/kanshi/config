@@ -1,12 +1,63 @@
-profile docked {
-    # LG Electronics LG HDR WQHD (HDMI-A-1)
-    output HDMI-A-1 mode 3440x1440@59.97Hz position 0,0 scale 1.0
+# ================================================================
+# 3画面構成（すべてon）
+# ================================================================
+profile triple {
+    # 左: I-O Data EX-LDGCU271D (縦置き)
+    output "I-O Data Device Inc EX-LDGCU271D 13JX0002650Z" mode 3840x2160@60Hz position 0,0 scale 1.25 transform 270
 
-    # YCT InnoView (DP-1)
-    output DP-1 mode 1920x1080@60.00Hz position 3440,0 scale 1.0
+    # 中央: LG UltraWide (横置き)
+    output "LG Electronics LG HDR WQHD 0x0000BDE0" mode 3440x1440@60Hz position 1728,0 scale 1.0
+
+    # 右: モバイルモニタ (縦置き)
+    output "Invalid Vendor Codename - RTK 0x2560 0x01010101" mode 2560x1600@60Hz position 5168,0 scale 1.333333 transform 90
 }
 
-profile undocked {
-    # DP-1が抜かれた場合
-    output HDMI-A-1 mode 3440x1440@59.97Hz position 0,0 scale 1.0
+# ================================================================
+# 2画面構成
+# ================================================================
+
+# I-O Data + LG
+profile dual_iodata_lg {
+    # 左: I-O Data EX-LDGCU271D (縦置き)
+    output "I-O Data Device Inc EX-LDGCU271D 13JX0002650Z" mode 3840x2160@60Hz position 0,0 scale 1.25 transform 270
+
+    # 右: LG UltraWide (横置き)
+    output "LG Electronics LG HDR WQHD 0x0000BDE0" mode 3440x1440@60Hz position 1728,0 scale 1.0
+}
+
+# I-O Data + モバイル
+profile dual_iodata_mobile {
+    # 左: I-O Data EX-LDGCU271D (縦置き)
+    output "I-O Data Device Inc EX-LDGCU271D 13JX0002650Z" mode 3840x2160@60Hz position 0,0 scale 1.25 transform 270
+
+    # 右: モバイルモニタ (縦置き)
+    output "Invalid Vendor Codename - RTK 0x2560 0x01010101" mode 2560x1600@60Hz position 1728,0 scale 1.333333 transform 90
+}
+
+# LG + モバイル
+profile dual_lg_mobile {
+    # 左: LG UltraWide (横置き)
+    output "LG Electronics LG HDR WQHD 0x0000BDE0" mode 3440x1440@60Hz position 0,0 scale 1.0
+
+    # 右: モバイルモニタ (縦置き)
+    output "Invalid Vendor Codename - RTK 0x2560 0x01010101" mode 2560x1600@60Hz position 3440,0 scale 1.333333 transform 90
+}
+
+# ================================================================
+# 1画面構成
+# ================================================================
+
+# I-O Dataのみ
+profile single_iodata {
+    output "I-O Data Device Inc EX-LDGCU271D 13JX0002650Z" mode 3840x2160@60Hz position 0,0 scale 1.25 transform 270
+}
+
+# LGのみ
+profile single_lg {
+    output "LG Electronics LG HDR WQHD 0x0000BDE0" mode 3440x1440@60Hz position 0,0 scale 1.0
+}
+
+# モバイルのみ
+profile single_mobile {
+    output "Invalid Vendor Codename - RTK 0x2560 0x01010101" mode 2560x1600@60Hz position 0,0 scale 1.333333 transform 90
 }

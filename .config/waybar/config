@@ -1,7 +1,7 @@
 [
   {
     "output": "HDMI-A-1",
-    "height": 24,
+    "height": 38,
     "layer": "top",
     "position": "top",
     "spacing": 6,
@@ -34,7 +34,7 @@
   },
   {
     "output": "HDMI-A-2",
-    "height": 24,
+    "height": 38,
     "layer": "top",
     "position": "top",
     "spacing": 6,
