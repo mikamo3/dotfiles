@@ -24,7 +24,6 @@ source /usr/lib/kawazu/kawazu.fish
 source ~/.config/op/plugins.sh
 starship init fish | source
 zoxide init fish | source
-mise activate fish | source
 set -Ux MCFLY_INTERFACE_VIEW BOTTOM
 mcfly init fish | source
 

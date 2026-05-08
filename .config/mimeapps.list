@@ -34,3 +34,4 @@ x-scheme-handler/http=firefox.desktop;
 x-scheme-handler/https=firefox.desktop;
 x-scheme-handler/unknown=chromium.desktop;
 application/pdf=org.pwmt.zathura.desktop
+x-scheme-handler/claude-cli=claude-code-url-handler.desktop
