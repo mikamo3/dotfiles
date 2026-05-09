@@ -12,15 +12,11 @@ set -Ux PAGER bat
 set -Ux MANPAGER "sh -c 'col -bx | bat -l man -p'"
 set PATH ~/bin ~/.local/bin $PATH
 
-set -Ux KAWAZU_ROOT_DIR /usr/lib/kawazu
-set -Ux MEMO_DIR ~/google-drive/.memo
-
 fish_vi_key_bindings
 
 # Catppuccin Mocha theme is already applied via themes directory
 
 # fzf integration is now handled by PatrickF1/fzf.fish plugin
-source /usr/lib/kawazu/kawazu.fish
 source ~/.config/op/plugins.sh
 starship init fish | source
 zoxide init fish | source
