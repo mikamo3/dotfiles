@@ -150,23 +150,7 @@ else
 fi
 
 # ============================================================================
-# 9. Hyprland plugins (hyprpm)
-# ============================================================================
-
-if has hyprpm && has hyprctl; then
-    if hyprpm list 2>/dev/null | grep -q "hyprexpo.*enabled"; then
-        skip "Hyprland plugins already installed"
-    else
-        hyprpm add https://github.com/hyprwm/hyprland-plugins 2>/dev/null || true
-        hyprpm enable hyprexpo 2>/dev/null || true
-        hyprpm reload 2>/dev/null && ok "Hyprland plugins loaded" || warn "hyprpm reload failed"
-    fi
-else
-    skip "hyprpm/hyprctl not available (non-Hyprland environment)"
-fi
-
-# ============================================================================
-# 10. mise (runtime tools)
+# 9. mise (runtime tools)
 # ============================================================================
 
 if has mise; then
