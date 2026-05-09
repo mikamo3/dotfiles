@@ -1,3 +1,4 @@
+{{- if eq .chezmoi.hostname "mainpc" -}}
 [
   {
     "output": "HDMI-A-1",
@@ -53,3 +54,14 @@
     "include": "~/.config/waybar/modules.json"
   }
 ]
+{{- else }}
+[
+  {
+    "output": "TODO_{{ .chezmoi.hostname }}",
+    "height": 38, "layer": "top", "position": "top",
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["clock"],
+    "modules-right": ["tray"]
+  }
+]
+{{- end }}
