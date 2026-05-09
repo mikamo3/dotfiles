@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+choice=$(ghq list -p | fuzzel --dmenu --prompt "VSCode  ")
+[[ -n "$choice" ]] && code "$choice"

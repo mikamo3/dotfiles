@@ -5,7 +5,7 @@ workspaces = true
 style = "compact"
 inline_height = 20
 show_preview = true
-enter_accept = true
+enter_accept = false
 keymap_mode = "auto"
 
 history_filter = [
