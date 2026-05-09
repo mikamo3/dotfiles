@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Dotfiles initialization script for Arch Linux
-# Run after ansible setup to complete user environment
+# User-space initialization script for Arch Linux dotfiles
+# Idempotent: safe to run multiple times
 
 set -euo pipefail
 
@@ -11,119 +11,175 @@ readonly BLUE='\033[0;34m'
 readonly NC='\033[0m'
 
 info()    { echo -e "${BLUE}[INFO]${NC} $1"; }
-success() { echo -e "${GREEN}[SUCCESS]${NC} $1"; }
+ok()      { echo -e "${GREEN}[ OK ]${NC} $1"; }
+skip()    { echo -e "${YELLOW}[SKIP]${NC} $1"; }
 warn()    { echo -e "${YELLOW}[WARN]${NC} $1"; }
-error()   { echo -e "${RED}[ERROR]${NC} $1" >&2; }
+error()   { echo -e "${RED}[ERR ]${NC} $1" >&2; }
 
-trap 'error "Script failed at line $LINENO"' ERR
+trap 'error "Failed at line $LINENO"' ERR
 
-USER_NAME=$(whoami)
-info "Setting up dotfiles environment for user: $USER_NAME"
+has() { command -v "$1" >/dev/null 2>&1; }
 
-# ---- Dependencies ----------------------------------------------------------
+# ============================================================================
+# 1. Prerequisite check
+# ============================================================================
 
-check_dependencies() {
-    info "Checking dependencies..."
-    local missing=()
-    command -v git     >/dev/null 2>&1 || missing+=("git")
-    command -v chezmoi >/dev/null 2>&1 || missing+=("chezmoi")
+info "Checking prerequisites..."
+missing=()
+for cmd in git chezmoi zsh; do
+    has "$cmd" || missing+=("$cmd")
+done
+if [[ ${#missing[@]} -gt 0 ]]; then
+    error "Missing: ${missing[*]} — run ansible first"
+    exit 1
+fi
+ok "Prerequisites satisfied"
 
-    if [[ ${#missing[@]} -gt 0 ]]; then
-        error "Missing dependencies: ${missing[*]}"
-        error "Please install missing packages with ansible first"
-        exit 1
-    fi
-    success "All dependencies satisfied"
-}
+# ============================================================================
+# 2. XDG user directories (English names)
+# ============================================================================
 
-check_dependencies
-
-# ---- XDG directories -------------------------------------------------------
-
-info "Checking XDG directories..."
 if grep -q 'XDG_DESKTOP_DIR.*Desktop' ~/.config/user-dirs.dirs 2>/dev/null; then
-    success "XDG directories already configured in English"
+    skip "XDG directories already in English"
 else
-    info "Updating XDG directories to English names..."
-    LC_ALL=C xdg-user-dirs-update --force && success "XDG directories updated" || warn "Failed to update XDG directories"
+    LC_ALL=C xdg-user-dirs-update --force
+    ok "XDG directories updated to English"
 fi
 
-# ---- Home directories ------------------------------------------------------
+# ============================================================================
+# 3. Essential directories
+# ============================================================================
 
-info "Checking essential home directories..."
-directories=(
-    ~/Documents/projects ~/Documents/notes
-    ~/Downloads/software ~/Downloads/media
-    ~/Pictures/screenshots ~/Pictures/wallpapers
-    ~/.local/bin ~/.local/share/applications
+dirs=(
+    ~/Documents/projects
+    ~/Documents/notes
+    ~/Downloads/software
+    ~/Downloads/media
+    ~/Pictures/screenshots
+    ~/Pictures/wallpapers
+    ~/.local/bin
+    ~/.local/share/applications
     ~/src
 )
-
 missing_dirs=()
-for dir in "${directories[@]}"; do
-    [[ -d "$dir" ]] || missing_dirs+=("$dir")
+for d in "${dirs[@]}"; do
+    [[ -d "$d" ]] || missing_dirs+=("$d")
 done
-
 if [[ ${#missing_dirs[@]} -eq 0 ]]; then
-    success "All home directories already exist"
+    skip "All directories exist"
 else
-    mkdir -p "${missing_dirs[@]}" && success "Home directories created: ${missing_dirs[*]}"
+    mkdir -p "${missing_dirs[@]}"
+    ok "Created: ${missing_dirs[*]}"
 fi
 
-# ---- Default shell ---------------------------------------------------------
+# ============================================================================
+# 4. Default shell → zsh
+# ============================================================================
 
-info "Checking user shell..."
-CURRENT_SHELL=$(getent passwd "$USER_NAME" | cut -d: -f7)
-if [[ "$CURRENT_SHELL" == "/usr/bin/zsh" ]]; then
-    success "User shell is already zsh"
+current_shell=$(getent passwd "$(whoami)" | cut -d: -f7)
+if [[ "$current_shell" == "/usr/bin/zsh" ]]; then
+    skip "Shell already zsh"
 else
-    info "Changing user shell to zsh..."
-    sudo chsh -s /usr/bin/zsh "$USER_NAME" && success "User shell changed to zsh"
+    sudo chsh -s /usr/bin/zsh "$(whoami)"
+    ok "Shell changed to zsh (effective after re-login)"
 fi
 
-# ---- Dotfiles (chezmoi) ----------------------------------------------------
+# ============================================================================
+# 5. Dotfiles (chezmoi)
+# ============================================================================
 
-info "Applying dotfiles with chezmoi..."
 if [[ ! -d ~/.kawazu/dotfiles ]]; then
-    info "Cloning dotfiles repository..."
+    info "Cloning dotfiles..."
     mkdir -p ~/.kawazu
     git clone https://github.com/mikamo3/dotfiles ~/.kawazu/dotfiles
+    ok "Dotfiles cloned"
 fi
 
 chezmoi apply --source ~/.kawazu/dotfiles
-success "Dotfiles applied"
+ok "Dotfiles applied"
 
-# ---- zsh plugins (sheldon) -------------------------------------------------
+# ============================================================================
+# 6. zsh plugins (sheldon)
+# ============================================================================
 
-if command -v sheldon >/dev/null 2>&1; then
-    info "Installing zsh plugins with sheldon..."
-    sheldon lock --update && success "Sheldon plugins installed"
-else
-    warn "sheldon not found, skipping plugin install"
-fi
-
-# ---- Hyprland plugins (hyprpm) ---------------------------------------------
-
-if command -v hyprpm >/dev/null 2>&1 && command -v hyprctl >/dev/null 2>&1; then
-    info "Checking Hyprland plugins..."
-    if hyprpm list 2>/dev/null | grep -q "hyprexpo.*enabled"; then
-        success "Hyprland plugins already installed"
+if has sheldon; then
+    # lock --update only if plugins.toml is newer than the lockfile
+    lockfile="${XDG_CONFIG_HOME:-$HOME/.config}/sheldon/plugins.lock"
+    plugins_toml="${XDG_CONFIG_HOME:-$HOME/.config}/sheldon/plugins.toml"
+    if [[ ! -f "$lockfile" ]] || [[ "$plugins_toml" -nt "$lockfile" ]]; then
+        sheldon lock --update
+        ok "Sheldon plugins installed/updated"
     else
-        hyprpm add https://github.com/hyprwm/hyprland-plugins 2>/dev/null || true
-        hyprpm enable hyprexpo 2>/dev/null && hyprpm reload 2>/dev/null && success "Hyprland plugins loaded" || warn "Failed to set up Hyprland plugins"
+        skip "Sheldon plugins up to date"
     fi
 else
-    warn "Skipping Hyprland plugin setup (hyprpm/hyprctl not available)"
+    warn "sheldon not found"
 fi
 
-# ---- mise ------------------------------------------------------------------
+# ============================================================================
+# 7. yazi plugins
+# ============================================================================
 
-if command -v mise >/dev/null 2>&1; then
-    info "Installing mise tools..."
-    mise install && success "Mise tools installed" || warn "Failed to install some mise tools"
+if has ya; then
+    pkg_toml="${XDG_CONFIG_HOME:-$HOME/.config}/yazi/package.toml"
+    pkg_state="${XDG_STATE_HOME:-$HOME/.local/state}/yazi/packages"
+    if [[ ! -d "$pkg_state" ]] || [[ "$pkg_toml" -nt "$pkg_state" ]]; then
+        ya pkg install
+        ok "yazi plugins installed"
+    else
+        skip "yazi plugins up to date"
+    fi
 else
-    warn "Skipping mise tool installation (mise not available)"
+    warn "ya not found"
 fi
 
-success "=== Setup complete ==="
-info "Please log out and log back in for shell changes to take effect."
+# ============================================================================
+# 8. atuin history import (first time only)
+# ============================================================================
+
+if has atuin; then
+    atuin_db="${XDG_DATA_HOME:-$HOME/.local/share}/atuin/history.db"
+    if [[ ! -f "$atuin_db" ]]; then
+        atuin import auto
+        ok "atuin history imported"
+    else
+        skip "atuin DB already exists"
+    fi
+else
+    warn "atuin not found"
+fi
+
+# ============================================================================
+# 9. Hyprland plugins (hyprpm)
+# ============================================================================
+
+if has hyprpm && has hyprctl; then
+    if hyprpm list 2>/dev/null | grep -q "hyprexpo.*enabled"; then
+        skip "Hyprland plugins already installed"
+    else
+        hyprpm add https://github.com/hyprwm/hyprland-plugins 2>/dev/null || true
+        hyprpm enable hyprexpo 2>/dev/null || true
+        hyprpm reload 2>/dev/null && ok "Hyprland plugins loaded" || warn "hyprpm reload failed"
+    fi
+else
+    skip "hyprpm/hyprctl not available (non-Hyprland environment)"
+fi
+
+# ============================================================================
+# 10. mise (runtime tools)
+# ============================================================================
+
+if has mise; then
+    # mise install は未インストールのものだけ処理するので常に実行して問題なし
+    mise install && ok "mise tools ready"
+else
+    warn "mise not found"
+fi
+
+# ============================================================================
+
+echo ""
+ok "=== Init complete ==="
+if [[ "$(getent passwd "$(whoami)" | cut -d: -f7)" != "/usr/bin/zsh" ]]; then
+    info "Re-login required for shell change to take effect"
+fi
