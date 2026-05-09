@@ -27,9 +27,6 @@ autoload -Uz compinit && compinit
 # Plugins
 eval "$(sheldon source)"
 
-# fzf shell integration
-source <(fzf --zsh)
-
 # Aliases
 alias ls='lsd'
 alias ll='lsd -la --git'
@@ -55,7 +52,40 @@ alias di='docker images'
 source ~/.config/op/plugins.sh
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
-eval "$(atuin init zsh)"
+function zvm_after_init() {
+  source <(fzf --zsh)
+  eval "$(atuin init zsh)"
+
+  function _fzf_ghq() {
+    local repo=$(ghq list | fzf --preview "ls $(ghq root)/{}")
+    [[ -n "$repo" ]] && cd "$(ghq root)/$repo"
+    zle reset-prompt
+  }
+  zle -N _fzf_ghq
+  bindkey '^g' _fzf_ghq
+
+  function _fzf_nvim() {
+    local file=$(fzf --preview 'bat --color=always {}')
+    [[ -n "$file" ]] && nvim "$file"
+    zle reset-prompt
+  }
+  zle -N _fzf_nvim
+  bindkey '^f' _fzf_nvim
+
+  function _fzf_git_branch() {
+    local branch=$(git branch --all 2>/dev/null \
+      | grep -v HEAD \
+      | sed 's/^[ *]*//' \
+      | sed 's|remotes/origin/||' \
+      | sort -u \
+      | fzf)
+    [[ -n "$branch" ]] && git checkout "$branch"
+    zle reset-prompt
+  }
+  zle -N _fzf_git_branch
+  bindkey '^b' _fzf_git_branch
+}
+
 
 # Zellij auto-start
 if [[ $- == *i* ]] && [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != *vscode* ]] && [[ -z "$SSH_CONNECTION" ]]; then
