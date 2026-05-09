@@ -5,14 +5,14 @@
     "warp-on-scroll": false,
     "format": "{name} {icon}",
     "format-icons": {
-      "1": "🌐",
-      "2": "💻",
-      "3": "💬",
-      "4": "🖥️",
-      "5": "📁",
-      "urgent": "",
-      "focused": "",
-      "default": ""
+      "1": "󰖟",
+      "2": "󰨞",
+      "3": "󰍦",
+      "4": "󰍹",
+      "5": "󰉋",
+      "urgent": "󰗖",
+      "focused": "󰮯",
+      "default": "󰊠"
     }
   },
   "hyprland/submap": {
@@ -90,7 +90,7 @@
     "scroll-step": 5
   },
   "custom/weather": {
-    "format": "🌤 {}°",
+    "format": "󰖐 {}°",
     "tooltip": true,
     "interval": 1800,
     "exec": "wttrbar --location yokohama --lang ja",
@@ -105,7 +105,7 @@
     },
     "exec-if": "which waybar-module-pacman-updates",
     "exec": "waybar-module-pacman-updates --interval-seconds 900 --network-interval-seconds 3600",
-    "on-click": "kitty -e yay -Syu"
+    "on-click": "ghostty -e yay -Syu"
   },
   "custom/topproc": {
     "interval": 2,
