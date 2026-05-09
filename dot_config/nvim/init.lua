@@ -3,6 +3,7 @@
 
 -- Basic editor settings
 vim.opt.number = true
+vim.opt.relativenumber = true
 vim.opt.autoindent = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
@@ -35,7 +36,7 @@ vim.keymap.set("n", "<Esc>", ":nohlsearch<CR>", { desc = "Clear search highlight
 
 -- Auto-install lazy.nvim (modern plugin manager)
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -79,11 +80,6 @@ require("lazy").setup({
     config = true,
   },
   
-  -- EditorConfig support
-  {
-    "editorconfig/editorconfig-vim",
-    event = "VeryLazy",
-  },
 })
 
 -- FileType specific settings
