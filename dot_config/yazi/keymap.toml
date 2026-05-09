@@ -1,0 +1,72 @@
+[manager]
+keymap = [
+  # Navigation
+  { on = "h", run = "leave",              desc = "Go to parent directory" },
+  { on = "l", run = "enter",              desc = "Enter directory / open file" },
+  { on = "j", run = "arrow 1",            desc = "Move down" },
+  { on = "k", run = "arrow -1",           desc = "Move up" },
+  { on = "J", run = "arrow 5",            desc = "Move down 5" },
+  { on = "K", run = "arrow -5",           desc = "Move up 5" },
+  { on = "g", run = "arrow -99999999",    desc = "Go to top" },
+  { on = "G", run = "arrow 99999999",     desc = "Go to bottom" },
+  { on = "<Enter>", run = "open",         desc = "Open selected files" },
+
+  # Goto shortcuts
+  { on = ["g", "h"], run = "cd ~",        desc = "Go to home" },
+  { on = ["g", "d"], run = "cd ~/Downloads", desc = "Go to Downloads" },
+  { on = ["g", "s"], run = "cd ~/src",    desc = "Go to src" },
+  { on = ["g", "c"], run = "cd ~/.config", desc = "Go to .config" },
+
+  # Operations
+  { on = "y", run = "yank",              desc = "Yank (copy)" },
+  { on = "x", run = "yank --cut",        desc = "Yank (cut)" },
+  { on = "p", run = "paste",             desc = "Paste" },
+  { on = "d", run = "remove --permanently", desc = "Delete" },
+  { on = "r", run = "rename --cursor=before_ext", desc = "Rename" },
+  { on = "a", run = "create",            desc = "Create file/dir" },
+  { on = "<Space>", run = "select --state=none", desc = "Toggle selection" },
+  { on = "v", run = "visual_mode",       desc = "Visual mode" },
+  { on = "V", run = "select_all --state=none", desc = "Select/deselect all" },
+
+  # View
+  { on = ".", run = "hidden toggle",     desc = "Toggle hidden files" },
+  { on = "z", run = "plugin zoxide",     desc = "Jump with zoxide" },
+  { on = "f", run = "plugin smart-filter", desc = "Smart filter" },
+
+  # Tabs
+  { on = "t",       run = "tab_create --current", desc = "New tab" },
+  { on = "[",       run = "tab_switch -1 --relative", desc = "Prev tab" },
+  { on = "]",       run = "tab_switch  1 --relative", desc = "Next tab" },
+  { on = "1", run = "tab_switch 0",     desc = "Switch to tab 1" },
+  { on = "2", run = "tab_switch 1",     desc = "Switch to tab 2" },
+  { on = "3", run = "tab_switch 2",     desc = "Switch to tab 3" },
+
+  # Shell
+  { on = "!", run = "shell --interactive --block", desc = "Open shell" },
+  { on = "e", run = "open --interactive", desc = "Open with picker" },
+
+  { on = "q", run = "quit",             desc = "Quit" },
+  { on = "<Esc>", run = ["escape", "unyank"], desc = "Escape" },
+]
+
+[input]
+keymap = [
+  { on = "<Esc>",   run = "close",       desc = "Cancel" },
+  { on = "<Enter>", run = "submit",      desc = "Submit" },
+  { on = "<C-c>",   run = "close",       desc = "Cancel" },
+  { on = "j",       run = ["close --submit", "arrow 1"],  desc = "Submit and move down" },
+
+  { on = "<C-h>", run = "backspace",    desc = "Backspace" },
+  { on = "<C-u>", run = "kill-before",  desc = "Kill before cursor" },
+  { on = "<C-a>", run = "move -999",    desc = "Move to start" },
+  { on = "<C-e>", run = "move 999",     desc = "Move to end" },
+]
+
+[select]
+keymap = [
+  { on = "<Esc>",   run = "close",       desc = "Cancel" },
+  { on = "<C-c>",   run = "close",       desc = "Cancel" },
+  { on = "<Enter>", run = "submit",      desc = "Confirm" },
+  { on = "j",       run = "arrow 1",     desc = "Move down" },
+  { on = "k",       run = "arrow -1",    desc = "Move up" },
+]
