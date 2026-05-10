@@ -22,18 +22,22 @@ arch-ansible の shell / desktop / apps / media / development ロールが導入
 設定ファイルが必要なものを以下に列挙する。
 
 ### シェル / ターミナル
-- **fish** — メインシェル (`~/.config/fish/`)
+- **zsh** — メインシェル (`~/.zshrc`)
+- **sheldon** — zsh プラグインマネージャ (`~/.config/sheldon/plugins.toml`)
 - **starship** — プロンプト (`~/.config/starship.toml`)
-- **fisher** — fish プラグインマネージャ (`~/.config/fish/fish_plugins`)
 - **ghostty** / **kitty** — ターミナルエミュレータ
 - **zellij** — ターミナルマルチプレクサ (`~/.config/zellij/`)
 - **atuin** — シェル履歴 (`~/.config/atuin/`)
+- **fish** — 移行前の設定を保持中 (`~/.config/fish/`)
 
 ### Wayland / Hyprland
 - **hyprland** — compositor (`~/.config/hypr/hyprland.conf`) ← モニター設定はテンプレート化
 - **waybar** — ステータスバー (`~/.config/waybar/`)
 - **fuzzel** — アプリランチャ (`~/.config/fuzzel/`)
-- **mako** — 通知 (`~/.config/mako/`)
+- **swaync** — 通知 (`~/.config/swaync/`)
+- **rofi** — 移行前の設定を保持中 (`~/.config/rofi/`)
+- **kanshi** — 無効化済み・設定のみ保持 (`~/.config/kanshi/`)
+- **swayidle** — hypridle へ移行済み・systemd unit のみ保持
 - **hyprlock** (`~/.config/hypr/hyprlock.conf`)
 - **hypridle** (`~/.config/hypr/hypridle.conf`)
 - **hyprpaper** (`~/.config/hypr/hyprpaper.conf`)
