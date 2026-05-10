@@ -24,8 +24,23 @@ setopt HIST_IGNORE_DUPS
 # Completion
 autoload -Uz compinit && compinit
 
+# Case-insensitive + partial-word matching (fish-like)
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' menu no
+zstyle ':completion:*:descriptions' format '[%d]'
+
 # Plugins
 eval "$(sheldon source)"
+
+# fzf-tab: fuzzy selection on Tab
+zstyle ':fzf-tab:*' fzf-flags '--height=40%' '--layout=reverse' '--ansi'
+zstyle ':fzf-tab:complete:*:*' fzf-preview '
+  if [[ -d $realpath ]]; then
+    lsd --color=always --tree --depth=2 -- $realpath 2>/dev/null
+  elif [[ -f $realpath ]]; then
+    bat --color=always --style=numbers --line-range=:200 -- $realpath 2>/dev/null
+  fi'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'lsd --color=always --tree --depth=2 -- $realpath'
 
 # Aliases
 alias ls='lsd'
