@@ -29,7 +29,3 @@ brew "zoxide"
 brew "btop"
 brew "chezmoi"
 
-# Media / docs
-cask "mpv"
-brew "zathura"
-brew "zathura-pdf-poppler"
