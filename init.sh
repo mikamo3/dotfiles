@@ -109,13 +109,6 @@ fi
 # 5. Dotfiles (chezmoi)
 # ============================================================================
 
-if [[ ! -d ~/.kawazu/dotfiles ]]; then
-    info "Cloning dotfiles..."
-    mkdir -p ~/.kawazu
-    git clone https://github.com/mikamo3/dotfiles ~/.kawazu/dotfiles
-    ok "Dotfiles cloned"
-fi
-
 chezmoi apply --source ~/.kawazu/dotfiles
 ok "Dotfiles applied"
 
