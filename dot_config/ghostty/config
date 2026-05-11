@@ -1,7 +1,7 @@
 font-family = UDEV Gothic 35NFLG
 font-size = 12
 
-theme = catppuccin-mocha
+theme = Catppuccin Mocha
 
 cursor-style = bar
 cursor-style-blink = false
