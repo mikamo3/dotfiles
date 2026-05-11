@@ -1,5 +1,8 @@
 # Path
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+{{- if eq .chezmoi.os "darwin" }}
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+{{- end }}
 
 # Environment
 export EDITOR=nvim
@@ -64,7 +67,7 @@ alias dps='docker ps'
 alias di='docker images'
 
 # Tools
-source ~/.config/op/plugins.sh
+[[ -f ~/.config/op/plugins.sh ]] && source ~/.config/op/plugins.sh
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 function zvm_after_init() {

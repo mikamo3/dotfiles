@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# User-space initialization script for Arch Linux dotfiles
+# User-space initialization script for Arch Linux / macOS dotfiles
 # Idempotent: safe to run multiple times
 
 set -euo pipefail
@@ -19,6 +19,8 @@ error()   { echo -e "${RED}[ERR ]${NC} $1" >&2; }
 trap 'error "Failed at line $LINENO"' ERR
 
 has() { command -v "$1" >/dev/null 2>&1; }
+is_mac()   { [[ "$(uname -s)" == "Darwin" ]]; }
+is_linux() { [[ "$(uname -s)" == "Linux" ]]; }
 
 # ============================================================================
 # 1. Prerequisite check
@@ -30,20 +32,28 @@ for cmd in git chezmoi zsh; do
     has "$cmd" || missing+=("$cmd")
 done
 if [[ ${#missing[@]} -gt 0 ]]; then
-    error "Missing: ${missing[*]} — run ansible first"
+    if is_mac; then
+        error "Missing: ${missing[*]} — install via Homebrew: brew install ${missing[*]}"
+    else
+        error "Missing: ${missing[*]} — run ansible first"
+    fi
     exit 1
 fi
 ok "Prerequisites satisfied"
 
 # ============================================================================
-# 2. XDG user directories (English names)
+# 2. XDG user directories (Linux only)
 # ============================================================================
 
-if grep -q 'XDG_DESKTOP_DIR.*Desktop' ~/.config/user-dirs.dirs 2>/dev/null; then
-    skip "XDG directories already in English"
+if is_linux; then
+    if grep -q 'XDG_DESKTOP_DIR.*Desktop' ~/.config/user-dirs.dirs 2>/dev/null; then
+        skip "XDG directories already in English"
+    else
+        LC_ALL=C xdg-user-dirs-update --force
+        ok "XDG directories updated to English"
+    fi
 else
-    LC_ALL=C xdg-user-dirs-update --force
-    ok "XDG directories updated to English"
+    skip "XDG user-dirs: not applicable on macOS"
 fi
 
 # ============================================================================
@@ -58,9 +68,13 @@ dirs=(
     ~/Pictures/screenshots
     ~/Pictures/wallpapers
     ~/.local/bin
-    ~/.local/share/applications
     ~/src
 )
+# ~/.local/share/applications is Linux (freedesktop) specific
+if is_linux; then
+    dirs+=(~/.local/share/applications)
+fi
+
 missing_dirs=()
 for d in "${dirs[@]}"; do
     [[ -d "$d" ]] || missing_dirs+=("$d")
@@ -76,11 +90,18 @@ fi
 # 4. Default shell → zsh
 # ============================================================================
 
-current_shell=$(getent passwd "$(whoami)" | cut -d: -f7)
-if [[ "$current_shell" == "/usr/bin/zsh" ]]; then
+if is_mac; then
+    current_shell=$(dscl . -read "/Users/$(whoami)" UserShell | awk '{print $2}')
+    target_shell="/bin/zsh"
+else
+    current_shell=$(getent passwd "$(whoami)" | cut -d: -f7)
+    target_shell="/usr/bin/zsh"
+fi
+
+if [[ "$current_shell" == "$target_shell" ]]; then
     skip "Shell already zsh"
 else
-    sudo chsh -s /usr/bin/zsh "$(whoami)"
+    sudo chsh -s "$target_shell" "$(whoami)"
     ok "Shell changed to zsh (effective after re-login)"
 fi
 
@@ -103,7 +124,6 @@ ok "Dotfiles applied"
 # ============================================================================
 
 if has sheldon; then
-    # lock --update only if plugins.toml is newer than the lockfile
     lockfile="${XDG_CONFIG_HOME:-$HOME/.config}/sheldon/plugins.lock"
     plugins_toml="${XDG_CONFIG_HOME:-$HOME/.config}/sheldon/plugins.toml"
     if [[ ! -f "$lockfile" ]] || [[ "$plugins_toml" -nt "$lockfile" ]]; then
@@ -154,16 +174,33 @@ fi
 # ============================================================================
 
 if has mise; then
-    # mise install は未インストールのものだけ処理するので常に実行して問題なし
     mise install && ok "mise tools ready"
 else
     warn "mise not found"
 fi
 
 # ============================================================================
+# 10. macOS: install Homebrew packages
+# ============================================================================
+
+if is_mac; then
+    if has brew; then
+        brewfile="$HOME/.Brewfile"
+        if [[ -f "$brewfile" ]]; then
+            brew bundle --global --no-lock
+            ok "Homebrew packages installed"
+        else
+            skip "~/.Brewfile not found"
+        fi
+    else
+        warn "Homebrew not found — install from https://brew.sh"
+    fi
+fi
+
+# ============================================================================
 
 echo ""
 ok "=== Init complete ==="
-if [[ "$(getent passwd "$(whoami)" | cut -d: -f7)" != "/usr/bin/zsh" ]]; then
+if [[ "$current_shell" != "$target_shell" ]]; then
     info "Re-login required for shell change to take effect"
 fi
