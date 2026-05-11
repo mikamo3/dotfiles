@@ -22,6 +22,22 @@ has() { command -v "$1" >/dev/null 2>&1; }
 is_mac()   { [[ "$(uname -s)" == "Darwin" ]]; }
 is_linux() { [[ "$(uname -s)" == "Linux" ]]; }
 
+# Resolve dotfiles directory:
+#   - If init.sh is run from within the cloned repo, use that directory.
+#   - Otherwise (curl | bash, or run from elsewhere), fall back to chezmoi default.
+readonly DOTFILES_REPO="https://github.com/mikamo3/dotfiles.git"
+readonly DOTFILES_DIR_DEFAULT="${XDG_DATA_HOME:-$HOME/.local/share}/chezmoi"
+_from_repo=false
+_script="${BASH_SOURCE[0]:-}"
+if [[ -n "$_script" && -f "$_script" ]]; then
+    _candidate="$(cd "$(dirname "$_script")" && pwd)"
+    if [[ -f "$_candidate/dot_zshrc.tmpl" ]]; then
+        DOTFILES_DIR="$_candidate"
+        _from_repo=true
+    fi
+fi
+readonly DOTFILES_DIR="${DOTFILES_DIR:-$DOTFILES_DIR_DEFAULT}"
+
 # ============================================================================
 # 1. Prerequisite check
 # ============================================================================
@@ -109,8 +125,14 @@ fi
 # 5. Dotfiles (chezmoi)
 # ============================================================================
 
-chezmoi apply --source ~/.kawazu/dotfiles
-ok "Dotfiles applied"
+if [[ "$_from_repo" == true ]]; then
+    chezmoi apply --source "$DOTFILES_DIR"
+    ok "Dotfiles applied"
+else
+    info "Initializing dotfiles via chezmoi..."
+    chezmoi init --apply "$DOTFILES_REPO"
+    ok "Dotfiles initialized and applied"
+fi
 
 # ============================================================================
 # 6. zsh plugins (sheldon)
@@ -160,16 +182,6 @@ if has atuin; then
     fi
 else
     warn "atuin not found"
-fi
-
-# ============================================================================
-# 9. mise (runtime tools)
-# ============================================================================
-
-if has mise; then
-    mise install && ok "mise tools ready"
-else
-    warn "mise not found"
 fi
 
 # ============================================================================

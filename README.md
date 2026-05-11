@@ -8,9 +8,8 @@
 
 ```bash
 # arch-ansible で git / chezmoi / zsh など最低限のツールを導入後:
-git clone https://github.com/mikamo3/dotfiles ~/.kawazu/dotfiles
-cd ~/.kawazu/dotfiles
-./init.sh
+git clone https://github.com/mikamo3/dotfiles ~/.local/share/chezmoi
+~/.local/share/chezmoi/init.sh
 ```
 
 `init.sh` は冪等。再実行時は差分のみ適用。

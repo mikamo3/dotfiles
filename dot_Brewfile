@@ -16,7 +16,6 @@ brew "yazi"
 brew "git-delta"
 brew "difftastic"
 brew "lazygit"
-brew "mise"
 brew "ghq"
 
 # CLI tools
