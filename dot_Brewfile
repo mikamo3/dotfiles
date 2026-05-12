@@ -1,0 +1,30 @@
+# Shell / Terminal
+brew "sheldon"
+brew "starship"
+brew "atuin"
+brew "zellij"
+cask "ghostty"
+
+# Editors
+brew "neovim"
+brew "helix"
+
+# File manager
+brew "yazi"
+
+# Development
+brew "git-delta"
+brew "difftastic"
+brew "lazygit"
+brew "ghq"
+
+# CLI tools
+brew "fzf"
+brew "fd"
+brew "bat"
+brew "eza"
+brew "ripgrep"
+brew "zoxide"
+brew "btop"
+brew "chezmoi"
+

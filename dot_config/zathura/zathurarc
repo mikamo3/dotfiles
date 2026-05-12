@@ -1,0 +1,39 @@
+# Catppuccin Mocha
+set default-bg                  "#1e1e2e"
+set default-fg                  "#cdd6f4"
+set statusbar-bg                "#313244"
+set statusbar-fg                "#cdd6f4"
+set inputbar-bg                 "#1e1e2e"
+set inputbar-fg                 "#cdd6f4"
+set notification-bg             "#313244"
+set notification-fg             "#cdd6f4"
+set notification-error-bg       "#f38ba8"
+set notification-error-fg       "#1e1e2e"
+set notification-warning-bg     "#f9e2af"
+set notification-warning-fg     "#1e1e2e"
+set highlight-color             rgba(203,166,247,0.5)
+set highlight-active-color      rgba(137,180,250,0.7)
+set completion-bg               "#313244"
+set completion-fg               "#cdd6f4"
+set completion-highlight-bg     "#45475a"
+set completion-highlight-fg     "#cdd6f4"
+set recolor-lightcolor          "#1e1e2e"
+set recolor-darkcolor           "#cdd6f4"
+
+# Behavior
+set recolor                     true
+set recolor-keephue             false
+set selection-clipboard         clipboard
+set adjust-open                 "best-fit"
+set zoom-step                   10
+set scroll-step                 40
+
+# Font
+set font                        "UDEV Gothic 35NFLG 12"
+
+# Keybindings
+map <C-=> zoom in
+map <C--> zoom out
+map <C-0> zoom reset
+map r reload
+map R rotate

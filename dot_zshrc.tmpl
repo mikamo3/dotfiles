@@ -1,0 +1,111 @@
+# Path
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+{{- if eq .chezmoi.os "darwin" }}
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+{{- end }}
+
+# Environment
+export EDITOR=nvim
+export PAGER=bat
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --ansi --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8,fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc,marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8'
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+export RIPGREP_CONFIG_PATH=~/.config/ripgrep/ripgreprc
+export BAT_THEME="Catppuccin Mocha"
+export DELTA_FEATURES='+side-by-side'
+
+# History
+export HISTFILE=~/.zsh_history
+export HISTSIZE=10000
+export SAVEHIST=10000
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_DUPS
+
+# Completion
+autoload -Uz compinit && compinit
+
+# Case-insensitive + partial-word matching (fish-like)
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' menu no
+zstyle ':completion:*:descriptions' format '[%d]'
+
+# Plugins
+eval "$(sheldon source)"
+
+# fzf-tab: fuzzy selection on Tab
+zstyle ':fzf-tab:*' fzf-flags '--height=40%' '--layout=reverse' '--ansi'
+zstyle ':fzf-tab:complete:*:*' fzf-preview '
+  if [[ -d $realpath ]]; then
+    eza --color=always --tree --level=2 -- $realpath 2>/dev/null
+  elif [[ -f $realpath ]]; then
+    bat --color=always --style=numbers --line-range=:200 -- $realpath 2>/dev/null
+  fi'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --color=always --tree --level=2 -- $realpath'
+
+# Aliases
+alias ls='eza'
+alias ll='eza -la --git'
+alias la='eza -la --git'
+alias lt='eza --tree'
+alias vim='nvim'
+alias cat='bat'
+alias cdt='cd $(mktemp -d)'
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gp='git push'
+alias gl='git pull'
+alias gd='git diff'
+alias gco='git checkout'
+alias gb='git branch'
+alias d='docker'
+alias dc='docker-compose'
+alias dps='docker ps'
+alias di='docker images'
+
+# Tools
+[[ -f ~/.config/op/plugins.sh ]] && source ~/.config/op/plugins.sh
+eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
+function zvm_after_init() {
+  source <(fzf --zsh)
+  eval "$(atuin init zsh)"
+
+  function _fzf_ghq() {
+    local repo=$(ghq list | fzf --preview "ls $(ghq root)/{}")
+    [[ -n "$repo" ]] && cd "$(ghq root)/$repo"
+    zle reset-prompt
+  }
+  zle -N _fzf_ghq
+  bindkey '^g' _fzf_ghq
+
+  function _fzf_nvim() {
+    local file=$(fzf --preview 'bat --color=always {}')
+    [[ -n "$file" ]] && nvim "$file"
+    zle reset-prompt
+  }
+  zle -N _fzf_nvim
+  bindkey '^f' _fzf_nvim
+
+  function _fzf_git_branch() {
+    local branch=$(git branch --all 2>/dev/null \
+      | grep -v HEAD \
+      | sed 's/^[ *]*//' \
+      | sed 's|remotes/origin/||' \
+      | sort -u \
+      | fzf)
+    [[ -n "$branch" ]] && git checkout "$branch"
+    zle reset-prompt
+  }
+  zle -N _fzf_git_branch
+  bindkey '^b' _fzf_git_branch
+}
+
+
+# Zellij auto-start
+if [[ $- == *i* ]] && [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != *vscode* ]] && [[ -z "$SSH_CONNECTION" ]]; then
+    exec zellij
+fi

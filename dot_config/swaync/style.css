@@ -1,0 +1,171 @@
+:root {
+  --base:    #1e1e2e;
+  --mantle:  #181825;
+  --crust:   #11111b;
+  --surface0: #313244;
+  --surface1: #45475a;
+  --surface2: #585b70;
+  --overlay0: #6c7086;
+  --text:    #cdd6f4;
+  --subtext: #a6adc8;
+  --mauve:   #cba6f7;
+  --blue:    #89b4fa;
+  --green:   #a6e3a1;
+  --red:     #f38ba8;
+  --yellow:  #f9e2af;
+  --peach:   #fab387;
+
+  --border-radius: 12px;
+  --border-radius-sm: 8px;
+  --font: "UDEV Gothic 35NFLG", sans-serif;
+}
+
+* {
+  font-family: var(--font);
+  font-size: 13px;
+  color: var(--text);
+}
+
+/* Control center */
+.control-center {
+  background: var(--base);
+  border: 1px solid var(--surface1);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+}
+
+.control-center-list {
+  background: transparent;
+}
+
+.control-center-list-placeholder {
+  color: var(--overlay0);
+}
+
+/* Notification rows in control center */
+.notification-row {
+  margin: 4px 8px;
+}
+
+.notification-row:focus,
+.notification-row:hover {
+  background: transparent;
+}
+
+/* Notification card */
+.notification {
+  background: var(--surface0);
+  border: 1px solid var(--surface1);
+  border-radius: var(--border-radius);
+  padding: 0;
+  margin: 0;
+}
+
+.notification.critical {
+  border-color: var(--red);
+}
+
+.notification.low {
+  border-color: var(--surface1);
+}
+
+/* Default action area (main clickable part) */
+.notification-default-action {
+  background: transparent;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  padding: 10px 12px;
+}
+
+.notification-default-action:hover {
+  background: var(--surface1);
+}
+
+/* No action buttons: full border radius */
+.notification-default-action:only-child {
+  border-radius: var(--border-radius);
+}
+
+/* App icon */
+.notification-app-icon {
+  min-width: 40px;
+  min-height: 40px;
+}
+
+/* Text content */
+.notification-content {
+  padding: 0 4px;
+}
+
+.app-name {
+  font-size: 11px;
+  color: var(--subtext);
+}
+
+.summary {
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--text);
+}
+
+.body {
+  font-size: 12px;
+  color: var(--subtext);
+}
+
+.time {
+  font-size: 11px;
+  color: var(--overlay0);
+}
+
+/* Close button */
+.close-button {
+  background: var(--surface1);
+  border-radius: 50%;
+  color: var(--subtext);
+  min-width: 20px;
+  min-height: 20px;
+  margin: 6px;
+  padding: 0;
+}
+
+.close-button:hover {
+  background: var(--red);
+  color: var(--base);
+}
+
+/* Action buttons */
+.notification-action {
+  background: var(--surface0);
+  border: none;
+  border-top: 1px solid var(--surface1);
+  border-radius: 0;
+  color: var(--blue);
+  padding: 6px 12px;
+}
+
+.notification-action:first-child {
+  border-radius: 0 0 0 var(--border-radius);
+}
+
+.notification-action:last-child {
+  border-radius: 0 0 var(--border-radius) 0;
+}
+
+.notification-action:hover {
+  background: var(--surface1);
+}
+
+/* Notification group */
+.notification-group-collapsed-button,
+.notification-group-icon {
+  color: var(--mauve);
+}
+
+/* Popup notifications (outside control center) */
+.floating-notifications {
+  background: transparent;
+}
+
+.blank-window {
+  background: transparent;
+}
