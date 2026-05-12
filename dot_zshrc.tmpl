@@ -39,17 +39,17 @@ eval "$(sheldon source)"
 zstyle ':fzf-tab:*' fzf-flags '--height=40%' '--layout=reverse' '--ansi'
 zstyle ':fzf-tab:complete:*:*' fzf-preview '
   if [[ -d $realpath ]]; then
-    lsd --color=always --tree --depth=2 -- $realpath 2>/dev/null
+    eza --color=always --tree --level=2 -- $realpath 2>/dev/null
   elif [[ -f $realpath ]]; then
     bat --color=always --style=numbers --line-range=:200 -- $realpath 2>/dev/null
   fi'
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'lsd --color=always --tree --depth=2 -- $realpath'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --color=always --tree --level=2 -- $realpath'
 
 # Aliases
-alias ls='lsd'
-alias ll='lsd -la --git'
-alias la='lsd -la --git'
-alias lt='lsd --tree'
+alias ls='eza'
+alias ll='eza -la --git'
+alias la='eza -la --git'
+alias lt='eza --tree'
 alias vim='nvim'
 alias cat='bat'
 alias cdt='cd $(mktemp -d)'
