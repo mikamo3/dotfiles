@@ -1,5 +1,6 @@
 Host *
     IdentityAgent ~/.1password/agent.sock
+    SetEnv TERM=xterm-256color
 
 Host 192.168.100.10
     HostName 192.168.100.10
