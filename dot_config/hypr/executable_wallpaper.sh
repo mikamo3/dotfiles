@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 sleep 5
-WALLPAPER_DIR="/usr/share/backgrounds/pokemon"
+WALLPAPER_DIR="/usr/share/backgrounds/archlinux"
 
 WALLPAPER=$(find "$WALLPAPER_DIR" -type f | shuf -n 1)
 if [ -z "${WALLPAPER:-}" ]; then
