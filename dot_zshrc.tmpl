@@ -69,16 +69,20 @@ alias dc='docker-compose'
 alias dps='docker ps'
 alias di='docker images'
 
-# 1Password SSH Agent
-export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
-
 # Tools
-[[ -f ~/.config/op/plugins.sh ]] && source ~/.config/op/plugins.sh
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
-eval "$(op completion zsh)"
-eval "$(/usr/bin/gh completion -s zsh)"
-functions[_gh]="${functions[_gh]//\$\{words\[1\]\}//usr/bin/gh}"
+
+# 1Password
+if (( $+commands[op] )); then
+  export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
+  [[ -f ~/.config/op/plugins.sh ]] && source ~/.config/op/plugins.sh
+  eval "$(op completion zsh)"
+fi
+if (( $+commands[gh] )); then
+  eval "$(/usr/bin/gh completion -s zsh)"
+  functions[_gh]="${functions[_gh]//\$\{words\[1\]\}//usr/bin/gh}"
+fi
 function zvm_after_init() {
   source <(fzf --zsh)
   eval "$(atuin init zsh)"
