@@ -175,6 +175,22 @@ else
 fi
 
 # ============================================================================
+# 9. Firefox: create work profile
+# ============================================================================
+
+if is_linux && has firefox; then
+    ff_profiles_ini="${XDG_CONFIG_HOME:-$HOME/.config}/mozilla/firefox/profiles.ini"
+    if grep -q "^Name=work$" "$ff_profiles_ini" 2>/dev/null; then
+        skip "Firefox work profile already exists"
+    else
+        firefox -CreateProfile "work" --headless 2>/dev/null || true
+        ok "Firefox work profile created"
+    fi
+else
+    skip "Firefox work profile: not applicable"
+fi
+
+# ============================================================================
 # 10. macOS: install Homebrew packages
 # ============================================================================
 
@@ -185,7 +201,7 @@ if is_mac; then
             brew bundle --global --no-lock
             ok "Homebrew packages installed"
         else
-            skip "~/.Brewfile not found"
+            skip "$HOME/.Brewfile not found"
         fi
     else
         warn "Homebrew not found — install from https://brew.sh"
