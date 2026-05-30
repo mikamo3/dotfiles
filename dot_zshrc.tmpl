@@ -86,38 +86,33 @@ fi
 function zvm_after_init() {
   source <(fzf --zsh)
   eval "$(atuin init zsh)"
+  # Keep fzf's Alt-C binding while letting Television handle Ctrl-T and Ctrl-R.
+  eval "$(tv init zsh)"
 
-  function _fzf_ghq() {
+  function _tv_ghq() {
     local repo
-    repo=$(ghq list | fzf --preview "ls $(ghq root)/{}")
+    repo=$(tv --source-command 'ghq list' --preview-command "ls $(ghq root)/{}")
     [[ -n "$repo" ]] && cd "$(ghq root)/$repo"
     zle reset-prompt
   }
-  zle -N _fzf_ghq
-  bindkey '^g' _fzf_ghq
+  zle -N _tv_ghq
+  bindkey '^g' _tv_ghq
 
-  function _fzf_nvim() {
+  function _tv_nvim() {
     local file
-    file=$(fd --type f --hidden --follow --exclude .git | fzf --preview 'bat --color=always {}')
+    file=$(tv files --source-command 'fd --type f --hidden --follow --exclude .git')
     [[ -n "$file" ]] && nvim "$file"
     zle reset-prompt
   }
-  zle -N _fzf_nvim
-  bindkey '^f' _fzf_nvim
+  zle -N _tv_nvim
+  bindkey '^f' _tv_nvim
 
-  function _fzf_git_branch() {
-    local branch
-    branch=$(git branch --all 2>/dev/null \
-      | grep -v HEAD \
-      | sed 's/^[ *]*//' \
-      | sed 's|remotes/origin/||' \
-      | sort -u \
-      | fzf)
-    [[ -n "$branch" ]] && git checkout "$branch"
+  function _tv_git_branch() {
+    tv git-branch
     zle reset-prompt
   }
-  zle -N _fzf_git_branch
-  bindkey '^b' _fzf_git_branch
+  zle -N _tv_git_branch
+  bindkey '^b' _tv_git_branch
 }
 
 
@@ -125,3 +120,5 @@ function zvm_after_init() {
 if [[ $- == *i* ]] && [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != *vscode* ]] && [[ -z "$SSH_CONNECTION" ]]; then
     exec zellij
 fi
+
+[[ -f ~/.config/broot/launcher/bash/br ]] && source ~/.config/broot/launcher/bash/br

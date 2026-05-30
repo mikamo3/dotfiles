@@ -20,6 +20,7 @@ brew "ghq"
 
 # CLI tools
 brew "fzf"
+brew "television"
 brew "fd"
 brew "bat"
 brew "lsd"
