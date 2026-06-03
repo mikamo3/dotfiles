@@ -9,6 +9,8 @@ text/html=firefox.desktop;
 x-scheme-handler/chrome=firefox.desktop;
 x-scheme-handler/http=firefox.desktop;
 x-scheme-handler/https=firefox.desktop;
+image/jpeg=org.gnome.Loupe.desktop;
+
 [Default Applications]
 application/gzip=org.gnome.FileRoller.desktop;
 application/json=featherpad.desktop;
@@ -22,7 +24,7 @@ application/x-tar=org.gnome.FileRoller.desktop;
 application/xhtml+xml=firefox.desktop;
 application/zip=org.gnome.FileRoller.desktop;
 image/gif=org.gnome.gThumb.desktop;
-image/jpeg=org.gnome.gThumb.desktop;
+image/jpeg=org.gnome.Loupe.desktop
 image/png=org.gnome.gThumb.desktop;
 image/webp=org.gnome.gThumb.desktop;
 text/html=firefox.desktop;
