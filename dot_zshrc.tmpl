@@ -91,9 +91,10 @@ if (( $+commands[gh] )); then
 fi
 function zvm_after_init() {
   source <(fzf --zsh)
-  eval "$(atuin init zsh)"
-  # Keep fzf's Alt-C binding while letting Television handle Ctrl-T and Ctrl-R.
+  # Television handles Ctrl-T smart completion for git/repo/file pickers.
   eval "$(tv init zsh)"
+  # History is owned by Atuin. Load it last so Ctrl-R stays on Atuin.
+  eval "$(atuin init zsh)"
 
   # tv's generated completion treats the channel argument as a generic path.
   # Add installed channels to `tv <Tab>` while preserving its CLI completion.

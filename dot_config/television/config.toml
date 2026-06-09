@@ -182,7 +182,7 @@ ctrl-e = "go_to_input_end"
 # ----------------------------------------------------------------------------
 #
 # The shell integration feature allows you to use television as a picker for
-# your shell commands (as well as your shell history with <CTRL-R>).
+# your shell commands with <CTRL-T>. Shell history is handled by Atuin.
 # E.g. typing `git checkout <CTRL-T>` will open television with a list of
 # branches to choose from.
 
@@ -250,6 +250,5 @@ fallback_channel = "files"
 # controls which key binding should trigger tv
 # for shell autocomplete
 "smart_autocomplete" = "ctrl-t"
-# controls which keybinding should trigger tv
-# for command history
+# Atuin is loaded after tv in zshrc and owns this keybinding.
 "command_history" = "ctrl-r"

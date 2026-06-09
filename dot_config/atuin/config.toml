@@ -3,8 +3,8 @@ filter_mode = "global"
 workspaces = true
 
 style = "compact"
-inline_height = 20
-show_preview = true
+inline_height = 15
+show_preview = false
 enter_accept = false
 keymap_mode = "auto"
 
