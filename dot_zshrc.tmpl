@@ -57,19 +57,10 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'lsd --color=always --tree --depth=2
 # Aliases
 alias ls='lsd'
 alias ll='lsd -la --git'
-alias la='lsd -la --git'
 alias lt='lsd --tree'
 alias vim='nvim'
 alias cat='bat'
 alias cdt='cd $(mktemp -d)'
-alias gs='git status'
-alias ga='git add'
-alias gc='git commit'
-alias gp='git push'
-alias gl='git pull'
-alias gd='git diff'
-alias gco='git checkout'
-alias gb='git branch'
 alias d='docker'
 alias dc='docker-compose'
 alias dps='docker ps'
@@ -77,7 +68,104 @@ alias di='docker images'
 
 # Tools
 eval "$(starship init zsh)"
-eval "$(zoxide init zsh)"
+eval "$(zoxide init zsh --cmd cd)"
+
+# Hints for modern CLI alternatives. The original command still runs.
+autoload -Uz add-zsh-hook
+function _modern_cli_hint() {
+  emulate -L zsh
+  local -a words
+  words=(${(z)1})
+  (( ${#words} )) || return 0
+
+  local command_index=1
+  while (( command_index <= ${#words} )); do
+    case "${words[$command_index]}" in
+      command|builtin|exec|noglob|nocorrect|sudo|doas)
+        (( command_index++ ))
+        ;;
+      env)
+        (( command_index++ ))
+        while (( command_index <= ${#words} )) && [[ "${words[$command_index]}" == *=* ]]; do
+          (( command_index++ ))
+        done
+        ;;
+      *)
+        break
+        ;;
+    esac
+  done
+
+  (( command_index <= ${#words} )) || return 0
+  local command_name=${words[$command_index]#\\}
+  local suggestion=
+  local reason=
+  case "$command_name" in
+    cat)
+      (( $+commands[bat] )) && suggestion="bat" && reason="syntax-highlighted file viewing"
+      ;;
+    curl)
+      if (( $+commands[http] )); then
+        suggestion="http"
+        reason="readable HTTP requests"
+      elif (( $+commands[curlie] )); then
+        suggestion="curlie"
+        reason="curl-compatible HTTP requests"
+      fi
+      ;;
+    df)
+      (( $+commands[duf] )) && suggestion="duf" && reason="readable disk usage"
+      ;;
+    dig|nslookup)
+      (( $+commands[dog] )) && suggestion="dog" && reason="readable DNS lookup"
+      ;;
+    du)
+      (( $+commands[dust] )) && suggestion="dust" && reason="visual disk usage"
+      ;;
+    grep)
+      (( $+commands[rg] )) && suggestion="rg" && reason="fast recursive search"
+      ;;
+    find)
+      (( $+commands[fd] )) && suggestion="fd" && reason="fast file search"
+      ;;
+    gzip|gunzip|tar|unzip|zip)
+      (( $+commands[ouch] )) && suggestion="ouch" && reason="unified archive handling"
+      ;;
+    ls)
+      (( $+commands[lsd] )) && suggestion="lsd" && reason="modern ls output"
+      ;;
+    man)
+      (( $+commands[tldr] )) && suggestion="tldr" && reason="example-focused help"
+      ;;
+    ps)
+      (( $+commands[procs] )) && suggestion="procs" && reason="readable process listing"
+      ;;
+    sed)
+      (( $+commands[sd] )) && suggestion="sd" && reason="simple find and replace"
+      ;;
+    time)
+      (( $+commands[hyperfine] )) && suggestion="hyperfine" && reason="command benchmarking"
+      ;;
+    top)
+      (( $+commands[btop] )) && suggestion="btop" && reason="interactive system monitor"
+      ;;
+    tmux)
+      (( $+commands[zellij] )) && suggestion="zellij" && reason="modern terminal workspace"
+      ;;
+    watch)
+      (( $+commands[watchexec] )) && suggestion="watchexec" && reason="run commands on file changes"
+      ;;
+  esac
+
+  [[ -n "$suggestion" ]] || return 0
+  if [[ -n "$reason" ]]; then
+    print -P "%F{yellow}Hint:%f '$command_name' has a modern alternative: %F{cyan}$suggestion%f ($reason)" >&2
+  else
+    print -P "%F{yellow}Hint:%f '$command_name' has a modern alternative: %F{cyan}$suggestion%f" >&2
+  fi
+  return 0
+}
+add-zsh-hook preexec _modern_cli_hint
 
 # 1Password
 if (( $+commands[op] )); then
@@ -95,6 +183,25 @@ function zvm_after_init() {
   eval "$(tv init zsh)"
   # History is owned by Atuin. Load it last so Ctrl-R stays on Atuin.
   eval "$(atuin init zsh)"
+
+  # zsh-abbr must be loaded after zsh-vi-mode has initialized keymaps.
+  local zsh_abbr
+  for zsh_abbr in \
+    /opt/homebrew/opt/zsh-abbr@6/share/zsh-abbr/zsh-abbr.zsh \
+    /opt/homebrew/share/zsh-abbr/zsh-abbr.zsh \
+    /usr/local/opt/zsh-abbr@6/share/zsh-abbr/zsh-abbr.zsh \
+    /usr/local/share/zsh-abbr/zsh-abbr.zsh \
+    /home/linuxbrew/.linuxbrew/opt/zsh-abbr@6/share/zsh-abbr/zsh-abbr.zsh \
+    /home/linuxbrew/.linuxbrew/share/zsh-abbr/zsh-abbr.zsh
+  do
+    if [[ -r "$zsh_abbr" ]]; then
+      source "$zsh_abbr"
+      bindkey -M viins " " abbr-expand-and-insert
+      bindkey -M viins "^ " magic-space
+      bindkey -M viins "^M" abbr-expand-and-accept
+      break
+    fi
+  done
 
   # tv's generated completion treats the channel argument as a generic path.
   # Add installed channels to `tv <Tab>` while preserving its CLI completion.

@@ -1,0 +1,8 @@
+abbr ga='git add'
+abbr gb='git branch'
+abbr gc='git commit'
+abbr gco='git checkout'
+abbr gd='git diff'
+abbr gl='git pull'
+abbr gp='git push'
+abbr gs='git status'

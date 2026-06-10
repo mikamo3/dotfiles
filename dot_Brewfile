@@ -1,7 +1,10 @@
+tap "olets/tap"
+
 # Shell / Terminal
 brew "sheldon"
 brew "starship"
 brew "atuin"
+brew "zsh-abbr@6"
 brew "zellij"
 cask "ghostty"
 
@@ -28,4 +31,3 @@ brew "ripgrep"
 brew "zoxide"
 brew "btop"
 brew "chezmoi"
-
