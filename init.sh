@@ -79,6 +79,7 @@ dirs=(
 # ~/.local/share/applications is Linux (freedesktop) specific
 if is_linux; then
     dirs+=(~/.local/share/applications)
+    dirs+=(~/googledrive)
 fi
 
 missing_dirs=()

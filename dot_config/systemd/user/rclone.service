@@ -2,13 +2,13 @@
 Description=RClone Service
 Wants=network-online.target
 After=network-online.target
-AssertPathIsDirectory=/home/mikamo/google-drive
+AssertPathIsDirectory=/home/mikamo/googledrive
 
 [Service]
 Type=notify
 Environment=RCLONE_CONFIG=/home/mikamo/.config/rclone/rclone.conf
 RestartSec=10
-ExecStart=/usr/bin/rclone mount google-drive: /home/mikamo/google-drive \
+ExecStart=/usr/bin/rclone mount google-drive: /home/mikamo/googledrive \
    --allow-other \
    --dir-cache-time 5000h \
    --syslog \
@@ -24,7 +24,7 @@ ExecStart=/usr/bin/rclone mount google-drive: /home/mikamo/google-drive \
    --vfs-cache-max-age 5000h \
    --bwlimit-file 100M
 
-ExecStop=/bin/fusermount -uz /home/mikamo/google-drive
+ExecStop=/bin/fusermount -uz /home/mikamo/googledrive
 Restart=on-failure
 
 [Install]
