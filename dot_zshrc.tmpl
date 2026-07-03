@@ -42,6 +42,11 @@ zstyle ':completion:*' menu no
 zstyle ':completion:*:descriptions' format '[%d]'
 
 # Plugins
+# SSH越しだとbracketed pasteの終端シーケンス(\e[201~)が遅延・分割されて届き、
+# zsh-vi-modeのデフォルトタイムアウト(0.4s)内に間に合わず`~`が生入力扱いされ、
+# NORMALモードのswapcaseコマンドとして発火してペースト末尾が大文字化することがある。
+# タイムアウトを伸ばして受信を待たせることで回避する。
+export ZVM_KEYTIMEOUT=1.0
 eval "$(sheldon source)"
 
 # fzf-tab: fuzzy selection on Tab
