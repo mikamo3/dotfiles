@@ -42,12 +42,18 @@ zstyle ':completion:*' menu no
 zstyle ':completion:*:descriptions' format '[%d]'
 
 # Plugins
-# SSH越しだとbracketed pasteの終端シーケンス(\e[201~)が遅延・分割されて届き、
-# zsh-vi-modeのデフォルトタイムアウト(0.4s)内に間に合わず`~`が生入力扱いされ、
-# NORMALモードのswapcaseコマンドとして発火してペースト末尾が大文字化することがある。
-# タイムアウトを伸ばして受信を待たせることで回避する。
-export ZVM_KEYTIMEOUT=1.0
+# zsh-vi-mode's NEX engine batches focus reporting (ESC[I/ESC[O) with an
+# immediately following bracketed paste over SSH. Use ZLE's native parser.
+export ZVM_READKEY_ENGINE=zle
 eval "$(sheldon source)"
+
+# Ignore xterm focus reporting so it cannot be interpreted as vi commands.
+function _zvm_ignore_focus_event() {}
+zle -N _zvm_ignore_focus_event
+for keymap in viins vicmd visual; do
+  bindkey -M "$keymap" $'\e[I' _zvm_ignore_focus_event
+  bindkey -M "$keymap" $'\e[O' _zvm_ignore_focus_event
+done
 
 # fzf-tab: fuzzy selection on Tab
 zstyle ':fzf-tab:*' fzf-flags '--height=40%' '--layout=reverse' '--ansi'
