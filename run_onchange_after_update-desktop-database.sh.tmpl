@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+
+# Re-run when either the desktop entry or its MIME associations change.
+# mpv-private.desktop: {{ include "dot_local/share/applications/mpv-private.desktop.tmpl" | sha256sum }}
+# mimeapps.list: {{ include "dot_config/mimeapps.list" | sha256sum }}
+
+if command -v update-desktop-database >/dev/null 2>&1; then
+    update-desktop-database "{{ .chezmoi.homeDir }}/.local/share/applications"
+fi

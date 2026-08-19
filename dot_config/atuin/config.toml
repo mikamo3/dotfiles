@@ -11,6 +11,7 @@ keymap_mode = "auto"
 history_filter = [
   "^\\s*rm -rf",
   "^\\s*sudo rm",
+  "^\\s*(?:/usr/bin/)?mpv(?:\\s|$)",
 ]
 
 [stats]

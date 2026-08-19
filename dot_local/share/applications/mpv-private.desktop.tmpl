@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=mpv Media Player (private)
+GenericName=Media Player
+Comment=Play media without persistent playback caches or history
+TryExec={{ .chezmoi.homeDir }}/.local/bin/mpv
+Exec={{ .chezmoi.homeDir }}/.local/bin/mpv --player-operation-mode=pseudo-gui -- %U
+Icon=mpv
+Terminal=false
+NoDisplay=true
+Categories=AudioVideo;Audio;Video;Player;
+MimeType=video/mp4;video/x-matroska;video/webm;video/x-msvideo;video/quicktime;video/mpeg;video/x-ms-wmv;video/x-flv;video/ogg;video/x-m4v;video/mp2t;video/3gpp;video/3gpp2;
+StartupWMClass=mpv

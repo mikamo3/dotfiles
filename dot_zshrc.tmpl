@@ -31,6 +31,8 @@ setopt HIST_SAVE_NO_DUPS
 setopt HIST_FIND_NO_DUPS
 setopt HIST_IGNORE_SPACE
 setopt HIST_REDUCE_BLANKS
+# Do not persist media paths passed directly to mpv.
+export HISTORY_IGNORE='(mpv|/usr/bin/mpv)(| *)'
 setopt COMPLETE_ALIASES
 
 # Completion

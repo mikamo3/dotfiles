@@ -1,0 +1,36 @@
+#!/bin/sh
+set -eu
+
+# Keep all playback-generated state ephemeral. The host filesystem remains
+# readable so mpv can load its config and media, but it cannot write to it.
+readonly private_cache="$HOME/.cache"
+readonly private_state="$HOME/.local/state"
+
+# Bubblewrap mount targets must already exist on the host. Creating these base
+# XDG directories does not disclose which media is played.
+mkdir -p "$private_cache" "$private_state"
+
+exec /usr/bin/bwrap \
+    --die-with-parent \
+    --new-session \
+    --ro-bind / / \
+    --dev-bind /dev /dev \
+    --proc /proc \
+    --tmpfs /dev/shm \
+    --tmpfs /tmp \
+    --tmpfs "$private_cache" \
+    --tmpfs "$private_state" \
+    --setenv XDG_CACHE_HOME "$private_cache" \
+    --setenv XDG_STATE_HOME "$private_state" \
+    --setenv TMPDIR /tmp \
+    -- /usr/bin/mpv \
+    --cache-on-disk=no \
+    --gpu-shader-cache=no \
+    --icc-cache=no \
+    --demuxer-cache-unlink-files=immediate \
+    --save-watch-history=no \
+    --save-position-on-quit=no \
+    --resume-playback=no \
+    --write-filename-in-watch-later-config=no \
+    --screenshot-dir=/tmp \
+    "$@"
