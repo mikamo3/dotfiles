@@ -1,12 +1,7 @@
-{{- if eq .chezmoi.hostname "LAVA" }}
+{{- if eq .chezmoi.hostname "mainpc" }}
 hl.monitor({ output = "HDMI-A-2", mode = "3840x2160@60", position = "0x0", scale = 1.25, bitdepth = 8 })
 hl.monitor({ output = "HDMI-A-1", mode = "3440x1440@60", position = "3072x0", scale = 1 })
 hl.monitor({ output = "DP-1", mode = "2560x1600@60", position = "6512x0", scale = 1 })
-{{- else if eq .chezmoi.hostname "RAPID" }}
-hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })
-{{- else if eq .chezmoi.hostname "MIST" }}
-hl.monitor({ output = "DP-2", mode = "2560x1600@60", position = "0x0", scale = 1 })
-hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })
 {{- else }}
 hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })
 {{- end }}
