@@ -263,8 +263,14 @@ function zvm_after_init() {
 
 
 # Zellij auto-start
-if [[ $- == *i* ]] && [[ -z "$ZELLIJ" ]] && [[ "$TERM_PROGRAM" != *vscode* ]] && [[ -z "$SSH_CONNECTION" ]]; then
-    exec zellij
+if [[ -o interactive && -t 0 && -t 1 && -z "$ZELLIJ" && -z "$TMUX" \
+      && "$TERM_PROGRAM" != *vscode* && "${ZELLIJ_AUTO_START:-1}" != 0 ]] \
+      && (( $+commands[zellij] )); then
+    if [[ -n "$SSH_CONNECTION" ]]; then
+        exec zellij attach --create ssh
+    else
+        exec zellij
+    fi
 fi
 
 [[ -f ~/.config/broot/launcher/bash/br ]] && source ~/.config/broot/launcher/bash/br
