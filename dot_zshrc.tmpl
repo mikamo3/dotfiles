@@ -5,6 +5,13 @@ export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
 {{- end }}
 
 # Environment
+# Detect VS Code before plugins can change the terminal environment.
+# Inherit the opt-out in nested shells as well.
+if [[ "$TERM_PROGRAM" == *vscode* || -n "$VSCODE_IPC_HOOK_CLI" \
+      || "$VSCODE_INJECTION" == 1 || "$VSCODE_SHELL_INTEGRATION" == 1 ]]; then
+  export ZELLIJ_AUTO_START=0
+fi
+
 export EDITOR=nvim
 export PAGER=bat
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
