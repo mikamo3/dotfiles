@@ -238,7 +238,9 @@ default_mode "locked"
 default_shell "zsh"
 pane_frames false
 scroll_buffer_size 50000
-copy_command "wl-copy"
+// Use OSC 52 so selections reach the local clipboard even over SSH.
+copy_on_select true
+copy_clipboard "system"
 show_startup_tips false
 session_serialization true
 serialize_pane_viewport true
